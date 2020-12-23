@@ -1,0 +1,18 @@
+{
+  "name": "ts-rna-draw",
+  "version": "1.0.0",
+  "description": "Experimental RNA structure drawing in typescript",
+  "main": "index.js",
+  "author": "Ved V. Topkar",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "paper": "^0.12.11",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^4.1.3"
+  },
+  "scripts": {
+    "build": "parcel build index.html --out-dir build",
+    "watch": "parcel watch index.html"
+  }
+}
