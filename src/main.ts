@@ -33,7 +33,3 @@ window.onload = begin
 let s:Structure = new Structure((<HTMLInputElement>document.getElementById('name')).value,
                                 (<HTMLInputElement>document.getElementById('sequence')).value,
                                 (<HTMLInputElement>document.getElementById('structure')).value)
-
-let root:RootNode = new RootNode()
-let _:UnpairedNode = new UnpairedNode(root, [0,1,2], 'AAAA')
-root.pushDaughters(_)

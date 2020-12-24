@@ -43,6 +43,8 @@ export class Structure {
             cursor += 1
         }
 
+        console.log(pairs)
+
         return pairs
     }
 
@@ -65,6 +67,8 @@ export class Structure {
 
         // Execute our recursive tree building, using our new root node as root
         this.recursive_tree_dispatch(left, right, root)
+
+        console.log(tree)
         
         return tree
     }
@@ -93,24 +97,28 @@ export class Structure {
         /*
         This is where we scan a complex region (either root or an internal loop) and spawn recursive tree builds
         */
-        let cursor: number = left
+        let left_cursor: number = left
+        let right_cursor: number = left
 
-        while (cursor < right) {
-            if (this.pairs[cursor] == null) {
+        while (right_cursor < right) {
+            console.log(left_cursor, right_cursor)
+            if (this.pairs[right_cursor] == null) {
                 // Make an unstructured node
-                while (this.pairs[cursor + 1] == null) {
-                    cursor += 1
+                while (this.pairs[right_cursor + 1] == null && right_cursor <= right) {
+                    right_cursor += 1
                 }
-
-                let u: UnpairedNode = new UnpairedNode(parentNode, this.sequence_indices.slice(left, cursor + 1), this.sequence.slice(left, cursor + 1))
+                console.log(left_cursor, right_cursor)
+                let u: UnpairedNode = new UnpairedNode(parentNode, this.sequence_indices.slice(left_cursor, right_cursor + 1), this.sequence.slice(left_cursor, right_cursor + 1))
                 parentNode.pushDaughters(u)
-                cursor += 1
+                left_cursor = right_cursor = right_cursor + 1
             } else {
                 // Kick off recursive tree build for a stem
-                this.recursive_tree_build(cursor, this.pairs[cursor], parentNode)
-                cursor = this.pairs[cursor] + 1
+                this.recursive_tree_build(left_cursor, this.pairs[left_cursor], parentNode)
+                left_cursor = right_cursor = this.pairs[left_cursor] + 1
+                console.log(left_cursor, right_cursor)
             }
         }
+        console.log('done!')
 
     }
 
@@ -140,7 +148,7 @@ export class Structure {
                 stem_pairs.push([this.sequence.charAt(left_cursor), this.sequence.charAt(right_cursor)])
 
                 left_cursor += 1
-                right_cursor += 1
+                right_cursor -= 1
             }
 
             // Make the node, add it to the parent
@@ -222,7 +230,7 @@ export class UnpairedNode extends Node {
     constructor(parent: Node, sequence_indices: Array<Number>, sequence: string) {
         super(parent, sequence_indices)
         this.sequence = sequence
-        console.log('Made an UnpairedNode')
+        console.log('Made an UnpairedNode ' + sequence)
     }
 }
 
@@ -235,7 +243,7 @@ export class StemNode extends Node {
    constructor(parent: Node, sequence_indices: Array<Number>, pairs: Array<Array<string>>) {
        super(parent, sequence_indices)
        this.pairs = pairs
-       console.log('Made a StemNode')
+       console.log('Made a StemNode ' + pairs)
    }
 }
 
@@ -248,7 +256,7 @@ export class TerminalLoopNode extends Node {
    constructor(parent: Node, sequence_indices: Array<Number>, sequence: string) {
        super(parent, sequence_indices)
        this.sequence = sequence
-       console.log('Made a TerminalLoopNode')
+       console.log('Made a TerminalLoopNode: ' + sequence)
    }
 }
 
@@ -267,6 +275,7 @@ export class BulgeNode extends Node {
         super(parent, sequence_indices)
         this._sequence = sequence
         this._bulge_side = bulge_side
+        console.log('Made a BulgeNode')
     }
 }
 
