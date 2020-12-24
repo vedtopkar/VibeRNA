@@ -32,4 +32,5 @@ window.onload = begin
 // Initialize structure object with inputted values
 let s:Structure = new Structure((<HTMLInputElement>document.getElementById('name')).value,
                                 (<HTMLInputElement>document.getElementById('sequence')).value,
-                                (<HTMLInputElement>document.getElementById('structure')).value)
+								(<HTMLInputElement>document.getElementById('structure')).value)
+								

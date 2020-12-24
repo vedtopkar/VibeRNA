@@ -169,14 +169,14 @@ export class Structure {
             if(this.pairs[left] == null) {
                 bulge_side = 'left'
                 left_cursor = this.find_end_of_unpaired(left)
-                sequence_indices = this.sequence_indices.slice(left, cursor + 1)
-                sequence = this.sequence.slice(left, cursor + 1)
+                sequence_indices = this.sequence_indices.slice(left, left_cursor + 1)
+                sequence = this.sequence.slice(left, left_cursor + 1)
                 left_cursor += 1
             } else {
                 bulge_side = 'right'
                 right_cursor = this.find_end_of_unpaired(right, true)
                 sequence_indices = this.sequence_indices.slice(right_cursor, right + 1)
-                sequence = this.sequence.slice(cursor, right + 1)
+                sequence = this.sequence.slice(right_cursor, right + 1)
                 right_cursor -= 1
             }
 
