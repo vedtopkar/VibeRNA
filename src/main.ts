@@ -10,27 +10,26 @@ This requires 2 things:
 
 */
 
-import { Path, Point, view, setup } from "paper/dist/paper-core"
-import { Node, RootNode, Structure, UnpairedNode } from './structure'
+import { setup } from "paper/dist/paper-core"
+import { Structure } from './structure'
+import { blah, drawRNA } from './draw'
 
 const begin = () => {
 
+	// Initialize structure object with inputted values
+	let s:Structure = new Structure((<HTMLInputElement>document.getElementById('name')).value,
+									(<HTMLInputElement>document.getElementById('sequence')).value,
+									(<HTMLInputElement>document.getElementById('structure')).value)
+
+	// Initialize canvas for PaperJS
 	const canvas: HTMLCanvasElement = document.getElementById("render") as HTMLCanvasElement
 	setup(canvas)
-	const path = new Path()
-	path.strokeColor = "black"
 
-	const start = new Point(100, 100)
-	path.moveTo(start)
-	path.lineTo(start.add([200, -50]))
-	view.draw()
-
+	// Draw the structure
+	drawRNA(s.structureTree)
 }
 
 window.onload = begin
 
-// Initialize structure object with inputted values
-let s:Structure = new Structure((<HTMLInputElement>document.getElementById('name')).value,
-                                (<HTMLInputElement>document.getElementById('sequence')).value,
-								(<HTMLInputElement>document.getElementById('structure')).value)
+
 								

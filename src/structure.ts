@@ -201,6 +201,11 @@ export class Structure {
 }
 
 
+// Declare a node "type" string literal
+export type NodeType = "UnpairedNode" | "StemNode" | "TerminalLoopNode"
+
+// Declare a "BulgeSide" string literal type that can only be "left" or "right"
+export type BulgeSide = "right" | "left"
 
 export class Node {
     /*
@@ -208,8 +213,9 @@ export class Node {
     and sequence indices (which characters in the sequence are owned by this node)
     */
     private parent: Node
-    private daughters: Array<Node> = []
+    public daughters: Array<Node> = []
     private sequence_indices: Array<Number>
+    public type: string
 
     constructor(parent: Node, sequence_indices: Array<Number>) {
         this.parent = parent
@@ -219,13 +225,15 @@ export class Node {
     public pushDaughters(daughter: Node){
         this.daughters.push(daughter)
     }
+
 }
 
 export class UnpairedNode extends Node {
     /*
     Unpaired Nodes are just an unpaired sequence
     */
-    private sequence: string;
+    public sequence: string;
+    public type: NodeType = 'UnpairedNode'
 
     constructor(parent: Node, sequence_indices: Array<Number>, sequence: string) {
         super(parent, sequence_indices)
@@ -238,7 +246,8 @@ export class StemNode extends Node {
     /*
     Stem Nodes encode an uninterrupted double-stranded region
     */
-   private pairs: Array<Array<string>>;
+   public pairs: Array<Array<string>>;
+   public type: NodeType = 'StemNode'
 
    constructor(parent: Node, sequence_indices: Array<Number>, pairs: Array<Array<string>>) {
        super(parent, sequence_indices)
@@ -252,6 +261,7 @@ export class TerminalLoopNode extends Node {
     TerminalLoop Nodes are the end of the line
     */
    private sequence: string;
+   public type: NodeType = 'TerminalLoopNode'
 
    constructor(parent: Node, sequence_indices: Array<Number>, sequence: string) {
        super(parent, sequence_indices)
@@ -260,8 +270,6 @@ export class TerminalLoopNode extends Node {
    }
 }
 
-// Declare a "BulgeSide" string literal type that can only be "left" or "right"
-export type BulgeSide = "right" | "left"
 
 export class BulgeNode extends Node {
     /*
