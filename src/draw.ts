@@ -85,6 +85,17 @@ export function drawStem(drawCursor, node: StemNode): Array<number> {
     return drawCursor
 }
 
-export function drawTerminalLoop(drawCursor, node) {
+export function drawTerminalLoop(drawCursor, node): Array<number> {
+    const n_polygon_sides = 2 + node.sequence.length
+    const sum_polygon_angles = (n_polygon_sides - 2) * 180
+    const each_internal_angle = sum_polygon_angles/n_polygon_sides
+
     const chars = [...node.sequence]
+    chars.forEach((c, i) {
+        drawCursor[0] += 20*Math.sin(i*(2*Math.PI/n_polygon_sides))
+        drawCursor[1] += 20*Math.cos(i*(2*Math.PI/n_polygon_sides))
+        console.log(drawCursor)
+        drawNucleotide(c, drawCursor[0], drawCursor[1])
+    })
+    return drawCursor
 }

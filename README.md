@@ -6,16 +6,22 @@ Ved's attempt at using Typescript to write a pure Javascript RNA secondary struc
 
 Clone:
 ```
-https://github.com/vedtopkar/ts-rna-draw.git
+git clone https://github.com/vedtopkar/ts-rna-draw.git
 ```
 
-Install dependencies:
+Install npm module dependencies:
 ```
-yarn install
+cd ts-rna-draw && yarn install
 ```
+
+For development, start the `parcel` server with `yarn`:
+```
+yarn watch
+```
+Your page will reload every time you hit save on a modified `.ts` or `.html` file.
 
 ## Dependencies
 
-- npm
-- yarnjs
-- parceljs
+- [npm](https://www.npmjs.com/get-npm)
+- [yarnjs](https://yarnpkg.com/)
+- [parceljs](https://parceljs.org/)
