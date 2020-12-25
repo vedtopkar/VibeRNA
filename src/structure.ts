@@ -1,3 +1,5 @@
+import { StructureTree, RootNode, Node, UnpairedNode, StemNode, BulgeSide, BulgeNode, TerminalLoopNode, InternalLoop, MultiLoop } from "./tree.js"
+
 export class Structure {
     name: string
     sequence: string
@@ -124,7 +126,7 @@ export class Structure {
 
     private recursive_tree_build(left: number, right: number, parentNode: Node) {
         /*
-        Here, we scan the secondary structure from left to right, building up our structure tree recursively.
+        Here, we  traverse the secondary structure to recursively build up the structure tree
         */
 
         let cursor: number = left
@@ -191,127 +193,20 @@ export class Structure {
             parentNode.pushDaughters(t)
             // End of the line!
 
+        } else if (n_boundary_paired == 0 && (this.pairs[this.find_end_of_unpaired(left) + 1] = this.find_end_of_unpaired(right, true))) {
+            // We are in an internal loop
+            let left_cursor = this.find_end_of_unpaired(left)
+            let right_cursor = this.find_end_of_unpaired(right, true)
+
+            let i: InternalLoop = new InternalLoop(parentNode, this.sequence.slice(left, left_cursor + 1), this.sequence.slice(right_cursor, right + 1), this.sequence_indices.slice(left, right))
+            parentNode.pushDaughters(i)
+            
+            this.recursive_tree_build(left_cursor + 1, right_cursor + 1, i)
         } else {
-            // We are in an internal loop! Initialize the loop and kick off the recursive tree dispatch
-            let m: InternalLoop = new InternalLoop(parentNode, this.sequence_indices.slice(left, right))
+            // We are in a multi loop! Initialize the loop and kick off the recursive tree dispatch
+            let m: MultiLoop = new MultiLoop(parentNode, this.sequence_indices.slice(left, right))
             this.recursive_tree_dispatch(left, right, m)
         }
         
     }
 }
-
-
-// Declare a node "type" string literal
-export type NodeType = "UnpairedNode" | "StemNode" | "TerminalLoopNode"
-
-// Declare a "BulgeSide" string literal type that can only be "left" or "right"
-export type BulgeSide = "right" | "left"
-
-export class Node {
-    /*
-    All Nodes have attributes parent (single node), daughters (left to right array of nodes),
-    and sequence indices (which characters in the sequence are owned by this node)
-    */
-    private parent: Node
-    public daughters: Array<Node> = []
-    private sequence_indices: Array<Number>
-    public type: string
-
-    constructor(parent: Node, sequence_indices: Array<Number>) {
-        this.parent = parent
-        this.sequence_indices = sequence_indices
-    }
-
-    public pushDaughters(daughter: Node){
-        this.daughters.push(daughter)
-    }
-
-}
-
-export class UnpairedNode extends Node {
-    /*
-    Unpaired Nodes are just an unpaired sequence
-    */
-    public sequence: string;
-    public type: NodeType = 'UnpairedNode'
-
-    constructor(parent: Node, sequence_indices: Array<Number>, sequence: string) {
-        super(parent, sequence_indices)
-        this.sequence = sequence
-        console.log('Made an UnpairedNode ' + sequence)
-    }
-}
-
-export class StemNode extends Node {
-    /*
-    Stem Nodes encode an uninterrupted double-stranded region
-    */
-   public pairs: Array<Array<string>>;
-   public type: NodeType = 'StemNode'
-
-   constructor(parent: Node, sequence_indices: Array<Number>, pairs: Array<Array<string>>) {
-       super(parent, sequence_indices)
-       this.pairs = pairs
-       console.log('Made a StemNode ' + pairs)
-   }
-}
-
-export class TerminalLoopNode extends Node {
-    /*
-    TerminalLoop Nodes are the end of the line
-    */
-   private sequence: string;
-   public type: NodeType = 'TerminalLoopNode'
-
-   constructor(parent: Node, sequence_indices: Array<Number>, sequence: string) {
-       super(parent, sequence_indices)
-       this.sequence = sequence
-       console.log('Made a TerminalLoopNode: ' + sequence)
-   }
-}
-
-
-export class BulgeNode extends Node {
-    /*
-    BulgeNodes have a "left" or "right" sequence, but not both! Uses the string literal type declared above.
-    */
-
-    private _bulge_side: BulgeSide
-    private _sequence: string
-
-    constructor(parent: Node, bulge_side: BulgeSide, sequence: string, sequence_indices: Array<number>) {
-        super(parent, sequence_indices)
-        this._sequence = sequence
-        this._bulge_side = bulge_side
-        console.log('Made a BulgeNode')
-    }
-}
-
-export class InternalLoop extends Node {
-
-}
-
-export class RootNode extends Node{
-    // This is a special node that just holds the top
-    constructor() {
-        super(null, null)
-        console.log('Made a RootNode')
-    }
-}
-
-export class StructureTree {
-    private _root: Node;
-
-    public get root(): Node {
-        return this._root;
-    }
-
-    public set root(n: Node) {
-        this._root = n
-    }
-
-    constructor() {
-        this._root = null
-    }
-}
-

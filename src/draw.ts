@@ -1,6 +1,6 @@
 import { Path, Point, view, setup } from "paper/dist/paper-core"
 import { nodeModuleNameResolver, Path } from "typescript"
-import { Node, StructureTree, UnpairedNode, StemNode } from "./structure"
+import { Node, StructureTree, UnpairedNode, StemNode } from "./NodeType"
 
 export class drawCursor {
 
