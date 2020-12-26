@@ -178,7 +178,7 @@ export class DrawTree {
         chars.forEach((c, i) {
             let center = C.clone()
             center.y += r*Math.sin(Math.PI*(angle_initial + (i+1)*angle_increment)/180)
-            center.x -= r*Math.cos(Math.PI*(angle_initial + (i+1)*angle_increment)/180)
+            center.x += r*Math.cos(Math.PI*(angle_initial + (i+1)*angle_increment)/180)
 
             let nt = new Nucleotide(c, center)
             nt.drawNucleotide()
@@ -216,10 +216,10 @@ export class Nucleotide {
         circle.strokeWidth = this.strokeWidth
 
         const offset_center: Point = this.center.clone()
-        offset_center.x -= 4
         offset_center.y += 4
         const text = new PointText(offset_center)
         text.content = this.letter
+        text.justification = 'center'
 
         circle.onMouseEnter = function(event) {
             this.strokeColor = 'blue'
