@@ -124,20 +124,3 @@ export class RootNode extends Node {
         console.log('Made a RootNode');
     }
 }
-
-export class StructureTree {
-    // A class that holds the root of a tree (that's it for now!)
-    private _root: Node;
-
-    public get root(): Node {
-        return this._root;
-    }
-
-    public set root(n: Node) {
-        this._root = n;
-    }
-
-    constructor() {
-        this._root = null;
-    }
-}

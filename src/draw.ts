@@ -3,7 +3,8 @@ Here, we
 */
 
 import { Point } from "paper/dist/paper-core"
-import { Structure } from "./structure/structure"
+import { Structure, StructureTree } from "./structure/structure"
+import { Node, UnpairedNode, StemNode, TerminalLoopNode, BulgeNode, InternalLoop, MultiLoop, RootNode } from './structure/nodes'
 
 import { UnpairedElement } from './draw/UnpairedElement'
 import { StemElement } from './draw/StemElement'
@@ -45,8 +46,34 @@ export class Drawing {
         }
     }
 
-    constructor() {
+    constructor(structure: Structure) {
+        this.structure = structure
+    }
 
+    public drawTreeDispatch() {
+        let t: StructureTree = this.structure.structureTree
+
+        for (const node: Node of t.root.daughters) {
+            switch(node.type) {
+                case 'UnpairedNode' : {
+                    break
+                }
+                case 'StemNode': {
+                    break
+                }
+            }
+        }
+    }
+
+    public drawTreeRecursive(node: Node) {
+        switch(node.type) {
+            case 'StemNode': {
+
+            }
+            case 'TerminalLoopNode': {
+
+            }
+        }
     }
 
 }
