@@ -1,4 +1,0 @@
-/*
-Changeable options for configuration
-*/
-

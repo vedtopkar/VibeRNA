@@ -7,7 +7,6 @@ export type NodeType = "UnpairedNode" | "StemNode" | "TerminalLoopNode" | "Bulge
 // Declare a "BulgeSide" string literal type that can only be "left" or "right"
 export type BulgeSide = "right" | "left";
 
-
 /*
 Declaration of a Node class, and inheriting node classes for the different type of tree nodes (sequence features)
 */
