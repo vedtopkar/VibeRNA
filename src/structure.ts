@@ -1,12 +1,12 @@
-import { StructureTree, RootNode, Node, UnpairedNode, StemNode, BulgeSide, BulgeNode, TerminalLoopNode, InternalLoop, MultiLoop } from "./tree.js"
+import { StructureTree, RootNode, Node, UnpairedNode, StemNode, BulgeSide, BulgeNode, TerminalLoopNode, InternalLoop, MultiLoop } from "./tree.ts"
 
 export class Structure {
-    name: string
-    sequence: string
-    sequence_indices: Array<number>
-    db: string
-    pairs: Array<number>
-    structureTree: StructureTree
+    public name: string
+    public sequence: string
+    public sequence_indices: Array<number>
+    public db: string
+    public pairs: Array<number>
+    public structureTree: StructureTree
 
     constructor(name: string, sequence: string, db: string) {
         this.name = name
@@ -200,7 +200,7 @@ export class Structure {
 
             let i: InternalLoop = new InternalLoop(parentNode, this.sequence.slice(left, left_cursor + 1), this.sequence.slice(right_cursor, right + 1), this.sequence_indices.slice(left, right))
             parentNode.pushDaughters(i)
-            
+
             this.recursive_tree_build(left_cursor + 1, right_cursor + 1, i)
         } else {
             // We are in a multi loop! Initialize the loop and kick off the recursive tree dispatch

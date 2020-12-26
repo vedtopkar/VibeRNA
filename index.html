@@ -3,15 +3,31 @@
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-  <form>
-    <label for="name">Name</label><br>
-    <input type="text" id="name" name="name" value="Test Sequence"><br>
-    <label for="sequence">Sequence</label><br>
-    <input type="text" id="sequence" name="sequence" value="AAAAAGGGGGGAAACCCCCAAAAA"><br>
-    <label for="structure">Structure</label><br>
-    <input type="text" id="structure" name="structure" value=".....(((((....))))).....">
-  </form>
-  <canvas id="render"></canvas>
+  <div id="app">
+    <section class="section">
+      <div class="container">
+        <form>
+          <div class="field">
+            <label for="name" class="label">Name</label>
+            <input type="text" id="name" name="name" class="input" value="Test Sequence">
+          </div>
+          <div class="field">
+            <label for="sequence" class="label">Sequence</label>
+            <input type="text" id="sequence" name="sequence" class="input" value="AAAAAGGGGGGAAACCCCCAAAAA">
+          </div>
+    
+          <label for="structure" class="label">Secondary structure (dot-bracket)</label>
+          <input type="text" id="structure" name="structure" class="input" value=".....(((((....))))).....">
+        </form>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <canvas id="render"></canvas>
+      </div>
+    </section>
+  </div>
+
   <script src="./src/main.ts"></script>
 </body>
 </html>

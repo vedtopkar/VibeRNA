@@ -1,6 +1,6 @@
 canvas#render {
-    width: 70%;
-    height: 70%;
+    width: 1000px;
+    height: 600px;
     border-style: solid;
     border-color: black;
 }

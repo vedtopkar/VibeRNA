@@ -1,5 +1,3 @@
-
-
 /*
 Declaration of handy string literal types
 */
@@ -18,7 +16,7 @@ export class Node {
     All Nodes have attributes parent (single node), daughters (left to right array of nodes),
     and sequence indices (which characters in the sequence are owned by this node)
     */
-    private parent: Node;
+    public parent: Node;
     public daughters: Array<Node> = [];
     private sequence_indices: Array<Number>;
     public type: string;
@@ -66,7 +64,7 @@ export class TerminalLoopNode extends Node {
     /*
     TerminalLoop Nodes are the end of the line
     */
-    private sequence: string;
+    public sequence: string;
     public type: NodeType = 'TerminalLoopNode';
 
     constructor(parent: Node, sequence_indices: Array<Number>, sequence: string) {

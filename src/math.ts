@@ -7,5 +7,4 @@ export class Vector {
     y: number
     angle: number
 
-    constructor
 }

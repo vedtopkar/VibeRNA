@@ -10,9 +10,11 @@ This requires 2 things:
 
 */
 
-import { setup } from "paper/dist/paper-core"
+import { setup, Path, Point, Line } from "paper/dist/paper-core"
+import 'bulma'
+
 import { Structure } from './structure'
-import { blah, drawRNA } from './draw'
+import { drawRNA, DrawTree } from './draw'
 
 const begin = () => {
 
@@ -26,7 +28,8 @@ const begin = () => {
 	setup(canvas)
 
 	// Draw the structure
-	drawRNA(s.structureTree)
+	let d = new DrawTree(s)
+	d.drawTreeDispatch()
 }
 
 window.onload = begin
