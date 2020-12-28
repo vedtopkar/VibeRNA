@@ -1,4 +1,5 @@
-import { StructureTree, RootNode, Node, UnpairedNode, StemNode, BulgeSide, BulgeNode, TerminalLoopNode, InternalLoop, MultiLoop } from "./tree.ts"
+import { DefaultConfig, DrawConfig } from "../draw/DrawConfig"
+import { RootNode, Node, UnpairedNode, StemNode, BulgeSide, BulgeNode, TerminalLoopNode, InternalLoop, MultiLoop } from "./nodes.ts"
 
 export class Structure {
     public name: string
@@ -7,6 +8,7 @@ export class Structure {
     public db: string
     public pairs: Array<number>
     public structureTree: StructureTree
+    public drawConfig: DrawConfig = DefaultConfig
 
     constructor(name: string, sequence: string, db: string) {
         this.name = name
@@ -213,17 +215,6 @@ export class Structure {
 
 export class StructureTree {
     // A class that holds the root of a tree (that's it for now!)
-    private _root: Node;
+    public root: Node = new RootNode()
 
-    public get root(): Node {
-        return this._root;
-    }
-
-    public set root(n: Node) {
-        this._root = n;
-    }
-
-    constructor() {
-        this._root = null;
-    }
 }

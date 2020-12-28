@@ -13,8 +13,8 @@ This requires 2 things:
 import { setup, Path, Point, Line } from "paper/dist/paper-core"
 import 'bulma'
 
-import { Structure } from './structure'
-import { drawRNA, DrawTree } from './draw'
+import { Structure } from './structure/structure'
+import { Drawing } from "./draw"
 
 const begin = () => {
 
@@ -28,8 +28,9 @@ const begin = () => {
 	setup(canvas)
 
 	// Draw the structure
-	let d = new DrawTree(s)
+	const d: Drawing = new Drawing(s)
 	d.drawTreeDispatch()
+
 }
 
 window.onload = begin
