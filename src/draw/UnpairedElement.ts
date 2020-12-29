@@ -21,7 +21,7 @@ export class UnpairedElement extends DrawnElement {
     public draw(): Point {
         const chars = [...this.node.sequence]
         let drawCursor: Point = this.startPoint.clone()
-        console.log(chars)
+        console.log('up', chars)
         chars.forEach((c, i) {
             let n = new Nucleotide(this.drawing, c, drawCursor)
             n.draw()

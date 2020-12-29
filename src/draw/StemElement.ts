@@ -49,8 +49,7 @@ export class StemElement extends DrawnElement {
      */
     public draw() {
         let drawCursor: Point = this.startPoint.clone()
-        console.log(drawCursor)
-
+        console.log(this.node.pairs)
         this.node.pairs.forEach((p, i) {
             let bp = new BasePairElement(this.drawing, this, p, drawCursor, this.startVector)
             bp.draw()
@@ -62,7 +61,6 @@ export class StemElement extends DrawnElement {
             scaledDirectionVector.length = this.drawing.config.ntSpacing
 
             drawCursor = drawCursor.add(scaledDirectionVector)
-            console.log(drawCursor)
         })
 
         return drawCursor

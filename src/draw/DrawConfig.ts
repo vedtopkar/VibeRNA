@@ -35,5 +35,5 @@ export const DefaultConfig: DrawConfig = {
     bpLength: 40,
     bpStrokeSize: 2,
 
-    terminalLoopRadius: 40
+    terminalLoopRadius: 30
 }

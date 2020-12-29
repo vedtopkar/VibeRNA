@@ -17,6 +17,7 @@ import { MultiLoopElement } from './draw/MultiLoopElement'
 import { BasePairElement } from './draw/BasePairElement'
 import { Nucleotide } from './draw/Nucleotide'
 import { DrawConfig, DefaultConfig } from "./draw/DrawConfig"
+import { BulgeElement } from "./draw/BulgeElement"
 
 /**
  * Drawing
@@ -66,13 +67,13 @@ export class Drawing {
 
         // Generate an initial drawVector that points rightward
         this.drawVector = this.config.origin.subtract(this.drawCursor)
-        console.log(this.config.origin, this.drawCursor, this.drawVector)
+
     }
 
     public drawTreeDispatch() {
 
         for (const node of this.structure.structureTree.root.daughters) {
-            console.log(node)
+
             switch(node.type) {
                 case 'UnpairedNode' : {
                     let u: UnpairedElement = new UnpairedElement(this, null, node, this.drawCursor)
@@ -100,11 +101,20 @@ export class Drawing {
                 drawCursor = s.draw()
 
                 if (node.daughters.length > 0) {
-                    console.log(node.daughters[0])
                     this.drawTreeRecursive(node.daughters[0], s, drawCursor, drawVector)
                 }
                 break
             }
+
+            case 'BulgeNode': {
+                let b = new BulgeElement(this, parentElement, node)
+                b.draw()
+
+                this.drawTreeRecursive(node.daughters[0], b, null, null)
+
+                break
+            }
+
             case 'TerminalLoopNode': {
                 let t = new TerminalLoopElement(this, parentElement, node)
                 t.draw()

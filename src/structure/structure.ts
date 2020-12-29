@@ -1,4 +1,5 @@
 import { DefaultConfig, DrawConfig } from "../draw/DrawConfig"
+import { UnpairedNode } from "./nodes"
 import { RootNode, Node, UnpairedNode, StemNode, BulgeSide, BulgeNode, TerminalLoopNode, InternalLoop, MultiLoop } from "./nodes.ts"
 
 export class Structure {
@@ -112,7 +113,7 @@ export class Structure {
                     right_cursor += 1
                 }
                 console.log(left_cursor, right_cursor)
-                let u: UnpairedNode = new UnpairedNode(parentNode, this.sequence_indices.slice(left_cursor, right_cursor + 1), this.sequence.slice(left_cursor, right_cursor + 1))
+                let u: UnpairedNode = new UnpairedNode(parentNode, this.sequence.slice(left_cursor, right_cursor + 1))
                 parentNode.pushDaughters(u)
                 left_cursor = right_cursor = right_cursor + 1
             } else {
@@ -156,7 +157,7 @@ export class Structure {
             }
 
             // Make the node, add it to the parent
-            let s: StemNode = new StemNode(parentNode, stem_indices, stem_pairs)
+            let s: StemNode = new StemNode(parentNode, stem_pairs)
             parentNode.pushDaughters(s)
 
             // Kick off the next recursive layer, with the stem we just made as parent
@@ -165,33 +166,37 @@ export class Structure {
         } else if (n_boundary_paired == 1 && (this.find_end_of_unpaired(left) + 1 == this.pairs[right] || this.find_end_of_unpaired(right, true) - 1 == this.pairs[left])) {
             // We are at a bulge!
             let bulge_side: BulgeSide
-            let sequence_indices: Array<number> = []
             let sequence: string
             let left_cursor: number = left
             let right_cursor: number = right
 
+            let b: BulgeNode = new BulgeNode(parentNode)
+
+            
             if(this.pairs[left] == null) {
                 bulge_side = 'left'
                 left_cursor = this.find_end_of_unpaired(left)
-                sequence_indices = this.sequence_indices.slice(left, left_cursor + 1)
                 sequence = this.sequence.slice(left, left_cursor + 1)
                 left_cursor += 1
             } else {
                 bulge_side = 'right'
                 right_cursor = this.find_end_of_unpaired(right, true)
-                sequence_indices = this.sequence_indices.slice(right_cursor, right + 1)
                 sequence = this.sequence.slice(right_cursor, right + 1)
                 right_cursor -= 1
             }
 
-            let b: BulgeNode = new BulgeNode(parentNode, bulge_side, sequence, sequence_indices)
             parentNode.pushDaughters(b)
 
             this.recursive_tree_build(left_cursor, right_cursor, b)
 
         } else if (n_boundary_paired == 0 && this.find_end_of_unpaired(left) == right) {
             // We are at a terminal loop!
-            let t: TerminalLoopNode = new TerminalLoopNode(parentNode, this.sequence_indices.slice(left, right + 1), this.sequence.slice(left, right + 1))
+            let t: TerminalLoopNode = new TerminalLoopNode(parentNode)
+            let u: UnpairedNode = new UnpairedNode(t)
+
+            u.sequence = this.sequence.slice(left, right + 1)
+
+            t.pushDaughters(u)
             parentNode.pushDaughters(t)
             // End of the line!
 
