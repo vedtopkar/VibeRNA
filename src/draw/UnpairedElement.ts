@@ -5,6 +5,10 @@ import { Structure } from '../structure/structure'
 import { UnpairedNode } from '../structure/nodes'
 import { Drawing } from '../draw'
 
+/**
+ * Unlike an UnpairedNode, which can point to unpaired root or loop regions,
+ * an UnpairedElement ONLY refers to a root-level unpaired region.
+ */
 export class UnpairedElement extends DrawnElement {
 
     public drawnNucleotides: Array<Nucleotide> = []
@@ -21,7 +25,6 @@ export class UnpairedElement extends DrawnElement {
     public draw(): Point {
         const chars = [...this.node.sequence]
         let drawCursor: Point = this.startPoint.clone()
-        console.log('up', chars)
         chars.forEach((c, i) {
             let n = new Nucleotide(this.drawing, c, drawCursor)
             n.draw()

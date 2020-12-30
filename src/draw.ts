@@ -97,7 +97,7 @@ export class Drawing {
     public drawTreeRecursive(node: Node, parentElement: DrawnElement, drawCursor: Point, drawVector: Point) {
         switch(node.type) {
             case 'StemNode': {
-                let s = new StemElement(this, parentElement, node, drawCursor, this.drawVector.clone())
+                let s = new StemElement(this, parentElement, node, drawCursor.clone(), drawVector.clone())
                 drawCursor = s.draw()
 
                 if (node.daughters.length > 0) {
@@ -109,8 +109,6 @@ export class Drawing {
             case 'BulgeNode': {
                 let b = new BulgeElement(this, parentElement, node)
                 b.draw()
-
-                this.drawTreeRecursive(node.daughters[0], b, null, null)
 
                 break
             }

@@ -54,9 +54,6 @@ export class StemNode extends Node {
     }
 }
 
-
-
-
 // Similar to how we draw, all circular nodes are pretty much the same structurally
 export class CircularNode extends Node {
     public type: NodeType
@@ -78,10 +75,9 @@ export class TerminalLoopNode extends Node {
     }
 }
 
-
 export class BulgeNode extends CircularNode {
     /*
-    BulgeNodes have a "left" or "right" sequence, but not both! Uses the string literal type declared above.
+    
     */
     public type: NodeType = 'BulgeNode';
 

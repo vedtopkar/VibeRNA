@@ -33,13 +33,14 @@ export class StemElement extends DrawnElement {
         super(drawing, parentElement)
 
         this.node = node
-        this.startPoint = startPoint
-        this.startVector = startVector
+        this.startPoint = startPoint.clone()
+        this.startVector = startVector.clone()
 
         // Make a unit vector that points in the direction  of the stem to be drawn
         this.stemDirectionVector = this.startVector.clone()
         this.stemDirectionVector.angle -= 90
         this.stemDirectionVector.length = 1
+        console.log(this.stemDirectionVector)
     }
 
     /**
@@ -49,7 +50,6 @@ export class StemElement extends DrawnElement {
      */
     public draw() {
         let drawCursor: Point = this.startPoint.clone()
-        console.log(this.node.pairs)
         this.node.pairs.forEach((p, i) {
             let bp = new BasePairElement(this.drawing, this, p, drawCursor, this.startVector)
             bp.draw()

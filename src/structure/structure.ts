@@ -165,36 +165,42 @@ export class Structure {
 
         } else if (n_boundary_paired == 1 && (this.find_end_of_unpaired(left) + 1 == this.pairs[right] || this.find_end_of_unpaired(right, true) - 1 == this.pairs[left])) {
             // We are at a bulge!
-            let bulge_side: BulgeSide
             let sequence: string
             let left_cursor: number = left
             let right_cursor: number = right
 
             let b: BulgeNode = new BulgeNode(parentNode)
-
             
+            // Depending on which side the bulge is on, arrange the stem and unpaired nodes in one order or the other
+            // There is probably a much simpler way to do this...
             if(this.pairs[left] == null) {
-                bulge_side = 'left'
+                // left side bulge
                 left_cursor = this.find_end_of_unpaired(left)
                 sequence = this.sequence.slice(left, left_cursor + 1)
                 left_cursor += 1
+
+                let u: UnpairedNode = new UnpairedNode(b, sequence)
+                b.pushDaughters(u)
+                this.recursive_tree_build(left_cursor, right_cursor, b)
+
             } else {
-                bulge_side = 'right'
+                // right side bulge
                 right_cursor = this.find_end_of_unpaired(right, true)
                 sequence = this.sequence.slice(right_cursor, right + 1)
                 right_cursor -= 1
+
+                let u: UnpairedNode = new UnpairedNode(b, sequence)
+                this.recursive_tree_build(left_cursor, right_cursor, b)
+                b.pushDaughters(u)
             }
 
             parentNode.pushDaughters(b)
 
-            this.recursive_tree_build(left_cursor, right_cursor, b)
 
         } else if (n_boundary_paired == 0 && this.find_end_of_unpaired(left) == right) {
             // We are at a terminal loop!
             let t: TerminalLoopNode = new TerminalLoopNode(parentNode)
-            let u: UnpairedNode = new UnpairedNode(t)
-
-            u.sequence = this.sequence.slice(left, right + 1)
+            let u: UnpairedNode = new UnpairedNode(t, this.sequence.slice(left, right + 1))
 
             t.pushDaughters(u)
             parentNode.pushDaughters(t)

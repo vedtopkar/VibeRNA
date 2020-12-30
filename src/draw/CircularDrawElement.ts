@@ -6,6 +6,7 @@ import { DrawnElement } from './DrawnElement'
 import { Nucleotide } from './Nucleotide'
 import { StemElement } from './StemElement'
 import { Node } from '../structure/nodes'
+import { exit } from 'process'
 
 /**
  * Circular Draw Element
@@ -20,10 +21,13 @@ export class CircularDrawElement extends DrawnElement {
 
     public baseBp: BasePairElement // The base-pair at the base (end of the parent stem)
     public baseVector: Point
+    public baseStart: Point
 
     public node: Node
-    public radius: number = 0
-    public minRadius: number = 0
+    public radius: number
+
+    public minRadius: number
+    public defaultRadius: number
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: Node) {
         super(drawing, parentElement)
@@ -31,17 +35,40 @@ export class CircularDrawElement extends DrawnElement {
 
         this.baseBp = this.parentElement.basePairs.slice(-1)[0]
         this.baseVector = this.baseBp.drawVector
+        this.baseStart = this.baseBp.startPoint
 
+        console.log(this.baseVector)
+
+        this.computeRadius() // compute 
     }
 
-    private configureRadius() {
+    // TODO: Tinker with this...
+    private computeRadius(): void {
 
-        // Iterate through the daughter nodes and sum up the minimum radius
-        this.node.daughters.forEach(n => {
-            switch(n.type) {
-                case ''
+        this.minRadius = this.drawing.config.bpLength + 2*this.drawing.config.ntRadius
+        this.defaultRadius = this.drawing.config.bpLength + 2*this.drawing.config.ntRadius
+
+        // Iterate through the circle and tally up the circumference
+        this.node.daughters.forEach((c,i) => {
+            switch (c.type) {
+                case 'UnpairedNode': {
+                    this.minRadius += 2*(c.sequence.length+1)*this.drawing.config.ntRadius
+                    this.defaultRadius += (c.sequence.length + 1)*this.drawing.config.ntSpacing
+                    // this.defaultRadius += (c.sequence.length + 1)*this.drawing.config.ntSpacing
+                    break
+                }
+
+                case 'StemNode': {
+                    this.minRadius += this.drawing.config.bpLength
+                    this.defaultRadius += this.drawing.config.bpLength + 2*this.drawing.config.ntRadius
+                }
+
             }
-        });
+        })
+
+        // Divide our circumferences by 2pi to get our radii
+        this.minRadius /= 2*Math.PI
+        this.defaultRadius /= 2*Math.PI
     }
 
     public draw() {
@@ -59,7 +86,8 @@ export class CircularDrawElement extends DrawnElement {
         Third, we find the centerpoint by rotating v1 by theta and scaling to length r
         (this is the vector v3)
 
-        Fourth, we calculate the total angle used up by the two end-nucleotides.
+        Fourth, we calculate the total angle used up by the two base-nucleotides.
+        This is the same angle used up by all stems in the loop
         phi = 2arcsin(|v1|/2r)
 
         Fifth, we use calculate the amount of angle each terminal loop nt gets
@@ -69,50 +97,98 @@ export class CircularDrawElement extends DrawnElement {
 
         */
 
+        'use strict';
+
         // NOTE: In paperjs, vectors are still of type Point
-        let r: number = this.radius
+        let r: number = this.defaultRadius
         let bp: BasePairElement = this.parentElement.basePairs.slice(-1)[0]
         let p1: Point = bp.nucleotides[0].center
         let p2: Point = bp.nucleotides[1].center
-
-
         let v1: Point = p2.subtract(p1)
 
-        let theta: number = 180*Math.acos(v1.length/(2*r))/Math.PI
-        
-        let C = v1.clone()
+        console.log(bp, p1, p2, v1)
 
+        let theta: number = 180*Math.acos(v1.length/(2*r))/Math.PI
+
+        let C = v1.clone()
         C.angle -= theta
-        
         C.length = r
-        
         C = C.add(p1)
 
         let v2: Point = p2.subtract(C)
         let v3: Point = p1.subtract(C)
 
-        // let phi: number = 180*2*Math.asin(v1.length/(2*r))/Math.PI
         let phi: number = 180 - 2*theta
-        // console.log(phi, theta)
 
-        let angle_initial: number = v3.angle
-        let angle_increment: number = (360 - phi)/(this.node.daughters[0].sequence.length+1)
-        // console.log(theta, phi, p1, p2, v1, v2, v3, C)
-        // console.log(angle_initial, angle_increment, this.node.daughters[0].sequence.length)
-        const chars = [...this.node.daughters[0].sequence]
-        console.log('here', chars)
-        // let c = new Path.Circle(C, r)
-        // c.strokeColor = 'black'
-        
-        chars.forEach((c, i) {
-            let center = C.clone()
-            center.y += r*Math.sin(Math.PI*(angle_initial + (i+1)*angle_increment)/180)
-            center.x += r*Math.cos(Math.PI*(angle_initial + (i+1)*angle_increment)/180)
-
-            let nt = new Nucleotide(this.drawing, c, center)
-            nt.draw()
-
-            this.drawing.nucleotides.push(nt)
+        // Count up the number of bp vs unpaired nts in the loop
+        let bps: number = 1
+        let nts: number = 0
+        this.node.daughters.forEach((n, i) => {
+            switch (n.type) {
+                case 'UnpairedNode' {
+                    nts += n.sequence.length
+                    break
+                }
+                case 'StemNode' {
+                    bps += 1
+                    break
+                }
+            }
         })
-        
+
+        // TODO explain this
+        let nt_angle_increment: number = (360 - bps*phi)/(nts + bps)
+        let bp_angle_increment: number = phi
+
+        let angle_cursor: number = v3.angle + nt_angle_increment
+
+        let c = new Path.Circle(C, r)
+        // c.strokeColor = 'black'
+
+        // Iterate through the nodes along the circle and draw
+        this.node.daughters.forEach((n, i) => {
+            switch (n.type) {
+                case 'UnpairedNode' {
+                    let chars = [...n.sequence]
+                    chars.forEach((c, i) => {
+                        let center = C.clone()
+                        center.y += r*Math.sin(Math.PI*angle_cursor/180)
+                        center.x += r*Math.cos(Math.PI*angle_cursor/180)
+            
+                        let nt = new Nucleotide(this.drawing, c, center)
+                        nt.draw()
+            
+                        this.drawing.nucleotides.push(nt)
+                        angle_cursor += nt_angle_increment
+                    })
+                    break
+                }
+                case 'StemNode': {
+                    // When we get to the stem, we make a new helix and kick off the next recursive round
+                    let startPoint = C.clone()
+                    startPoint.y += r*Math.sin(Math.PI*angle_cursor/180)
+                    startPoint.x += r*Math.cos(Math.PI*angle_cursor/180)
+
+                    angle_cursor += bp_angle_increment
+
+                    let endPoint = C.clone()
+                    endPoint.y += r*Math.sin(Math.PI*angle_cursor/180)
+                    endPoint.x += r*Math.cos(Math.PI*angle_cursor/180)
+
+                    let startVector = endPoint.subtract(startPoint)
+                    let c1 = new Path.Circle(startPoint, 10)
+                    c1.fillColor = 'black'
+
+                    let c1 = new Path.Circle(endPoint, 10)
+                    c1.fillColor = 'black'
+
+                    angle_cursor += nt_angle_increment
+
+                    console.log(n, startPoint, startVector)
+                    this.drawing.drawTreeRecursive(n, this, startPoint, startVector)
+                    
+                    break
+                }
+            }
+        })
 }
