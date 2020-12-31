@@ -71,7 +71,7 @@ export class Drawing {
     }
 
     public drawTreeDispatch() {
-
+        console.log('dispatch')
         for (const node of this.structure.structureTree.root.daughters) {
 
             switch(node.type) {
@@ -103,6 +103,7 @@ export class Drawing {
                 if (node.daughters.length > 0) {
                     this.drawTreeRecursive(node.daughters[0], s, drawCursor, drawVector)
                 }
+
                 break
             }
 
@@ -119,6 +120,13 @@ export class Drawing {
 
                 this.terminalLoops.push(t)
                 // End of the line! No more elements to draw in this branch.
+                break
+            }
+
+            case 'MultiLoopNode': {
+                let m = new MultiLoopElement(this, parentElement, node)
+                m.draw()
+                this.multiLoops.push(m)
                 break
             }
         }

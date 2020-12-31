@@ -7,8 +7,8 @@ Ved's attempt at using Typescript to write a pure Javascript RNA secondary struc
 Using the following inputs:
 
 ```
-AAAAAGGGGGAAGGGGAAACCCCCCCAAAAAAAAAAGGGGGGAAACCACCCAAAAA
-.....(((((..(((....))))))))..........(((((....)).))).....
+AAAAAGGGGGAAGGGGAAACCCAAGGGGAAACCCACCCCCAAAAAAAAAAGGGGGGAAAAAAACCACCCAAAAA
+.....(((((..(((....)))..(((....))).)))))..........(((((........)).))).....
 ```
 
 We get:

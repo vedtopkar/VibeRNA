@@ -18,6 +18,7 @@ export class Node {
 
     constructor(parent: Node) {
         this.parent = parent;
+        console.log(this)
     }
 
     public pushDaughters(daughter: Node) {
@@ -44,10 +45,10 @@ export class StemNode extends Node {
     /*
     Stem Nodes encode an uninterrupted double-stranded region
     */
-    public pairs: Array<Array<string>>;
+    public pairs: Array<number>;
     public type: NodeType = 'StemNode';
 
-    constructor(parent: Node, pairs: Array<Array<string>>) {
+    constructor(parent: Node, pairs: Array<number>) {
         super(parent);
         this.pairs = pairs;
         console.log('Made a StemNode ' + pairs);

@@ -37,7 +37,6 @@ export class CircularDrawElement extends DrawnElement {
         this.baseVector = this.baseBp.drawVector
         this.baseStart = this.baseBp.startPoint
 
-        console.log(this.baseVector)
 
         this.computeRadius() // compute 
     }
@@ -100,13 +99,12 @@ export class CircularDrawElement extends DrawnElement {
         'use strict';
 
         // NOTE: In paperjs, vectors are still of type Point
+        console.log('Drawing', this.node.type)
         let r: number = this.defaultRadius
         let bp: BasePairElement = this.parentElement.basePairs.slice(-1)[0]
         let p1: Point = bp.nucleotides[0].center
         let p2: Point = bp.nucleotides[1].center
         let v1: Point = p2.subtract(p1)
-
-        console.log(bp, p1, p2, v1)
 
         let theta: number = 180*Math.acos(v1.length/(2*r))/Math.PI
 
@@ -124,6 +122,7 @@ export class CircularDrawElement extends DrawnElement {
         let bps: number = 1
         let nts: number = 0
         this.node.daughters.forEach((n, i) => {
+            console.log(bps, nts, n)
             switch (n.type) {
                 case 'UnpairedNode' {
                     nts += n.sequence.length
@@ -135,6 +134,8 @@ export class CircularDrawElement extends DrawnElement {
                 }
             }
         })
+
+        console.log('ntbp', nts, bps)
 
         // TODO explain this
         let nt_angle_increment: number = (360 - bps*phi)/(nts + bps)
@@ -184,7 +185,6 @@ export class CircularDrawElement extends DrawnElement {
 
                     angle_cursor += nt_angle_increment
 
-                    console.log(n, startPoint, startVector)
                     this.drawing.drawTreeRecursive(n, this, startPoint, startVector)
                     
                     break
