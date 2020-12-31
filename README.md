@@ -43,12 +43,13 @@ Your page will reload every time you hit save on a modified `.ts` or `.html` fil
 - ~~Scale up terminal loop radius for large-sequence loops~~
 - ~~Abstract away global variables for drawing config~~
 - ~~Split up drawing scripts for each element type~~
-- Implement paperjs element grouping
 - ~~Update stem drawing for arbitrary angles~~
-- Figure out robust vertical text centering for nucleotides
 - ~~Implement drawing bulges~~
-- Implement drawing internal loops
-- Implement drawing multi-loops
+- ~~Implement drawing internal loops~~
+- ~~Implement drawing multi-loops~~
+- Implement pan/zoom mouse functionality
+- Implement paperjs element grouping
+- Figure out robust vertical text centering for nucleotides
 - Implement interactive flipping stems around basline
 - Implement interactive stem moving at bulges
 - Implement interactive stem moving at internal loops
