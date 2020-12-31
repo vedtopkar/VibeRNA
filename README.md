@@ -12,7 +12,7 @@ AAAAAGGGGGAAGGGGAAACCCAAGGGGAAACCCACCCCCAAAAAAAAAAGGGGGGAAAAAAACCACCCAAAAA
 ```
 
 We get:
-![ts-rna-draw-example](img/ts-rna-draw-example.png)
+![ts-rna-draw-example](img/ts-rna-draw-multiloop-example.png)
 
 ## Usage
 
