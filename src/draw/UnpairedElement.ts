@@ -16,15 +16,14 @@ export class UnpairedElement extends DrawnElement {
     public startPoint: Point
     public endPoint: Point
 
-    constructor(drawing: Drawing, parentElement: DrawnElement, node: UnpairedNode, drawCursor: Point) {
+    constructor(drawing: Drawing, parentElement: DrawnElement, node: UnpairedNode) {
         super(drawing, parentElement)
         this.node = node
-        this.startPoint = drawCursor.clone()
     }
 
-    public draw(): Point {
+    public draw(startPoint: Point): Point {
         const chars = [...this.node.sequence]
-        let drawCursor: Point = this.startPoint.clone()
+        let drawCursor: Point = startPoint.clone()
         chars.forEach((c, i) {
             let n = new Nucleotide(this.drawing, c, drawCursor)
             n.draw()
@@ -36,6 +35,51 @@ export class UnpairedElement extends DrawnElement {
         this.endPoint = drawCursor.clone()
 
         return this.endPoint.clone()
+    }
+
+    /**
+     * Draws circularly
+     * 
+     * When the unpaired element is the daughter of a ciruclar element, we draw it circularly
+     * 
+     * @param center 
+     * @param radius 
+     * @param angleStart 
+     * @param angleEnd 
+     * @returns circular 
+     */
+    public drawCircular(centerPoint: Point, radius: number, angleStart: number, angleEnd: number): Point {
+        
+        const chars = [...this.node.sequence]
+        console.log('drawing circularly', this.node.sequence, centerPoint, radius, angleStart, chars)
+
+        let angleCursor: number = angleStart
+        let ntAngleIncrement: number = (angleEnd - angleStart)/(chars.length - 1)
+
+        chars.forEach((c, i) => {
+            let center = centerPoint.clone()
+            center.y += radius*Math.sin(Math.PI*angleCursor/180)
+            center.x += radius*Math.cos(Math.PI*angleCursor/180)
+
+            let nt = new Nucleotide(this.drawing, c, center)
+            nt.draw()
+
+            this.drawing.nucleotides.push(nt)
+            this.drawnNucleotides.push(nt)
+            angleCursor += ntAngleIncrement
+        })
+
+        return angleCursor
+    }
+
+    /**
+     * Transforms circularly
+     * 
+     * When our unpairedlement is part of a circular element, and when the circular element is shifted
+     * (e.g. a stem is dragged), we move the nucleotides to space equally along some angle of the circle.
+     */
+    public transformCircular() {
+
     }
 
 

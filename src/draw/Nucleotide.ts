@@ -1,10 +1,13 @@
-import { Path, Point, PointText } from "paper/dist/paper-core"
+import { Path, Point, PointText, Group } from "paper/dist/paper-core"
 import { Drawing } from "../draw"
 
 export class Nucleotide {
     public drawing: Drawing
     public letter: string
     public center: Point
+    public group: Group
+    public circle: Path.Circle
+    public text: Path.PointText
 
 
     constructor(drawing: Drawing, letter: string, center: Point) {
@@ -25,22 +28,13 @@ export class Nucleotide {
         text.content = this.letter
         text.justification = 'center'
 
-        // circle.onMouseEnter = function(event) {
-        //     this.strokeColor = 'blue'
-        // }
-    
-        // circle.onMouseLeave = function(event) {
-        //     this.strokeColor = 'red'
-        // }
-    
-        // circle.onMouseDown = function(event) {
-        //     this.strokeColor = 'green'
-        // }
-    
-        // circle.onMouseUp = function(event) {
-        //     this.strokeColor = 'red'
-        // }
-    
+        this.circle = circle
+        this.text = text
+
+        this.group = new Group([circle, text])
+
+
+
     }
 
 }

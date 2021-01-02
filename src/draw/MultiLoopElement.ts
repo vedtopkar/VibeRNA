@@ -9,7 +9,6 @@ export class MultiLoopElement extends CircularDrawElement {
     public baseVector: Point
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: BulgeNode) {
-        console.log('drawing multiloop')
         super(drawing, parentElement, node)
         this.node = node
     }

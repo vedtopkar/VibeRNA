@@ -71,14 +71,13 @@ export class Drawing {
     }
 
     public drawTreeDispatch() {
-        console.log('dispatch')
         for (const node of this.structure.structureTree.root.daughters) {
 
             switch(node.type) {
                 case 'UnpairedNode' : {
-                    let u: UnpairedElement = new UnpairedElement(this, null, node, this.drawCursor)
+                    let u: UnpairedElement = new UnpairedElement(this, null, node)
                     // We expect unpaired nodes to return a drawCursor that sits at the center of the last nt
-                    this.drawCursor = u.draw()
+                    this.drawCursor = u.draw(this.drawCursor)
                     break
                 }
                 case 'StemNode': {
@@ -103,6 +102,7 @@ export class Drawing {
                 if (node.daughters.length > 0) {
                     this.drawTreeRecursive(node.daughters[0], s, drawCursor, drawVector)
                 }
+                return s
 
                 break
             }
@@ -110,6 +110,8 @@ export class Drawing {
             case 'BulgeNode': {
                 let b = new BulgeElement(this, parentElement, node)
                 b.draw()
+
+                return b
 
                 break
             }
@@ -120,6 +122,8 @@ export class Drawing {
 
                 this.terminalLoops.push(t)
                 // End of the line! No more elements to draw in this branch.
+
+                return t
                 break
             }
 
@@ -127,6 +131,8 @@ export class Drawing {
                 let m = new MultiLoopElement(this, parentElement, node)
                 m.draw()
                 this.multiLoops.push(m)
+                
+                return m
                 break
             }
         }

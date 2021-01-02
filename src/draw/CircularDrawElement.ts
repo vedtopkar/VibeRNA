@@ -7,6 +7,7 @@ import { Nucleotide } from './Nucleotide'
 import { StemElement } from './StemElement'
 import { Node } from '../structure/nodes'
 import { exit } from 'process'
+import { UnpairedElement } from './UnpairedElement'
 
 /**
  * Circular Draw Element
@@ -28,6 +29,8 @@ export class CircularDrawElement extends DrawnElement {
 
     public minRadius: number
     public defaultRadius: number
+
+    public drawnElements: Array<DrawnElement> = []
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: Node) {
         super(drawing, parentElement)
@@ -122,7 +125,6 @@ export class CircularDrawElement extends DrawnElement {
         let bps: number = 1
         let nts: number = 0
         this.node.daughters.forEach((n, i) => {
-            console.log(bps, nts, n)
             switch (n.type) {
                 case 'UnpairedNode' {
                     nts += n.sequence.length
@@ -135,7 +137,6 @@ export class CircularDrawElement extends DrawnElement {
             }
         })
 
-        console.log('ntbp', nts, bps)
 
         // TODO explain this
         let nt_angle_increment: number = (360 - bps*phi)/(nts + bps)
@@ -150,18 +151,13 @@ export class CircularDrawElement extends DrawnElement {
         this.node.daughters.forEach((n, i) => {
             switch (n.type) {
                 case 'UnpairedNode' {
+                    let u: UnpairedElement = new UnpairedElement(this.drawing, this, n)
                     let chars = [...n.sequence]
-                    chars.forEach((c, i) => {
-                        let center = C.clone()
-                        center.y += r*Math.sin(Math.PI*angle_cursor/180)
-                        center.x += r*Math.cos(Math.PI*angle_cursor/180)
-            
-                        let nt = new Nucleotide(this.drawing, c, center)
-                        nt.draw()
-            
-                        this.drawing.nucleotides.push(nt)
-                        angle_cursor += nt_angle_increment
-                    })
+                    let endAngle = angle_cursor + nt_angle_increment*(chars.length - 1)
+
+                    u.drawCircular(C, r, angle_cursor, endAngle)
+
+                    angle_cursor = endAngle + nt_angle_increment
                     break
                 }
                 case 'StemNode': {
@@ -185,10 +181,14 @@ export class CircularDrawElement extends DrawnElement {
 
                     angle_cursor += nt_angle_increment
 
-                    this.drawing.drawTreeRecursive(n, this, startPoint, startVector)
+                    this.drawnElements.push(this.drawing.drawTreeRecursive(n, this, startPoint, startVector))
                     
                     break
                 }
             }
         })
+    }
+    public rotateStem(stemElement, angle) {
+        console.log(stemElement, angle, this.drawnElements.indexOf(stemElement))
+    }
 }

@@ -11,7 +11,6 @@ export class BulgeElement extends CircularDrawElement {
 
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: BulgeNode) {
-        console.log('drawingbulge')
         super(drawing, parentElement, node)
         this.node = node
     }

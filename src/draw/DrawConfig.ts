@@ -30,10 +30,10 @@ export const DefaultConfig: DrawConfig = {
     ntSpacing: 30,
     ntFillColor: 'white',
     ntStrokeColor: 'black',
-    ntStrokeWidth: 2,
+    ntStrokeWidth: 1,
 
     bpLength: 40,
-    bpStrokeSize: 2,
+    bpStrokeSize: 1,
 
     terminalLoopRadius: 30
 }

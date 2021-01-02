@@ -1,4 +1,4 @@
-import { Point, Path } from 'paper/dist/paper-core'
+import { Point, Path, Group } from 'paper/dist/paper-core'
 import { start } from 'repl'
 import { Drawing } from '../draw'
 import { StemNode } from '../structure/nodes'
@@ -24,6 +24,9 @@ export class StemElement extends DrawnElement {
     public endvector: Point
     public stemDirectionVector: Point
     public basePairs: Array<BasePairElement> = []
+    public nucleotides: Array<Nucleotide> = []
+    public drawnElements = []
+    public elementGroup: Group
 
     /**
      * Creates an instance of stem element.
@@ -40,7 +43,15 @@ export class StemElement extends DrawnElement {
         this.stemDirectionVector = this.startVector.clone()
         this.stemDirectionVector.angle -= 90
         this.stemDirectionVector.length = 1
-        console.log(this.stemDirectionVector)
+
+
+    }
+
+    private transformStem(angle){
+        if(this.node.parent.type !== 'RootNode') {
+            console.log('rotating by ', angle)
+            this.parentElement.rotateStem(this, angle)
+        }
     }
 
     /**
@@ -57,12 +68,51 @@ export class StemElement extends DrawnElement {
             this.drawing.basePairs.push(bp)
             this.basePairs.push(bp)
 
+            this.drawnElements.push(bp.nucleotides[0].circle)
+            this.drawnElements.push(bp.nucleotides[1].circle)
+            this.drawnElements.push(bp.nucleotides[0].text)
+            this.drawnElements.push(bp.nucleotides[1].text)
+
             let scaledDirectionVector = this.stemDirectionVector.clone()
             scaledDirectionVector.length = this.drawing.config.ntSpacing
 
             drawCursor = drawCursor.add(scaledDirectionVector)
         })
 
+        this.elementGroup = new Group(this.drawnElements)
+        let dragStartPoint: Point
+        let dragAngle: Point
+        let that = this
+
+        this.elementGroup.onMouseEnter = function(event) {
+            event.target.strokeColor = 'yellow'
+        }
+    
+        this.elementGroup.onMouseLeave = function(event) {
+            event.target.strokeColor = 'black'
+        }
+    
+        this.elementGroup.onMouseDown = function(event) {
+            event.target.strokeColor = 'red'
+            dragStartPoint = event.point.clone()
+        }
+    
+        this.elementGroup.onMouseUp = function(event) {
+            event.target.strokeColor = 'yellow'
+        }
+
+        this.elementGroup.onMouseDrag = function(event) {
+
+            dragAngle = that.stemDirectionVector.angle - event.point.subtract(that.startPoint).angle
+            that.transformStem(dragAngle)
+        }
+
+
         return drawCursor
+    }
+
+    private rotateOnDrag(event) {
+
+
     }
 }
