@@ -26,11 +26,13 @@ export class CircularDrawElement extends DrawnElement {
 
     public node: Node
     public radius: number
+    public center: Point
 
     public minRadius: number
     public defaultRadius: number
 
     public drawnElements: Array<DrawnElement> = []
+
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: Node) {
         super(drawing, parentElement)
@@ -115,6 +117,7 @@ export class CircularDrawElement extends DrawnElement {
         C.angle -= theta
         C.length = r
         C = C.add(p1)
+        this.center = C
 
         let v2: Point = p2.subtract(C)
         let v3: Point = p1.subtract(C)
@@ -156,6 +159,8 @@ export class CircularDrawElement extends DrawnElement {
                     let endAngle = angle_cursor + nt_angle_increment*(chars.length - 1)
 
                     u.drawCircular(C, r, angle_cursor, endAngle)
+                    
+                    this.drawnElements.push(u)
 
                     angle_cursor = endAngle + nt_angle_increment
                     break
@@ -187,8 +192,5 @@ export class CircularDrawElement extends DrawnElement {
                 }
             }
         })
-    }
-    public rotateStem(stemElement, angle) {
-        console.log(stemElement, angle, this.drawnElements.indexOf(stemElement))
     }
 }

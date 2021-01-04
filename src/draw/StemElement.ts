@@ -82,7 +82,7 @@ export class StemElement extends DrawnElement {
         this.elementGroup = new Group(this.drawnElements)
         let dragStartPoint: Point
         let dragAngle: Point
-        let that = this
+        let that = this // make a reference to this stem for passing into scopes
 
         this.elementGroup.onMouseEnter = function(event) {
             event.target.strokeColor = 'yellow'
@@ -102,17 +102,15 @@ export class StemElement extends DrawnElement {
         }
 
         this.elementGroup.onMouseDrag = function(event) {
+            dragAngle = event.point.subtract(that.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.center).angle
+            that.elementGroup.rotate(dragAngle, that.parentElement.center)
+            dragStartPoint = event.point.clone()
 
-            dragAngle = that.stemDirectionVector.angle - event.point.subtract(that.startPoint).angle
-            that.transformStem(dragAngle)
         }
 
 
         return drawCursor
     }
 
-    private rotateOnDrag(event) {
 
-
-    }
 }

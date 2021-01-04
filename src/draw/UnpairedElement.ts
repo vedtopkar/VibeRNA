@@ -16,6 +16,9 @@ export class UnpairedElement extends DrawnElement {
     public startPoint: Point
     public endPoint: Point
 
+    public centerPoint: Point
+    public radius: number
+
     constructor(drawing: Drawing, parentElement: DrawnElement, node: UnpairedNode) {
         super(drawing, parentElement)
         this.node = node
@@ -78,8 +81,7 @@ export class UnpairedElement extends DrawnElement {
      * When our unpairedlement is part of a circular element, and when the circular element is shifted
      * (e.g. a stem is dragged), we move the nucleotides to space equally along some angle of the circle.
      */
-    public transformCircular() {
-
+    public transformCircular(angleStart) {
     }
 
 
