@@ -1,6 +1,6 @@
 # TS RNA Draw
 
-Ved's attempt at using Typescript to write a pure Javascript RNA secondary structure drawing app.
+Ved's attempt at using Typescript to write a pure Javascript RNA secondary structure drawing app. Play around with it here: <a>https://vedtopkar.github.io/ts-rna-draw/</a>
 
 ## Demo
 
