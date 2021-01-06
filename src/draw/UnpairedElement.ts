@@ -66,6 +66,7 @@ export class UnpairedElement extends DrawnElement {
         let angleCursor: number = angleStart
         let ntAngleIncrement: number = (angleEnd - angleStart)/(chars.length + 1)
         angleCursor += ntAngleIncrement
+        console.log('BLAH', angleStart, angleEnd, ntAngleIncrement)
 
         chars.forEach((c, i) => {
             console.log(angleStart, angleEnd, ntAngleIncrement, angleCursor)
@@ -73,7 +74,6 @@ export class UnpairedElement extends DrawnElement {
             center.y += radius*Math.sin(Math.PI*angleCursor/180)
             center.x += radius*Math.cos(Math.PI*angleCursor/180)
 
-            console.log('nt coord', center)
             let nt = new Nucleotide(this.drawing, c, center)
             nt.draw()
 
@@ -92,6 +92,14 @@ export class UnpairedElement extends DrawnElement {
         })
     }
 
+    public normalizeAngle(angle) {
+        if (angle > 360) {
+            return angle % 360
+        }
+
+        
+    }
+
     /**
      * Transforms circularly
      * 
@@ -100,17 +108,15 @@ export class UnpairedElement extends DrawnElement {
      */
     public rearrangeCircular(angleStart, angleEnd) {
 
-        // angleEnd += 360
-        let angleCursor: number = angleStart
-        let ntAngleIncrement: number = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
+        console.log('rearrange circ', angleStart, angleEnd, angleEnd - angleStart)
 
-        this.angleStart = angleStart
-        this.angleEnd = angleEnd
-        
+        let angleCursor: number = angleStart
+        // let ntAngleIncrement: number = (360 - Math.abs(angleEnd) - Math.abs(angleStart))/(this.drawnNucleotides.length + 1)
+        let ntAngleIncrement: number = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
         angleCursor += ntAngleIncrement
 
         this.drawnNucleotides.forEach((nt, i) => {
-            console.log('rearrange', angleStart, angleEnd, ntAngleIncrement, angleCursor)
+
             let center = this.centerPoint.clone()
             center.y += this.radius*Math.sin(Math.PI*angleCursor/180)
             center.x += this.radius*Math.cos(Math.PI*angleCursor/180)
@@ -119,6 +125,11 @@ export class UnpairedElement extends DrawnElement {
 
             angleCursor += ntAngleIncrement
         })
+
+        this.angleStart = angleStart
+        this.angleEnd = angleEnd
+
+        return angleCursor
 
     }
 

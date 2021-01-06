@@ -149,6 +149,7 @@ export class CircularDrawElement extends DrawnElement {
         let bp_angle_increment: number = phi
 
         let angle_cursor: number = v3.angle
+        let angle_cursor_vector: Point = v3.clone()
 
         // Iterate through the nodes along the circle and draw
         this.node.daughters.forEach((n, i) => {
@@ -207,23 +208,24 @@ export class CircularDrawElement extends DrawnElement {
     // After a daughter stem is dragged, rearrange the 5' and 3' elements (if unpaired)
     public rearrangeAfterDrag(stem: StemElement, angle) {
         let stem_index = this.daughterElements.indexOf(stem)
-        let stem_angles = this.daughterAngles[stem_index]
+        let stem_angle = 360 + stem.stemDirectionVector.angle
+
+
 
 
         if (stem_index > 0) {
             // rearrange the stuff before
+            console.log(stem.stemDirectionVector)
             let before_element = this.daughterElements[stem_index - 1]
-            console.log('before element', before_element)
-            before_element.rearrangeCircular(before_element.angleStart, stem.stemDirectionVector.angle - this.phi/2)
+            before_element.rearrangeCircular(before_element.angleStart, stem_angle - this.phi/2)
             console.log(before_element.angleStart, stem.stemDirectionVector.angle - this.phi/2, )
         }
 
-        // if (stem_index < this.daughterElements.length) {
-        //     // rearrange the stuff after
-        //     let after_element = this.daughterElements[stem_index + 1]
-        //     console.log('after element', after_element)
-        //     after_element.rearrangeCircular(stem.stemDirectionVector.angle + this.phi/2, after_element.angleEnd)
-        //     console.log()
-        // }
+        if (stem_index < this.daughterElements.length - 1) {
+            // rearrange the stuff after
+            let after_element = this.daughterElements[stem_index + 1]
+            console.log('after element', after_element)
+            after_element.rearrangeCircular(stem_angle + this.phi/2, after_element.angleEnd)
+        }
     }
 }

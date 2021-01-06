@@ -48,8 +48,8 @@ dummy_example.addEventListener('click', (e:Event) {
 let p4p6_example = document.getElementById('load-p4p6')
 p4p6_example.addEventListener('click', (e:Event) {
 	name_field.value = 'P4P6'
-	sequence_field.value = 'AAAACCCGAAAGGGAAAAAAAACCCAAGGGGAAACCCAAGGGAAAA'
-	structure_field.value = '....(((....)))........(((..(((....)))..)))....'
+	sequence_field.value = 'AAAAAGGGGGABGGGGAAACCCCDGGGGAAACCCACCCCCAAAAAAAAAAGGGGGAGAAAAAAACCACCCAAAAA'
+	structure_field.value ='.....(((((..(((....)))..(((....))).)))))..........((((.(........)).))).....'
 })
 
 let draw_button = document.getElementById('draw')

@@ -55,7 +55,6 @@ export class BasePairElement extends DrawnElement {
 
     public rotateCircularly(angle, center) {
 
-        console.log(this.nucleotides)
         this.nucleotides[0].circle.rotate(angle, center)
         this.nucleotides[1].circle.rotate(angle, center)
 
