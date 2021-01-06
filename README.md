@@ -48,9 +48,8 @@ Your page will reload every time you hit save on a modified `.ts` or `.html` fil
 - ~~Implement drawing internal loops~~
 - ~~Implement drawing multi-loops~~
 - Implement pan/zoom mouse functionality
-- Implement paperjs element grouping
 - Figure out robust vertical text centering for nucleotides
 - Implement interactive flipping stems around basline
-- Implement interactive stem moving at bulges
-- Implement interactive stem moving at internal loops
-- Implement interactive stem moving at multi-loops
+- ~~Implement interactive stem moving at bulges~~
+- ~~Implement interactive stem moving at internal loops~~
+- ~~Implement interactive stem moving at multi-loops~~
