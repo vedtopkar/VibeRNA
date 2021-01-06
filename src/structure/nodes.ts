@@ -18,7 +18,6 @@ export class Node {
 
     constructor(parent: Node) {
         this.parent = parent;
-        console.log(this)
     }
 
     public pushDaughters(daughter: Node) {
@@ -37,7 +36,6 @@ export class UnpairedNode extends Node {
     constructor(parent: Node, sequence: string) {
         super(parent);
         this.sequence = sequence;
-        console.log('Made an UnpairedNode ' + sequence);
     }
 }
 
@@ -51,7 +49,6 @@ export class StemNode extends Node {
     constructor(parent: Node, pairs: Array<number>) {
         super(parent);
         this.pairs = pairs;
-        console.log('Made a StemNode ' + pairs);
     }
 }
 
@@ -72,7 +69,6 @@ export class TerminalLoopNode extends Node {
 
     constructor(parent: Node) {
         super(parent);
-        console.log('Made a TerminalLoopNode');
     }
 }
 
@@ -84,7 +80,6 @@ export class BulgeNode extends CircularNode {
 
     constructor(parent: Node) {
         super(parent)
-        console.log('Made a BulgeNode')
     }
 }
 
@@ -97,7 +92,6 @@ export class InternalLoop extends Node {
 
     constructor(parent: Node) {
         super(parent);
-        console.log('Made an internal loop');
     }
 }
 
@@ -109,7 +103,6 @@ export class MultiLoop extends Node {
 
     constructor(parent: Node) {
         super(parent)
-        console.log('Made a multiloop')
     }
 
 }
@@ -120,6 +113,5 @@ export class RootNode extends Node {
 
     constructor() {
         super(null, null);
-        console.log('Made a RootNode');
     }
 }

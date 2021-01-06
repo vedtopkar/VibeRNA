@@ -31,10 +31,16 @@ export class Nucleotide {
         this.circle = circle
         this.text = text
 
-        this.group = new Group([circle, text])
+        this.group = new Group([this.circle, this.text])
 
 
 
+    }
+
+    // Simply move the nucleotide and update the center
+    public move(center) {
+        this.center = center
+        this.group.position = this.center
     }
 
 }

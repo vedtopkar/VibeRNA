@@ -31,7 +31,8 @@ export class CircularDrawElement extends DrawnElement {
     public minRadius: number
     public defaultRadius: number
 
-    public drawnElements: Array<DrawnElement> = []
+    // An array that logs the amount of angle consumed by each daughter element
+    public daughterAngles: Array<Array<number>> = []
 
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: Node) {
@@ -104,7 +105,6 @@ export class CircularDrawElement extends DrawnElement {
         'use strict';
 
         // NOTE: In paperjs, vectors are still of type Point
-        console.log('Drawing', this.node.type)
         let r: number = this.defaultRadius
         let bp: BasePairElement = this.parentElement.basePairs.slice(-1)[0]
         let p1: Point = bp.nucleotides[0].center
@@ -160,7 +160,8 @@ export class CircularDrawElement extends DrawnElement {
 
                     u.drawCircular(C, r, angle_cursor, endAngle)
                     
-                    this.drawnElements.push(u)
+                    this.daughterElements.push(u)
+                    this.daughterAngles.push([angle_cursor, endAngle])
 
                     angle_cursor = endAngle + nt_angle_increment
                     break
@@ -171,6 +172,7 @@ export class CircularDrawElement extends DrawnElement {
                     startPoint.y += r*Math.sin(Math.PI*angle_cursor/180)
                     startPoint.x += r*Math.cos(Math.PI*angle_cursor/180)
 
+                    this.daughterAngles.push([angle_cursor, angle_cursor + bp_angle_increment])
                     angle_cursor += bp_angle_increment
 
                     let endPoint = C.clone()
@@ -178,19 +180,44 @@ export class CircularDrawElement extends DrawnElement {
                     endPoint.x += r*Math.cos(Math.PI*angle_cursor/180)
 
                     let startVector = endPoint.subtract(startPoint)
-                    let c1 = new Path.Circle(startPoint, 10)
-                    c1.fillColor = 'black'
-
-                    let c1 = new Path.Circle(endPoint, 10)
-                    c1.fillColor = 'black'
 
                     angle_cursor += nt_angle_increment
 
-                    this.drawnElements.push(this.drawing.drawTreeRecursive(n, this, startPoint, startVector))
+                    this.daughterElements.push(this.drawing.drawTreeRecursive(n, this, startPoint, startVector))
                     
                     break
                 }
             }
         })
+    }
+
+    // Rotate each daughter element to rotate this circle
+    public rotateCircularly(angle, center) {
+        this.daughterElements.forEach((e, i) {
+            e.rotateCircularly(angle, center)
+        })
+    }
+
+    // After a daughter stem is dragged, rearrange the 5' and 3' elements (if unpaired)
+    public rearrangeAfterDrag(stem: StemElement, angle) {
+        let stem_index = this.daughterElements.indexOf(stem)
+        let stem_angles = this.daughterAngles[stem_index]
+
+        console.log('rearrange', stem_index, stem_angles)
+
+        if (stem_index > 0) {
+            // rearrange the stuff before
+            let before_element = this.daughterElements[stem_index - 1]
+            console.log('before element', before_element)
+            before_element.rearrangeCircular(before_element.angleStart, stem.stemDirectionVector.angle)
+
+        }
+
+        if (stem_index < this.daughterElements.length) {
+            // rearrange the stuff after
+            let after_element = this.daughterElements[stem_index + 1]
+            console.log('after element', after_element)
+            after_element.rearrangeCircular(stem.stemDirectionVector.angle, after_element.angleEnd)
+        }
     }
 }

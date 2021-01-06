@@ -18,6 +18,8 @@ export class UnpairedElement extends DrawnElement {
 
     public centerPoint: Point
     public radius: number
+    public angleStart: number
+    public angleEnd: number
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: UnpairedNode) {
         super(drawing, parentElement)
@@ -52,9 +54,12 @@ export class UnpairedElement extends DrawnElement {
      * @returns circular 
      */
     public drawCircular(centerPoint: Point, radius: number, angleStart: number, angleEnd: number): Point {
+        this.radius = radius
+        this.angleStart = angleStart
+        this.angleEnd = angleEnd
+        this.centerPoint = centerPoint
         
         const chars = [...this.node.sequence]
-        console.log('drawing circularly', this.node.sequence, centerPoint, radius, angleStart, chars)
 
         let angleCursor: number = angleStart
         let ntAngleIncrement: number = (angleEnd - angleStart)/(chars.length - 1)
@@ -75,13 +80,37 @@ export class UnpairedElement extends DrawnElement {
         return angleCursor
     }
 
+    public rotateCircularly(angle, center) {
+        this.drawnNucleotides.forEach((n, i) {
+            n.group.rotate(angle, center)
+            n.text.rotate(-1*angle)
+        })
+    }
+
     /**
      * Transforms circularly
      * 
      * When our unpairedlement is part of a circular element, and when the circular element is shifted
      * (e.g. a stem is dragged), we move the nucleotides to space equally along some angle of the circle.
      */
-    public transformCircular(angleStart) {
+    public rearrangeCircular(angleStart, angleEnd) {
+        console.log('rearranging', angleStart, angleEnd)
+        let angleCursor = angleStart
+        let ntAngleIncrement = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
+
+        console.log(ntAngleIncrement)
+
+        this.drawnNucleotides.forEach((n, i) {
+            let center = this.centerPoint.clone()
+            console.log(center)
+            center.x += this.radius*Math.cos(Math.PI*angleCursor/180)
+            center.y += this.radius*Math.sin(Math.PI*angleCursor/180)
+            console.log('nt center', center)
+            n.move(center)
+
+            angleCursor += ntAngleIncrement
+        })
+
     }
 
 

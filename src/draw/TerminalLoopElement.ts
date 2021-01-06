@@ -31,4 +31,5 @@ export class TerminalLoopElement extends CircularDrawElement {
 
         return min_radius > this.drawing.config.terminalLoopRadius ? min_radius : this.drawing.config.terminalLoopRadius
     }
+    
 }

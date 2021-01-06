@@ -49,7 +49,6 @@ export class StemElement extends DrawnElement {
 
     private transformStem(angle){
         if(this.node.parent.type !== 'RootNode') {
-            console.log('rotating by ', angle)
             this.parentElement.rotateStem(this, angle)
         }
     }
@@ -85,31 +84,63 @@ export class StemElement extends DrawnElement {
         let that = this // make a reference to this stem for passing into scopes
 
         this.elementGroup.onMouseEnter = function(event) {
-            event.target.strokeColor = 'yellow'
+            // event.target.strokeColor = 'yellow'
         }
     
         this.elementGroup.onMouseLeave = function(event) {
-            event.target.strokeColor = 'black'
+            // event.target.strokeColor = 'black'
         }
     
         this.elementGroup.onMouseDown = function(event) {
-            event.target.strokeColor = 'red'
+            // event.target.strokeColor = 'red'
             dragStartPoint = event.point.clone()
         }
     
         this.elementGroup.onMouseUp = function(event) {
-            event.target.strokeColor = 'yellow'
+            // event.target.strokeColor = 'yellow'
         }
 
         this.elementGroup.onMouseDrag = function(event) {
-            dragAngle = event.point.subtract(that.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.center).angle
-            that.elementGroup.rotate(dragAngle, that.parentElement.center)
-            dragStartPoint = event.point.clone()
 
+            // Drag the stem if it's not at root
+            if (that.parentElement !== null) {
+                dragAngle = event.point.subtract(that.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.center).angle
+                that.rotateStem(dragAngle, that.parentElement.center)
+                dragStartPoint = event.point.clone()
+            }
         }
 
 
         return drawCursor
+    }
+
+    // When a stem is dragged, rotate it and kick off the upstream and downstream cascade
+    public rotateStem(angle: number, center: Point) {
+
+        // Rotate the stem and the stem's daughters
+        this.rotateCircularly(angle, center)
+
+        if (this.parentElement !== null) {
+            // Adjust the stem base if applicable
+            this.parentElement.rearrangeAfterDrag(this, angle)
+        }
+
+
+    }
+
+    public rotateCircularly(angle, center) {
+        // Rotate each bp individually
+        this.basePairs.forEach((bp,i) {
+            bp.rotateCircularly(angle, center)
+        })
+
+        // Update the stem's angle
+        this.stemDirectionVector.angle += angle
+
+        // Rotate daughters if applicable
+        if (this.daughterElements.length > 0) {
+            this.daughterElements[0].rotateCircularly(angle, center)
+        }
     }
 
 

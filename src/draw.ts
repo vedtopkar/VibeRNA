@@ -28,6 +28,10 @@ export class Drawing {
     // Reference to a structure object
     public structure: Structure
 
+    // The drawtree is a nested 
+    public rootElements: Array<DrawnElement> = []
+
+
     // Explicit references to each type of drawn element for easy post-hoc updating
     public unpaireds: Array<UnpairedElement> = []
     public stems: Array<StemElement> = []
@@ -36,13 +40,12 @@ export class Drawing {
     public multiLoops: Array<MultiLoopElement> = []
     public basePairs: Array<BasePairElement> = []
     public nucleotides: Array<Nucleotide> = []
+    
 
     // Load in the default config
     public config: DrawConfig = DefaultConfig
 
-    // This drawCursor is a bit tricky...
-    // The Drawing class has this attribute that starts at the origin.
-    // As the dispatch function works from 5' to 3', it modifies the
+ 
     /**
      * Draw cursor of drawing
      * 
@@ -76,17 +79,23 @@ export class Drawing {
             switch(node.type) {
                 case 'UnpairedNode' : {
                     let u: UnpairedElement = new UnpairedElement(this, null, node)
+
                     // We expect unpaired nodes to return a drawCursor that sits at the center of the last nt
                     this.drawCursor = u.draw(this.drawCursor)
+                    this.rootElements.push(u)
+                    
                     break
                 }
                 case 'StemNode': {
 
-                    this.drawTreeRecursive(node, null, this.drawCursor.clone(), this.drawVector.clone())
+                    let s = this.drawTreeRecursive(node, null, this.drawCursor.clone(), this.drawVector.clone())
 
                     // The next dispatched element may be a unpaired node or a stem
                     // shift the drawCursor over to where the bottom right stem nt should be
                     this.drawCursor.x += (this.config.ntSpacing + this.config.bpLength)
+
+                    this.rootElements.push(s)
+
                     break
                 }
             }
@@ -100,7 +109,7 @@ export class Drawing {
                 drawCursor = s.draw()
 
                 if (node.daughters.length > 0) {
-                    this.drawTreeRecursive(node.daughters[0], s, drawCursor, drawVector)
+                    s.daughterElements.push(this.drawTreeRecursive(node.daughters[0], s, drawCursor, drawVector))
                 }
                 return s
 

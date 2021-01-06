@@ -44,12 +44,28 @@ export class BasePairElement extends DrawnElement {
         r.draw()
 
 
-        let bp = new Path.Line(p1, p2)
-        bp.strokeColor = 'black'
-        bp.strokeWidth = 5
-        bp.sendToBack()
+        this.hBond = new Path.Line(p1, p2)
+        this.hBond.strokeColor = 'black'
+        this.hBond.strokeWidth = 5
+        this.hBond.sendToBack()
 
         this.nucleotides.push(l)
         this.nucleotides.push(r)
+    }
+
+    public rotateCircularly(angle, center) {
+
+        console.log(this.nucleotides)
+        this.nucleotides[0].circle.rotate(angle, center)
+        this.nucleotides[1].circle.rotate(angle, center)
+
+        this.nucleotides[0].text.rotate(angle, center)
+        this.nucleotides[1].text.rotate(angle, center)
+
+        this.nucleotides[0].text.rotate(-1*angle)
+        this.nucleotides[1].text.rotate(-1*angle)
+
+        this.hBond.rotate(angle, center)
+
     }
 }

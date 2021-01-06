@@ -18,11 +18,8 @@ export class Structure {
         this.db = db
 
         this.pairs = this.db_to_pairs(this.db)
-        console.log('middle', this.pairs)
         this.structureTree = this.pairs_to_tree(this.pairs)
 
-        console.log('Initialized Structure object')
-        console.log('end', this.pairs)
     }
     
     private db_to_pairs(db: string): Array<number> {
@@ -47,10 +44,8 @@ export class Structure {
                 pairs[left_helix_position] = cursor
             }
             cursor += 1
-            console.log(cursor)
         }
 
-        console.log('immediate', pairs)
         return pairs
     }
 
@@ -61,7 +56,6 @@ export class Structure {
         Here we initialize our root node and tree. Then we kick off a "dispatch" function that scans through
         the structure and kicks off recursive tree builds as we encounter different structure elements.
         */
-        console.log('Initialized StructureTree')
 
         let tree: StructureTree = new StructureTree()
         let root: RootNode = new RootNode()
@@ -73,8 +67,6 @@ export class Structure {
 
         // Execute our recursive tree building, using our new root node as root
         this.recursive_tree_dispatch(left, right, root)
-
-        console.log(tree)
         
         return tree
     }
@@ -105,7 +97,6 @@ export class Structure {
         */
         let left_cursor: number = left
         let right_cursor: number = left
-        console.log('dispatch', this.pairs)
 
         while (right_cursor <= right) {
             if (this.pairs[right_cursor] == null) {
@@ -113,18 +104,16 @@ export class Structure {
                 while (this.pairs[right_cursor + 1] == null && right_cursor <= right) {
                     right_cursor += 1
                 }
-                console.log('multi', right, left_cursor, right_cursor)
+
                 let u: UnpairedNode = new UnpairedNode(parentNode, this.sequence.slice(left_cursor, right_cursor + 1))
                 parentNode.pushDaughters(u)
                 left_cursor = right_cursor = right_cursor + 1
             } else {
                 // Kick off recursive tree build for a stem
-                console.log('stem pls', left_cursor, right_cursor, this.pairs[left_cursor], this.pairs[right_cursor], parentNode)
                 this.recursive_tree_build(left_cursor, this.pairs[left_cursor], parentNode)
                 left_cursor = right_cursor = this.pairs[left_cursor] + 1
             }
         }
-        console.log('done!')
 
     }
 
@@ -137,7 +126,6 @@ export class Structure {
 
         // Calculate if 0, 1, or 2 of the nucleotides at the left and right boundaries are paired
         let n_boundary_paired: number = [this.pairs[left], this.pairs[right]].filter(Boolean).length
-        console.log('paired: ', n_boundary_paired, left, right)
 
         if (n_boundary_paired == 2 && this.pairs[left] == right && this.pairs[right] == left) {
             // We are at a stem!
@@ -210,22 +198,13 @@ export class Structure {
 
         } else {
             // We are in an internal/multi loop
-            console.log('loop')
             let left_cursor = this.find_end_of_unpaired(left)
             let right_cursor = this.find_end_of_unpaired(right, true)
 
             let m: MultiLoop = new MultiLoop(parentNode)
             parentNode.pushDaughters(m)
             this.recursive_tree_dispatch(left, right, m)
-            // let u1: UnpairedNode = new UnpairedNode(i, this.sequence.slice(left, left_cursor + 1))
-            // let u2: UnpairedNode = new UnpairedNode(i, this.sequence.slice(right_cursor, right + 1))
 
-            // i.pushDaughters(u1)
-            // console.log('internal: ', left_cursor + 1, right_cursor - 1)
-            // this.recursive_tree_build(left_cursor + 1, right_cursor - 1, i)
-            // i.pushDaughters(u2)
-
-            // parentNode.pushDaughters(i)
         
     }
 }
