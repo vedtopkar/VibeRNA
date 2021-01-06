@@ -31,6 +31,8 @@ export class CircularDrawElement extends DrawnElement {
     public minRadius: number
     public defaultRadius: number
 
+    public phi: number // angle consumed by stems in this circle
+
     // An array that logs the amount of angle consumed by each daughter element
     public daughterAngles: Array<Array<number>> = []
 
@@ -123,6 +125,7 @@ export class CircularDrawElement extends DrawnElement {
         let v3: Point = p1.subtract(C)
 
         let phi: number = 180 - 2*theta
+        this.phi = phi
 
         // Count up the number of bp vs unpaired nts in the loop
         let bps: number = 1
@@ -145,10 +148,7 @@ export class CircularDrawElement extends DrawnElement {
         let nt_angle_increment: number = (360 - bps*phi)/(nts + bps)
         let bp_angle_increment: number = phi
 
-        let angle_cursor: number = v3.angle + nt_angle_increment
-
-        let c = new Path.Circle(C, r)
-        // c.strokeColor = 'black'
+        let angle_cursor: number = v3.angle
 
         // Iterate through the nodes along the circle and draw
         this.node.daughters.forEach((n, i) => {
@@ -156,17 +156,24 @@ export class CircularDrawElement extends DrawnElement {
                 case 'UnpairedNode' {
                     let u: UnpairedElement = new UnpairedElement(this.drawing, this, n)
                     let chars = [...n.sequence]
-                    let endAngle = angle_cursor + nt_angle_increment*(chars.length - 1)
+                    let endAngle = angle_cursor + nt_angle_increment*(chars.length + 1)
 
                     u.drawCircular(C, r, angle_cursor, endAngle)
                     
                     this.daughterElements.push(u)
                     this.daughterAngles.push([angle_cursor, endAngle])
 
-                    angle_cursor = endAngle + nt_angle_increment
+                    angle_cursor = endAngle
                     break
                 }
                 case 'StemNode': {
+
+                    // If the stem is the first thing in the loop, increment the angle_cursor
+                    // so that we don't start  drawing over the base bp
+                    if (i == 0) {
+                        angle_cursor += nt_angle_increment
+                    }
+
                     // When we get to the stem, we make a new helix and kick off the next recursive round
                     let startPoint = C.clone()
                     startPoint.y += r*Math.sin(Math.PI*angle_cursor/180)
@@ -181,7 +188,6 @@ export class CircularDrawElement extends DrawnElement {
 
                     let startVector = endPoint.subtract(startPoint)
 
-                    angle_cursor += nt_angle_increment
 
                     this.daughterElements.push(this.drawing.drawTreeRecursive(n, this, startPoint, startVector))
                     
@@ -203,21 +209,21 @@ export class CircularDrawElement extends DrawnElement {
         let stem_index = this.daughterElements.indexOf(stem)
         let stem_angles = this.daughterAngles[stem_index]
 
-        console.log('rearrange', stem_index, stem_angles)
 
         if (stem_index > 0) {
             // rearrange the stuff before
             let before_element = this.daughterElements[stem_index - 1]
             console.log('before element', before_element)
-            before_element.rearrangeCircular(before_element.angleStart, stem.stemDirectionVector.angle)
-
+            before_element.rearrangeCircular(before_element.angleStart, stem.stemDirectionVector.angle - this.phi/2)
+            console.log(before_element.angleStart, stem.stemDirectionVector.angle - this.phi/2, )
         }
 
-        if (stem_index < this.daughterElements.length) {
-            // rearrange the stuff after
-            let after_element = this.daughterElements[stem_index + 1]
-            console.log('after element', after_element)
-            after_element.rearrangeCircular(stem.stemDirectionVector.angle, after_element.angleEnd)
-        }
+        // if (stem_index < this.daughterElements.length) {
+        //     // rearrange the stuff after
+        //     let after_element = this.daughterElements[stem_index + 1]
+        //     console.log('after element', after_element)
+        //     after_element.rearrangeCircular(stem.stemDirectionVector.angle + this.phi/2, after_element.angleEnd)
+        //     console.log()
+        // }
     }
 }

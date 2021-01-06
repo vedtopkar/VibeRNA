@@ -58,17 +58,22 @@ export class UnpairedElement extends DrawnElement {
         this.angleStart = angleStart
         this.angleEnd = angleEnd
         this.centerPoint = centerPoint
+
+        console.log('draw circ', angleStart, angleEnd)
         
         const chars = [...this.node.sequence]
 
         let angleCursor: number = angleStart
-        let ntAngleIncrement: number = (angleEnd - angleStart)/(chars.length - 1)
+        let ntAngleIncrement: number = (angleEnd - angleStart)/(chars.length + 1)
+        angleCursor += ntAngleIncrement
 
         chars.forEach((c, i) => {
-            let center = centerPoint.clone()
+            console.log(angleStart, angleEnd, ntAngleIncrement, angleCursor)
+            let center = this.centerPoint.clone()
             center.y += radius*Math.sin(Math.PI*angleCursor/180)
             center.x += radius*Math.cos(Math.PI*angleCursor/180)
 
+            console.log('nt coord', center)
             let nt = new Nucleotide(this.drawing, c, center)
             nt.draw()
 
@@ -94,19 +99,23 @@ export class UnpairedElement extends DrawnElement {
      * (e.g. a stem is dragged), we move the nucleotides to space equally along some angle of the circle.
      */
     public rearrangeCircular(angleStart, angleEnd) {
-        console.log('rearranging', angleStart, angleEnd)
-        let angleCursor = angleStart
-        let ntAngleIncrement = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
 
-        console.log(ntAngleIncrement)
+        // angleEnd += 360
+        let angleCursor: number = angleStart
+        let ntAngleIncrement: number = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
 
-        this.drawnNucleotides.forEach((n, i) {
+        this.angleStart = angleStart
+        this.angleEnd = angleEnd
+        
+        angleCursor += ntAngleIncrement
+
+        this.drawnNucleotides.forEach((nt, i) => {
+            console.log('rearrange', angleStart, angleEnd, ntAngleIncrement, angleCursor)
             let center = this.centerPoint.clone()
-            console.log(center)
-            center.x += this.radius*Math.cos(Math.PI*angleCursor/180)
             center.y += this.radius*Math.sin(Math.PI*angleCursor/180)
-            console.log('nt center', center)
-            n.move(center)
+            center.x += this.radius*Math.cos(Math.PI*angleCursor/180)
+
+            nt.move(center)
 
             angleCursor += ntAngleIncrement
         })

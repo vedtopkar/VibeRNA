@@ -39,6 +39,7 @@ export class Nucleotide {
 
     // Simply move the nucleotide and update the center
     public move(center) {
+        console.log('moved to',center)
         this.center = center
         this.group.position = this.center
     }
