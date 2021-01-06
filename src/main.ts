@@ -66,3 +66,27 @@ draw_button.addEventListener('click', (e:Event) {
 	const d: Drawing = new Drawing(s)
 	d.drawTreeDispatch()
 })
+
+let donwload_svg = document.getElementById('download-svg')
+donwload_svg.addEventListener('click', (e:Event) {
+	let fileName = `${name_field.value}.svg`
+	let url = "data:image/svg+xml;utf8," + encodeURIComponent(window.paper.project.exportSVG({asString:true}))
+	let link = document.createElement("a")
+	link.download = fileName
+	link.href = url
+	link.click()
+	link.remove()
+})
+
+let download_png = document.getElementById('download-png')
+let that = this
+download_png.addEventListener('click', (e:Event) {
+	let png = document.getElementById("render").toDataURL()
+
+	let fileName = `${name_field.value}.png`
+	let link = document.createElement('a');
+	link.download = fileName
+	link.href = png;
+	link.click();
+	link.remove();
+})
