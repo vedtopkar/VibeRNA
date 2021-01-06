@@ -10,18 +10,21 @@ This requires 2 things:
 
 */
 
-import { setup, Path, Point, Line } from "paper/dist/paper-core"
+import { setup, Path, Point, Line, install } from "paper/dist/paper-core"
 import 'bulma'
 
 import { Structure } from './structure/structure'
 import { Drawing } from "./draw"
 
+let name_field: HTMLInputElement = document.getElementById('name')
+let sequence_field: HTMLInputElement = document.getElementById('sequence')
+let structure_field: HTMLInputElement = document.getElementById('structure')
+
+install(window)
 const begin = () => {
 
 	// Initialize structure object with inputted values
-	let s:Structure = new Structure((<HTMLInputElement>document.getElementById('name')).value,
-									(<HTMLInputElement>document.getElementById('sequence')).value,
-									(<HTMLInputElement>document.getElementById('structure')).value)
+	let s:Structure = new Structure(name_field.value, sequence_field.value, structure_field.value)
 
 	// Initialize canvas for PaperJS
 	const canvas: HTMLCanvasElement = document.getElementById("render") as HTMLCanvasElement
@@ -35,5 +38,31 @@ const begin = () => {
 
 window.onload = begin
 
-
+let dummy_example = document.getElementById('load-dummy')
+dummy_example.addEventListener('click', (e:Event) {
+	name_field.value = 'Dummy test example'
+	sequence_field.value = 'AAAACCCGAAAGGGAAAAAAAACCCAAGGGGAAACCCAAGGGAAAA'
+	structure_field.value = '....(((....)))........(((..(((....)))..)))....'
+})
 								
+let p4p6_example = document.getElementById('load-p4p6')
+p4p6_example.addEventListener('click', (e:Event) {
+	name_field.value = 'P4P6'
+	sequence_field.value = 'AAAACCCGAAAGGGAAAAAAAACCCAAGGGGAAACCCAAGGGAAAA'
+	structure_field.value = '....(((....)))........(((..(((....)))..)))....'
+})
+
+let draw_button = document.getElementById('draw')
+draw_button.addEventListener('click', (e:Event) {
+
+	// Initialize a new structure with the
+	let s = new Structure(name_field.value, sequence_field.value, structure_field.value)
+
+	// Clear canvas
+	const canvas: HTMLCanvasElement = document.getElementById("render") as HTMLCanvasElement
+	window.paper.project.clear()
+
+	// Make a new drawing and draw it
+	const d: Drawing = new Drawing(s)
+	d.drawTreeDispatch()
+})
