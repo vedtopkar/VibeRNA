@@ -31,8 +31,8 @@ const begin = () => {
 	setup(canvas)
 
 	// Draw the structure
-	const d: Drawing = new Drawing(s)
-	d.drawTreeDispatch()
+	// const d: Drawing = new Drawing(s)
+	// d.drawTreeDispatch()
 
 }
 
@@ -40,14 +40,14 @@ window.onload = begin
 
 let dummy_example = document.getElementById('load-dummy')
 dummy_example.addEventListener('click', (e:Event) {
-	name_field.value = 'Dummy test example'
+	name_field.value = 'Dummy example 1'
 	sequence_field.value = 'AAAACCCGAAAGGGAAAAAAAACCCAAGGGGAAACCCAAGGGAAAA'
 	structure_field.value = '....(((....)))........(((..(((....)))..)))....'
 })
 								
 let p4p6_example = document.getElementById('load-p4p6')
 p4p6_example.addEventListener('click', (e:Event) {
-	name_field.value = 'P4P6'
+	name_field.value = 'Dummy example 2'
 	sequence_field.value = 'AAAAAGGGGGABGGGGAAACCCCDGGGGAAACCCACCCCCAAAAAAAAAAGGGGGAGAAAAAAACCACCCAAAAA'
 	structure_field.value ='.....(((((..(((....)))..(((....))).)))))..........((((.(........)).))).....'
 })

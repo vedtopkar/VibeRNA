@@ -2,6 +2,10 @@
 
 Ved's attempt at using Typescript to write a pure Javascript RNA secondary structure drawing app.
 
+## Demo
+
+![ts-rna-draw-demo](img/vt-ts-rna-draw-demo.gif)
+
 ## Example
 
 Using the following inputs:
