@@ -1,6 +1,6 @@
 {
   "name": "ts-rna-draw",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Experimental RNA structure drawing in typescript",
   "main": "index.js",
   "author": "Ved V. Topkar",

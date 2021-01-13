@@ -200,6 +200,9 @@ export class CircularDrawElement extends DrawnElement {
 
     // Rotate each daughter element to rotate this circle
     public rotateCircularly(angle, center) {
+        console.log(this.center)
+        this.center = this.center.rotate(angle, center)
+        console.log(this.center)
         this.daughterElements.forEach((e, i) {
             e.rotateCircularly(angle, center)
         })

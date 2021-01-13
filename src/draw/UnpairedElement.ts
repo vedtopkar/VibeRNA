@@ -86,6 +86,7 @@ export class UnpairedElement extends DrawnElement {
     }
 
     public rotateCircularly(angle, center) {
+        this.centerPoint = this.centerPoint.rotate(angle, center)
         this.drawnNucleotides.forEach((n, i) {
             n.group.rotate(angle, center)
             n.text.rotate(-1*angle)
