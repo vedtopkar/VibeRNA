@@ -100,16 +100,25 @@ export class StemElement extends DrawnElement {
 
         this.elementGroup.onMouseDrag = function(event) {
 
+            dragAngle = event.point.subtract(that.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.center).angle
             // Drag the stem if it's not at root
             if (that.parentElement !== null) {
-                dragAngle = event.point.subtract(that.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.center).angle
                 that.rotateStem(dragAngle, that.parentElement.center)
                 dragStartPoint = event.point.clone()
+            } else {
+                // If we're dragging a root stem, then do a flip!
+                that.flipStem(that.startPoint)
             }
         }
 
 
         return drawCursor
+    }
+
+    // When a root stem is dragged, flip the stem over the horizontal
+    public flipStem(startPoint: Point) {
+        
+
     }
 
     // When a stem is dragged, rotate it and kick off the upstream and downstream cascade

@@ -10,33 +10,60 @@ This requires 2 things:
 
 */
 
-import { setup, Path, Point, Line, install } from "paper/dist/paper-core"
+import { paper } from 'paper/dist/paper-core'
+// import { setup, Path, Point, Line, install, view, Tool, DomEvent } from "paper/dist/paper-core"
 import 'bulma'
 
 import { Structure } from './structure/structure'
 import { Drawing } from "./draw"
+import { PanAndZoom } from './interact/PanAndZoom'
 
 let name_field: HTMLInputElement = document.getElementById('name')
 let sequence_field: HTMLInputElement = document.getElementById('sequence')
 let structure_field: HTMLInputElement = document.getElementById('structure')
 
-install(window)
-const begin = () => {
+console.log(paper)
+paper.install(window)
 
-	// Initialize structure object with inputted values
-	let s:Structure = new Structure(name_field.value, sequence_field.value, structure_field.value)
+// Initialize structure object with inputted values
+let s:Structure = new Structure(name_field.value, sequence_field.value, structure_field.value)
 
-	// Initialize canvas for PaperJS
-	const canvas: HTMLCanvasElement = document.getElementById("render") as HTMLCanvasElement
-	setup(canvas)
+// Initialize canvas for PaperJS
+const canvas: HTMLCanvasElement = document.getElementById("render") as HTMLCanvasElement
+paper.setup(canvas)
 
-	// Draw the structure
-	// const d: Drawing = new Drawing(s)
-	// d.drawTreeDispatch()
+// Initialize PanAndZoom
+const panAndZoom:PanAndZoom = new PanAndZoom()
+let zoomFactor:number = 1.05
+paper.view.scale(1)
 
-}
+// Initialize PaperJS Tool for event listening
+const toolPan = new Tool()
 
-window.onload = begin
+// Pan on mousedrag
+// toolPan.onMouseDrag = function (event) {
+//     var delta = event.downPoint.subtract(event.point)
+//     paper.view.scrollBy(delta)
+// };
+
+// Zoom on scroll
+canvas.addEventListener('wheel', (e:WheelEvent) {
+	console.log(e)
+	// Zoom on mousewheel
+	let newZoom: number = 1
+	let offset: number = 0
+
+	let mousePosition = paper.DomEvent.getOffset(e, canvas)
+	let viewPosition = paper.view.viewToProject(mousePosition)
+	let viewCenter = new Point(paper.view.center.x, paper.view.center.y)
+
+	// console.log('wheel', viewCenter, viewPosition)
+	let result = panAndZoom.changeZoom(paper.view.zoom, e.deltaY, viewCenter, viewPosition)
+	console.log(result)
+	view.zoom = result[0]
+	view.center = view.center.add(result[1])
+	event.preventDefault()
+})
 
 let dummy_example = document.getElementById('load-dummy')
 dummy_example.addEventListener('click', (e:Event) {
