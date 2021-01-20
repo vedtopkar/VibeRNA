@@ -18,9 +18,14 @@ export class Nucleotide {
 
     public draw() {
         const circle = new Path.Circle(this.center, this.drawing.config.ntRadius)
-        circle.fillColor = this.drawing.config.ntFillColor
+
+        const color = this.drawing.config.ntColors[this.drawing.config.ntNucleotides.indexOf(this.letter)]
+
+        // circle.fillColor = this.drawing.config.ntFillColor
+        circle.fillColor = color
         circle.strokeColor = this.drawing.config.ntStrokeColor
         circle.strokeWidth = this.drawing.config.ntStrokeWidth
+
 
         const offset_center: Point = this.center.clone()
         offset_center.y += 4
@@ -30,6 +35,7 @@ export class Nucleotide {
 
         this.circle = circle
         this.text = text
+
 
         this.group = new Group([this.circle, this.text])
 

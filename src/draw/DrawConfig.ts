@@ -18,6 +18,9 @@ export interface DrawConfig {
     ntStrokeColor: string,
     ntStrokeWidth: number,
 
+    ntNucleotides: Array<string>,
+    ntColors: Array<string>
+
     bpLength: number,
     bpStrokeSize: number,
     terminalLoopRadius: number,
@@ -30,7 +33,10 @@ export const DefaultConfig: DrawConfig = {
     ntSpacing: 30,
     ntFillColor: 'white',
     ntStrokeColor: 'black',
-    ntStrokeWidth: 1,
+    ntStrokeWidth: 0,
+
+    ntNucleotides: ['A', 'U', 'C', 'G'],
+    ntColors: ['#ff70a6', '#ffd670', '#06d6a0', '#70d6ff'],
 
     bpLength: 40,
     bpStrokeSize: 1,
