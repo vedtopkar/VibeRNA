@@ -60,8 +60,8 @@ canvas.addEventListener('wheel', (e:WheelEvent) {
 	// console.log('wheel', viewCenter, viewPosition)
 	let result = panAndZoom.changeZoom(paper.view.zoom, e.deltaY, viewCenter, viewPosition)
 	console.log(result)
-	view.zoom = result[0]
-	view.center = view.center.add(result[1])
+	paper.view.zoom = result[0]
+	paper.view.center = view.center.add(result[1])
 	event.preventDefault()
 })
 
@@ -92,6 +92,25 @@ draw_button.addEventListener('click', (e:Event) {
 	// Make a new drawing and draw it
 	const d: Drawing = new Drawing(s)
 	d.drawTreeDispatch()
+
+	// On initial draw, get bounding box and zoom to fill
+	let circles = []
+	
+	let unitedBounds = d.nucleotides.reduce((bbox, item) => {
+		return !bbox ? item.circle.bounds : bbox.unite(item.circle.bounds)
+	}, null)
+	console.log('unitedbounds', unitedBounds)
+	
+	// Draw the united bounds.
+	let bbox = new Path.Rectangle(unitedBounds)
+	bbox.strokeColor = 'black'
+
+	let c = new Path.Circle(unitedBounds.center, 10)
+	c.strokeColor = 'black'
+	
+	console.log(paper.view)
+	paper.view.center = unitedBounds.center
+	
 })
 
 let donwload_svg = document.getElementById('download-svg')

@@ -51,6 +51,9 @@ export class BasePairElement extends DrawnElement {
 
         this.nucleotides.push(l)
         this.nucleotides.push(r)
+
+        this.drawing.nucleotides.push(l)
+        this.drawing.nucleotides.push(r)
     }
 
     public rotateCircularly(angle, center) {
