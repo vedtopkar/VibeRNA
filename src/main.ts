@@ -10,7 +10,7 @@ This requires 2 things:
 
 */
 
-import { paper } from 'paper/dist/paper-core'
+import { paper, view } from 'paper/dist/paper-core'
 // import { setup, Path, Point, Line, install, view, Tool, DomEvent } from "paper/dist/paper-core"
 import 'bulma'
 
@@ -37,8 +37,9 @@ const panAndZoom:PanAndZoom = new PanAndZoom()
 let zoomFactor:number = 1.05
 paper.view.scale(1)
 
+
 // Initialize PaperJS Tool for event listening
-const toolPan = new Tool()
+const toolPan = new paper.Tool()
 
 // Pan on mousedrag
 // toolPan.onMouseDrag = function (event) {
@@ -61,8 +62,10 @@ canvas.addEventListener('wheel', (e:WheelEvent) {
 	let result = panAndZoom.changeZoom(paper.view.zoom, e.deltaY, viewCenter, viewPosition)
 	console.log(result)
 	paper.view.zoom = result[0]
-	paper.view.center = view.center.add(result[1])
-	event.preventDefault()
+
+	// NOTE: Uncomment if you want zooming to happen under the mouse
+	// paper.view.center = view.center.add(result[1])
+	e.preventDefault()
 })
 
 let dummy_example = document.getElementById('load-dummy')
@@ -100,21 +103,27 @@ draw_button.addEventListener('click', (e:Event) {
 		return !bbox ? item.circle.bounds : bbox.unite(item.circle.bounds)
 	}, null)
 	console.log('unitedbounds', unitedBounds)
-	
-	// Draw the united bounds.
-	let bbox = new Path.Rectangle(unitedBounds)
-	bbox.strokeColor = 'black'
 
-	let c = new Path.Circle(unitedBounds.center, 10)
-	c.strokeColor = 'black'
-	
 	console.log(paper.view)
 	paper.view.center = unitedBounds.center
+	console.log(unitedBounds, 'bounds')
+
+	// Set the zoom to encompass the whole drawing
+	const viewBounds = window.paper.view.bounds
+
+	const heightRatio = viewBounds.height/unitedBounds.height
+	const widthRatio = viewBounds.width/unitedBounds.width
+
+	const newZoom = Math.min(heightRatio, widthRatio)*.9
+
+	window.paper.view.zoom *= newZoom
+
+	console.log('new zoom', newZoom, viewBounds, heightRatio, widthRatio)
 	
 })
 
-let donwload_svg = document.getElementById('download-svg')
-donwload_svg.addEventListener('click', (e:Event) {
+let download_svg = document.getElementById('download-svg')
+download_svg.addEventListener('click', (e:Event) {
 	let fileName = `${name_field.value}.svg`
 	let url = "data:image/svg+xml;utf8," + encodeURIComponent(window.paper.project.exportSVG({asString:true}))
 	let link = document.createElement("a")
@@ -136,3 +145,11 @@ download_png.addEventListener('click', (e:Event) {
 	link.click();
 	link.remove();
 })
+
+// Kick off the sample
+// dummy_example.click(
+
+document.addEventListener('DOMContentLoaded', function() {
+	console.log('loaded')
+	draw_button.click()
+}, false);

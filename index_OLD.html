@@ -1,0 +1,76 @@
+<html>
+<head>
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <div class="columns">
+    <aside class="menu">
+      <p class="menu-label">
+        General
+      </p>
+      <p class="menu-label">
+        Graphical Config
+      </p>
+      <ul class="menu-list">
+        <li><a>Team Settings</a></li>
+        <li>
+          <a class="is-active">Manage Team</a>
+          <ul>
+            <li><a>Members</a></li>
+            <li><a>Plugins</a></li>
+            <li><a>Add a member</a></li>
+          </ul>
+        </li>
+        <li><a>Invitations</a></li>
+        <li><a>Cloud Storage Environment Settings</a></li>
+        <li><a>Authentication</a></li>
+      </ul>
+      <p class="menu-label">
+        Transactions
+      </p>
+      <ul class="menu-list">
+        <li><a>Payments</a></li>
+        <li><a>Transfers</a></li>
+        <li><a>Balance</a></li>
+      </ul>
+      <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            Built by Ved Topkar while in quarantine. Source available on <a href="https://github.com/vedtopkar/ts-rna-draw">GitHub</a>
+          </p>
+        </div>
+      </footer>
+    </aside>
+    <div class="column content">
+      <div id="editorjs">
+        <form>
+          <div class="field">
+            <label for="name" class="label">Name</label>
+            <input type="text" id="name" name="name" class="input" value="Test Sequence">
+          </div>
+          <div class="field">
+            <label for="sequence" class="label">Sequence</label>
+            <input type="text" id="sequence" name="sequence" class="input" value="AAAAAGGGGGABGGGGAAACCCCDGGGGAAACCCACCCCCAAAAAAAAAAGGGGGAGAAAAAAACCACCCAAAAA">
+      
+          </div>
+      
+          <label for="structure" class="label">Secondary structure (dot-bracket)</label>
+          <input type="text" id="structure" name="structure" class="input" value=".....(((((..(((....)))..(((....))).)))))..........((((.(........)).))).....">
+      
+        </form>
+      </div>
+      <div class="buttons">
+        <button id="load-dummy" class="button is-link is-light">Load dummy example</button>
+        <button id="load-p4p6" class="button is-link is-light">Load P4P6 example</button>
+        <button id="draw" class="button is-primary is-light">Draw!</button>
+      </div>
+      <canvas id="render"></canvas>
+      <div class="buttons">
+        <button id="download-svg" class="button is-link is-light">Download SVG</button>
+        <button id="download-png" class="button is-link is-light">Download PNG</button>
+      </div>
+    </div>
+
+  <script src="./src/main.ts"></script>
+</body>
+</html>
