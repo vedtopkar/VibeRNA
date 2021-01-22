@@ -118,6 +118,10 @@ export class StemElement extends DrawnElement {
     // When a root stem is dragged, flip the stem over the horizontal
     public flipStem(startPoint: Point) {
         
+        // Flip every 
+        this.basePairs.forEach((bp, i) {
+            bp.flipOverBaseline(this.startVector)
+        })
 
     }
 
@@ -137,7 +141,7 @@ export class StemElement extends DrawnElement {
 
     public rotateCircularly(angle, center) {
         // Rotate each bp individually
-        this.basePairs.forEach((bp,i) {
+        this.basePairs.forEach((bp, i) {
             bp.rotateCircularly(angle, center)
         })
 

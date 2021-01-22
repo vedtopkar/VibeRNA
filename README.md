@@ -44,6 +44,9 @@ Your page will reload every time you hit save on a modified `.ts` or `.html` fil
 
 ## Feature TODOs
 
+- Implement pan mouse functionality
+- Figure out robust vertical text centering for nucleotides
+- Implement interactive flipping stems around basline
 - ~~Scale up terminal loop radius for large-sequence loops~~
 - ~~Abstract away global variables for drawing config~~
 - ~~Split up drawing scripts for each element type~~
@@ -51,9 +54,7 @@ Your page will reload every time you hit save on a modified `.ts` or `.html` fil
 - ~~Implement drawing bulges~~
 - ~~Implement drawing internal loops~~
 - ~~Implement drawing multi-loops~~
-- Implement pan/zoom mouse functionality
-- Figure out robust vertical text centering for nucleotides
-- Implement interactive flipping stems around basline
+- ~~Implement zoom mouse functionality~~
 - ~~Implement interactive stem moving at bulges~~
 - ~~Implement interactive stem moving at internal loops~~
 - ~~Implement interactive stem moving at multi-loops~~
