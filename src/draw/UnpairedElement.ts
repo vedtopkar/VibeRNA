@@ -59,17 +59,14 @@ export class UnpairedElement extends DrawnElement {
         this.angleEnd = angleEnd
         this.centerPoint = centerPoint
 
-        console.log('draw circ', angleStart, angleEnd)
         
         const chars = [...this.node.sequence]
 
         let angleCursor: number = angleStart
         let ntAngleIncrement: number = (angleEnd - angleStart)/(chars.length + 1)
         angleCursor += ntAngleIncrement
-        console.log('BLAH', angleStart, angleEnd, ntAngleIncrement)
 
         chars.forEach((c, i) => {
-            console.log(angleStart, angleEnd, ntAngleIncrement, angleCursor)
             let center = this.centerPoint.clone()
             center.y += radius*Math.sin(Math.PI*angleCursor/180)
             center.x += radius*Math.cos(Math.PI*angleCursor/180)
@@ -109,7 +106,6 @@ export class UnpairedElement extends DrawnElement {
      */
     public rearrangeCircular(angleStart, angleEnd) {
 
-        console.log('rearrange circ', angleStart, angleEnd, angleEnd - angleStart)
 
         let angleCursor: number = angleStart
         // let ntAngleIncrement: number = (360 - Math.abs(angleEnd) - Math.abs(angleStart))/(this.drawnNucleotides.length + 1)

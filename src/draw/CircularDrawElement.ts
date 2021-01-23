@@ -200,9 +200,7 @@ export class CircularDrawElement extends DrawnElement {
 
     // Rotate each daughter element to rotate this circle
     public rotateCircularly(angle, center) {
-        console.log(this.center)
         this.center = this.center.rotate(angle, center)
-        console.log(this.center)
         this.daughterElements.forEach((e, i) {
             e.rotateCircularly(angle, center)
         })
@@ -218,16 +216,13 @@ export class CircularDrawElement extends DrawnElement {
 
         if (stem_index > 0) {
             // rearrange the stuff before
-            console.log(stem.stemDirectionVector)
             let before_element = this.daughterElements[stem_index - 1]
             before_element.rearrangeCircular(before_element.angleStart, stem_angle - this.phi/2)
-            console.log(before_element.angleStart, stem.stemDirectionVector.angle - this.phi/2, )
         }
 
         if (stem_index < this.daughterElements.length - 1) {
             // rearrange the stuff after
             let after_element = this.daughterElements[stem_index + 1]
-            console.log('after element', after_element)
             after_element.rearrangeCircular(stem_angle + this.phi/2, after_element.angleEnd)
         }
     }

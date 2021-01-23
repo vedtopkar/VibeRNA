@@ -81,11 +81,6 @@ export class StemElement extends DrawnElement {
         let dragAngle: Point
         let that = this // make a reference to this stem for passing into scopes
 
-        this.elementGroup.onMouseEnter = function(event) {
-        }
-    
-        this.elementGroup.onMouseLeave = function(event) {
-        }
     
         this.elementGroup.onMouseDown = function(event) {
             dragStartPoint = event.point.clone()
@@ -96,7 +91,16 @@ export class StemElement extends DrawnElement {
 
         this.elementGroup.onMouseDrag = function(event) {
 
+            
             dragAngle = event.point.subtract(that.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.center).angle
+
+            let nearestMultiple = Math.round(dragAngle / (Math.PI/2)) * (Math.PI/2)
+            console.log('nearest', dragAngle, nearestMultiple)
+            // Snap to nearest 45 degree angle if applicable
+            if (Math.abs(dragAngle - nearestMultiple) < Math.PI*15/180) {
+                dragAngle = nearestMultiple
+            }
+
             // Drag the stem if it's not at root
             if (that.parentElement !== null) {
                 that.rotateStem(dragAngle, that.parentElement.center)

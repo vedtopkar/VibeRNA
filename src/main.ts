@@ -34,7 +34,6 @@ paper.setup(canvas)
 
 // Initialize PanAndZoom
 const panAndZoom:PanAndZoom = new PanAndZoom()
-let zoomFactor:number = 1.05
 paper.view.scale(1)
 
 
@@ -68,11 +67,11 @@ canvas.addEventListener('wheel', (e:WheelEvent) {
 	e.preventDefault()
 })
 
-let dummy_example = document.getElementById('load-dummy')
-dummy_example.addEventListener('click', (e:Event) {
-	name_field.value = 'Dummy example'
-	sequence_field.value = 'AAAAAGGGGGABGGGGAAACCCCDGGGGAAACCCACCCCCAAAAAAAAAAGGGGAGGGGAAAAAAACCCCACCCAAAAA'
-	structure_field.value ='.....(((((..(((....)))..(((....))).)))))..........((((.(((........)))).))).....'
+let ade_example = document.getElementById('load-dummy')
+ade_example.addEventListener('click', (e:Event) {
+	name_field.value = 'Ade example'
+	sequence_field.value = 'GAUCAACGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGU'
+	structure_field.value ='.......((((((((...((((((.........))))))........((((((.......))))))..))))))))'
 })
 
 let p4p6_example = document.getElementById('load-p4p6')
@@ -105,7 +104,7 @@ window.paper.view.onResize = function(event) {
 	window.drawing.centerAndZoomDrawing(window.paper.view, window.drawing)
 })
 
-window.addEventListener('mouseup', function(e) {
+canvas.addEventListener('mouseup', function(e) {
 	window.drawing.centerAndZoomDrawing()
 })
 
@@ -138,5 +137,6 @@ download_png.addEventListener('click', (e:Event) {
 
 document.addEventListener('DOMContentLoaded', function() {
 	console.log('loaded')
+	ade_example.click()
 	draw_button.click()
 }, false);

@@ -5,7 +5,7 @@ import { paper } from "paper/dist/paper-core"
 export class PanAndZoom {
 
     public computeNewZoom(oldZoom: number, deltaY: number) {
-        const factor = 1.025
+        const factor = 1.05
         if (deltaY < 0) {
             return oldZoom * factor
         } else if (deltaY > 0) {

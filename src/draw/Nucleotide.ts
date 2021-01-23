@@ -8,6 +8,7 @@ export class Nucleotide {
     public group: Group
     public circle: Path.Circle
     public text: Path.PointText
+    public numbered: Boolean = false
 
 
     constructor(drawing: Drawing, letter: string, center: Point) {
@@ -39,6 +40,31 @@ export class Nucleotide {
 
         this.group = new Group([this.circle, this.text])
 
+        let that = this
+
+        this.group.onMouseEnter = function(event) {
+            that.circle.strokeWidth += 3
+        }
+    
+        this.group.onMouseLeave = function(event) {
+            that.circle.strokeWidth -= 3
+        }
+
+
+    }
+
+    public drawNumbering(number) {
+        let numberCenter = this.center.clone()
+        numberCenter.y += 40
+
+        const numberText = new PointText(numberCenter)
+        numberText.content = number
+        numberCenter.x += 5
+
+        let line = new Path.Line(numberCenter, this.center)
+        line.strokeColor = 'black'
+
+        console.log(line)
 
 
     }

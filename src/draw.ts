@@ -105,6 +105,12 @@ export class Drawing {
                 }
             }
         }
+
+        this.nucleotides.forEach((n, i) {
+            if (i % 10 == 0) {
+                n.drawNumbering(i)
+            }
+        })
     }
 
     public drawTreeRecursive(node: Node, parentElement: DrawnElement, drawCursor: Point, drawVector: Point) {

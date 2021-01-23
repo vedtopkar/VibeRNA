@@ -3,29 +3,38 @@
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-  <div id="editorjs">
-    <form>
-      <div class="field">
-        <label for="name" class="label">Name</label>
-        <input type="text" id="name" name="name" class="input" value="Test Sequence">
+  <div id="app">
+    <div id="editorjs">
+      <form>
+        <div class="field">
+          <label for="name" class="label">Name</label>
+          <input type="text" id="name" name="name" class="input" value="">
+        </div>
+        <div class="field">
+          <label for="sequence" class="label">Sequence</label>
+          <input type="text" id="sequence" name="sequence" class="input" value="">
+        </div>
+    
+        <label for="structure" class="label">Secondary structure (dot-bracket)</label>
+        <input type="text" id="structure" name="structure" class="input" value="">
+    
+      </form>
+    </div>
+    <div class="buttons">
+      <button id="load-dummy" class="button is-link is-light">Load Ade example</button>
+      <button id="load-p4p6" class="button is-link is-light">Load P4P6 example</button>
+      <button id="draw" class="button is-primary is-light">Draw!</button>
+    </div>
+
+    <div id="canvas-container">
+      <canvas id="render" resize="true"></canvas>
+      <div class="buttons" id="overlay-buttons">
+        <button id="download-svg" class="button is-link is-light">Download SVG</button>
+        <button id="download-png" class="button is-link is-light">Download PNG</button>
       </div>
-      <div class="field">
-        <label for="sequence" class="label">Sequence</label>
-        <input type="text" id="sequence" name="sequence" class="input" value="AAAAAGGGGGABGGGGAAACCCCDGGGGAAACCCACCCCCAAAAAAAAAAGGGGGAGAAAAAAACCACCCAAAAA">
-  
-      </div>
-  
-      <label for="structure" class="label">Secondary structure (dot-bracket)</label>
-      <input type="text" id="structure" name="structure" class="input" value=".....(((((..(((....)))..(((....))).)))))..........((((.(........)).))).....">
-  
-    </form>
+    </div>
+    
   </div>
-  <div class="buttons">
-    <button id="load-dummy" class="button is-link is-light">Load dummy example</button>
-    <button id="load-p4p6" class="button is-link is-light">Load P4P6 example</button>
-    <button id="draw" class="button is-primary is-light">Draw!</button>
-  </div>
-  <canvas id="render" resize="true"></canvas>
   <script src="./src/main.ts"></script>
 </body>
 </html>
