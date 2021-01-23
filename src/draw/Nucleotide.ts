@@ -8,6 +8,9 @@ export class Nucleotide {
     public group: Group
     public circle: Path.Circle
     public text: Path.PointText
+
+    public drawDirection: Point
+    
     public numbered: Boolean = false
 
 
@@ -58,7 +61,7 @@ export class Nucleotide {
         numberCenter.y += 40
 
         const numberText = new PointText(numberCenter)
-        numberText.content = number
+        numberText.content = number + 1
         numberCenter.x += 5
 
         let line = new Path.Line(numberCenter, this.center)

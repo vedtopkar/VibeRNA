@@ -107,7 +107,7 @@ export class Drawing {
         }
 
         this.nucleotides.forEach((n, i) {
-            if (i % 10 == 0) {
+            if (i == 0 || (i + 1) % 10 == 0) {
                 n.drawNumbering(i)
             }
         })
