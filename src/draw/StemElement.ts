@@ -82,20 +82,16 @@ export class StemElement extends DrawnElement {
         let that = this // make a reference to this stem for passing into scopes
 
         this.elementGroup.onMouseEnter = function(event) {
-            // event.target.strokeColor = 'yellow'
         }
     
         this.elementGroup.onMouseLeave = function(event) {
-            // event.target.strokeColor = 'black'
         }
     
         this.elementGroup.onMouseDown = function(event) {
-            // event.target.strokeColor = 'red'
             dragStartPoint = event.point.clone()
         }
     
         this.elementGroup.onMouseUp = function(event) {
-            // event.target.strokeColor = 'yellow'
         }
 
         this.elementGroup.onMouseDrag = function(event) {

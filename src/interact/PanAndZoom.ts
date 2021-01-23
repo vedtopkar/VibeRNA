@@ -31,8 +31,8 @@ export class PanAndZoom {
         return oldCenter.add(offset)
     }
 
-    public centerAndZoomDrawing(view, drawing) {
 
+    public centerAndZoomAfterResize(view, drawing) {
         let unitedBounds = drawing.nucleotides.reduce((bbox, item) => {
             return !bbox ? item.circle.bounds : bbox.unite(item.circle.bounds)
         }, null)

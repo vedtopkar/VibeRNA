@@ -4,7 +4,7 @@
  * Main file that initiates drawing
 */
 
-import { Point } from "paper/dist/paper-core"
+import { Point, View } from "paper/dist/paper-core"
 import { Structure, StructureTree } from "./structure/structure"
 import { Node, UnpairedNode, StemNode, TerminalLoopNode, BulgeNode, InternalLoop, MultiLoop, RootNode } from './structure/nodes'
 
@@ -25,6 +25,10 @@ import { BulgeElement } from "./draw/BulgeElement"
  * A class that encapsulates all elements and configuration of our RNA drawing
  */
 export class Drawing {
+
+    // Reference to paper view
+    public view: View
+
     // Reference to a structure object
     public structure: Structure
 
@@ -62,8 +66,9 @@ export class Drawing {
     private drawCursor: Point = this.config.origin.clone()
     private drawVector: Point
 
-    constructor(structure: Structure) {
+    constructor(structure: Structure, view: View) {
         this.structure = structure
+        this.view = view
 
         // Shift over so that the first element is drawn at the origin
         this.drawCursor.x -= this.config.ntSpacing
@@ -145,6 +150,27 @@ export class Drawing {
                 break
             }
         }
+    }
+
+    public centerAndZoomDrawing() {
+
+        let unitedBounds = this.nucleotides.reduce((bbox, item) => {
+            return !bbox ? item.circle.bounds : bbox.unite(item.circle.bounds)
+        }, null)
+
+        // Set the zoom to encompass the whole drawing
+        this.view.center = unitedBounds.center
+
+        const viewBounds = view.bounds
+        const heightRatio = viewBounds.height/unitedBounds.height
+        const widthRatio = viewBounds.width/unitedBounds.width
+        const newZoom = Math.min(heightRatio, widthRatio)*.9
+
+        this.view.zoom *= newZoom
+    }
+
+    public centerAndZoomAfterResize() {
+        
     }
 
 }

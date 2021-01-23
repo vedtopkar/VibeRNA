@@ -93,17 +93,20 @@ draw_button.addEventListener('click', (e:Event) {
 	window.paper.project.clear()
 
 	// Make a new drawing and draw it
-	window.drawing = new Drawing(s)
-	drawing.drawTreeDispatch()
-	
-	panAndZoom.centerAndZoomDrawing(window.paper.view, window.drawing)
+	window.drawing = new Drawing(s, window.paper.view)
+	window.drawing.drawTreeDispatch()
+	window.drawing.centerAndZoomDrawing()
 	
 })
 
 
 // Whenever the window is resized, recenter the drawing and change zoom if needed
 window.paper.view.onResize = function(event) {
-	panAndZoom.centerAndZoomDrawing(window.paper.view, window.drawing)
+	window.drawing.centerAndZoomDrawing(window.paper.view, window.drawing)
+})
+
+window.addEventListener('mouseup', function(e) {
+	window.drawing.centerAndZoomDrawing()
 })
 
 let download_svg = document.getElementById('download-svg')
