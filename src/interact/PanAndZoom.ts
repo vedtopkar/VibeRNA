@@ -30,4 +30,21 @@ export class PanAndZoom {
         offset = offset.multiply(factor)
         return oldCenter.add(offset)
     }
+
+    public centerAndZoomDrawing(view, drawing) {
+
+        let unitedBounds = drawing.nucleotides.reduce((bbox, item) => {
+            return !bbox ? item.circle.bounds : bbox.unite(item.circle.bounds)
+        }, null)
+
+        // Set the zoom to encompass the whole drawing
+        view.center = unitedBounds.center
+
+        const viewBounds = view.bounds
+        const heightRatio = viewBounds.height/unitedBounds.height
+        const widthRatio = viewBounds.width/unitedBounds.width
+        const newZoom = Math.min(heightRatio, widthRatio)*.9
+
+        view.zoom *= newZoom
+    }
 }

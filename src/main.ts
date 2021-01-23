@@ -93,33 +93,17 @@ draw_button.addEventListener('click', (e:Event) {
 	window.paper.project.clear()
 
 	// Make a new drawing and draw it
-	const d: Drawing = new Drawing(s)
-	d.drawTreeDispatch()
-
-	// On initial draw, get bounding box and zoom to fill
-	let circles = []
+	window.drawing = new Drawing(s)
+	drawing.drawTreeDispatch()
 	
-	let unitedBounds = d.nucleotides.reduce((bbox, item) => {
-		return !bbox ? item.circle.bounds : bbox.unite(item.circle.bounds)
-	}, null)
-	console.log('unitedbounds', unitedBounds)
-
-	console.log(paper.view)
-	paper.view.center = unitedBounds.center
-	console.log(unitedBounds, 'bounds')
-
-	// Set the zoom to encompass the whole drawing
-	const viewBounds = window.paper.view.bounds
-
-	const heightRatio = viewBounds.height/unitedBounds.height
-	const widthRatio = viewBounds.width/unitedBounds.width
-
-	const newZoom = Math.min(heightRatio, widthRatio)*.9
-
-	window.paper.view.zoom *= newZoom
-
-	console.log('new zoom', newZoom, viewBounds, heightRatio, widthRatio)
+	panAndZoom.centerAndZoomDrawing(window.paper.view, window.drawing)
 	
+})
+
+
+// Whenever the window is resized, recenter the drawing and change zoom if needed
+window.paper.view.onResize = function(event) {
+	panAndZoom.centerAndZoomDrawing(window.paper.view, window.drawing)
 })
 
 let download_svg = document.getElementById('download-svg')
