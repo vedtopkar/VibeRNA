@@ -1,34 +1,64 @@
+
 html, body { 
-    width:100%;
-    height:100%;
-    margin:0;
+    
+}
+
+body {
+    display: block;
+    overflow: hidden;
 }
 
 canvas { 
-    display:block;
-    position:absolute;
+    display: block;
     width: 100%;
     height: 100%;
     border-style: solid;
     border-color: black;
 }
 
-#app {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
+#menubar-container {
+    padding: 10px;
+    top: 0pt; left: 0pt; right: 0pt; height: 120pt;
+    border-style: solid;
+    border-color: black;
 }
 
-#canvas-container {
-    position: relative;
+#sidebar-container {
+    position: absolute;
+    left: 0px;
+    top: 120pt;
+    width: 300pt;
+    bottom: 0;
+    border-style: solid;
+    border-color: black;
+    overflow-y:auto
+}
+
+#drawing-container {
+    /* margin-top: 50px; */
+    position: absolute;
+    display: block;
+    margin-left: 300pt;
+    height: calc(100% - 120pt);
+    width: calc(100% - 300pt);
+    bottom: 0;
+    overflow: auto;
+    border-style: solid;
+    border-color: red;
+}
+
+#drawing {
+
+}
+
+#app {
+    position: absolute;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 }
 
 #overlay-buttons {
     position:absolute;
-    right: 0px;
-    bottom: 0px;
+    right: 10px;
+    bottom: 10px;
 }

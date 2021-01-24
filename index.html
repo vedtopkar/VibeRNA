@@ -3,36 +3,70 @@
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-  <div id="app">
-    <div id="editorjs">
-      <form>
-        <div class="field">
-          <label for="name" class="label">Name</label>
-          <input type="text" id="name" name="name" class="input" value="">
+<div id="menubar-container">
+  <div class="columns">
+    <div class="column is-10">
+      <div class="field is-horizontal">
+        <div class="field-label is-small">
+          <label class="label">RNA Name</label>
         </div>
-        <div class="field">
-          <label for="sequence" class="label">Sequence</label>
-          <input type="text" id="sequence" name="sequence" class="input" value="">
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input class="input is-small" type="text" placeholder="Small sized input"  id="name" name="name">
+            </div>
+          </div>
         </div>
-    
-        <label for="structure" class="label">Secondary structure (dot-bracket)</label>
-        <input type="text" id="structure" name="structure" class="input" value="">
-    
-      </form>
-    </div>
-    <div class="buttons">
-      <button id="load-dummy" class="button is-link is-light">Load Ade example</button>
-      <button id="load-p4p6" class="button is-link is-light">Load P4P6 example</button>
-      <button id="draw" class="button is-primary is-light">Draw!</button>
-    </div>
-
-    <div id="canvas-container">
-      <canvas id="render" resize="true"></canvas>
-      <div class="buttons" id="overlay-buttons">
-        <button id="download-svg" class="button is-link is-light">Download SVG</button>
-        <button id="download-png" class="button is-link is-light">Download PNG</button>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-small">
+          <label class="label">Sequence</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input class="input is-small" type="text" placeholder="Small sized input" id="sequence" name="sequence">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-small">
+          <label class="label">Secondary structure</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input class="input is-small" type="text" placeholder="" id="structure" name="structure">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <div class="column is-1">
+      <div class="buttons">
+        <button id="load-dummy" class="button is-link is-light">Load Ade example</button>
+        <button id="load-p4p6" class="button is-link is-light">Load P4P6 example</button>
+        <button id="draw" class="button is-primary is-light">Draw!</button>
+      </div>
+    </div>
+
+</div>
+</div>
+<div id="sidebar-container">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum aliquam pharetra. Cras nisl ex, maximus non vestibulum eu, faucibus nec nunc. Donec tincidunt tristique felis, in facilisis mi. Donec eu nunc id dolor pellentesque dapibus. Duis eu leo eu risus vulputate convallis sit amet vel leo. Integer non orci mauris. Vivamus a dapibus urna. Quisque ut est augue. Nam erat ligula, consectetur a facilisis eu, imperdiet vitae lacus. Suspendisse eget tortor volutpat, condimentum est at, aliquet risus. Donec eu ultricies ipsum, ac consectetur libero. Curabitur sagittis dolor gravida felis scelerisque finibus. Curabitur accumsan mauris libero, et semper tellus posuere vitae. Integer varius eget urna nec faucibus.
+
+  Etiam lorem dui, gravida a ante eget, gravida varius tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec arcu nisl, cursus in maximus sed, porta mollis diam. Ut in porta arcu, sit amet venenatis metus. Aliquam ullamcorper lorem libero, ac sagittis velit fringilla non. Morbi non ullamcorper massa. Maecenas non augue nec ex sodales ultrices. In vitae arcu facilisis, dapibus urna eget, tempus velit. Phasellus in tortor ut urna porttitor mollis nec a nisi. Pellentesque nisi nibh, interdum at erat quis, sodales mollis turpis. Etiam nulla mauris, pretium sed luctus et, faucibus eget ex.
+  
+  Nullam non ex a libero tristique accumsan id nec nulla. Lorem i
+</div>
+<div id="drawing-container">
+  <canvas id="render"></canvas>
+  <div class="buttons" id="overlay-buttons">
+    <button id="download-svg" class="button is-link is-light">Download SVG</button>
+    <button id="download-png" class="button is-link is-light">Download PNG</button>
+  </div>
+</div>
     
   </div>
   <script src="./src/main.ts"></script>

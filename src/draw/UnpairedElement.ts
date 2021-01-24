@@ -24,13 +24,14 @@ export class UnpairedElement extends DrawnElement {
     constructor(drawing: Drawing, parentElement: DrawnElement, node: UnpairedNode) {
         super(drawing, parentElement)
         this.node = node
+        this.type = 'UnpairedElement'
     }
 
     public draw(startPoint: Point): Point {
         const chars = [...this.node.sequence]
         let drawCursor: Point = startPoint.clone()
         chars.forEach((c, i) {
-            let n = new Nucleotide(this.drawing, c, drawCursor)
+            let n = new Nucleotide(this.drawing, this, c, drawCursor)
             n.draw()
             this.drawing.nucleotides.push(n)
 
@@ -71,7 +72,7 @@ export class UnpairedElement extends DrawnElement {
             center.y += radius*Math.sin(Math.PI*angleCursor/180)
             center.x += radius*Math.cos(Math.PI*angleCursor/180)
 
-            let nt = new Nucleotide(this.drawing, c, center)
+            let nt = new Nucleotide(this.drawing, this, c, center)
             nt.draw()
 
             this.drawing.nucleotides.push(nt)

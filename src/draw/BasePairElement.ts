@@ -33,14 +33,14 @@ export class BasePairElement extends DrawnElement {
     public draw() {
 
         let drawCursor: Point = this.startPoint.clone()
-        let l = new Nucleotide(this.drawing, this.letterPair[0], drawCursor)
+        let l = new Nucleotide(this.drawing, this, this.letterPair[0], drawCursor)
         l.draw()
 
         let p1: Point = drawCursor.clone()
         drawCursor = drawCursor.add(this.drawVector)
 
         let p2: Point = drawCursor.clone()
-        let r = new Nucleotide(this.drawing, this.letterPair[1], drawCursor)
+        let r = new Nucleotide(this.drawing, this, this.letterPair[1], drawCursor)
         r.draw()
 
 

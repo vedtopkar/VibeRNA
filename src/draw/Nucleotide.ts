@@ -1,5 +1,6 @@
 import { Path, Point, PointText, Group } from "paper/dist/paper-core"
 import { Drawing } from "../draw"
+import { DrawnElement } from "./DrawnElement"
 
 export class Nucleotide {
     public drawing: Drawing
@@ -9,13 +10,14 @@ export class Nucleotide {
     public circle: Path.Circle
     public text: Path.PointText
 
-    public drawDirection: Point
+    public parentElement: DrawnElement
     
     public numbered: Boolean = false
 
 
-    constructor(drawing: Drawing, letter: string, center: Point) {
+    constructor(drawing: Drawing, parentElement: DrawnElement, letter: string, center: Point) {
         this.drawing = drawing
+        this.parentElement = parentElement
         this.letter = letter
         this.center = center.clone()
     }
@@ -57,6 +59,11 @@ export class Nucleotide {
     }
 
     public drawNumbering(number) {
+        // First, we get the overal drawing direction
+        // we willd draw the numbering along its tangent
+
+        if (this.parent)
+
         let numberCenter = this.center.clone()
         numberCenter.y += 40
 

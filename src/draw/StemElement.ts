@@ -42,7 +42,7 @@ export class StemElement extends DrawnElement {
         // Make a unit vector that points in the direction  of the stem to be drawn
         this.stemDirectionVector = this.startVector.clone().rotate(-90).normalize()
 
-
+        this.type = 'StemElement'
     }
 
     private transformStem(angle){
