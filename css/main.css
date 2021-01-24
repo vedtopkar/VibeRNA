@@ -1,4 +1,9 @@
 
+:root {
+    --menubar-height: 100pt;
+    --sidebar-width: 200pt;
+  }
+
 html, body { 
     
 }
@@ -18,29 +23,31 @@ canvas {
 
 #menubar-container {
     padding: 10px;
-    top: 0pt; left: 0pt; right: 0pt; height: 120pt;
+    top: 0pt; left: 0pt; right: 0pt; height: var(--menubar-height);
     border-style: solid;
     border-color: black;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #sidebar-container {
     position: absolute;
     left: 0px;
-    top: 120pt;
-    width: 300pt;
+    top: var(--menubar-height);
+    width: var(--sidebar-width);
     bottom: 0;
     border-style: solid;
     border-color: black;
-    overflow-y:auto
+    overflow-y:auto;
 }
 
 #drawing-container {
     /* margin-top: 50px; */
     position: absolute;
     display: block;
-    margin-left: 300pt;
-    height: calc(100% - 120pt);
-    width: calc(100% - 300pt);
+    margin-left: var(--sidebar-width);
+    height: calc(100% - var(--menubar-height));
+    width: calc(100% - var(--sidebar-width));
     bottom: 0;
     overflow: auto;
     border-style: solid;
