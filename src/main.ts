@@ -140,3 +140,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	ade_example.click()
 	draw_button.click()
 }, false);
+
+let dropdown = document.querySelector('.dropdown');
+dropdown.addEventListener('click', function(event) {
+  event.stopPropagation();
+  dropdown.classList.toggle('is-active');
+});

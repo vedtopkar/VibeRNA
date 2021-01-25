@@ -1,6 +1,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="./css/main.css">
+  <script src="./assets/font-awesome.js"></script>
 </head>
 <body>
   <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -84,9 +85,9 @@
         </div>
       </div>
       <div class="buttons">
-        <button id="load-dummy" class="button is-link is-light">Load Ade example</button>
-        <button id="load-p4p6" class="button is-link is-light">Load P4P6 example</button>
-        <button id="draw" class="button is-primary is-light">Draw!</button>
+        <button id="load-dummy" class="button is-link is-light is-small is-fullwidth">Load Ade example</button>
+        <button id="load-p4p6" class="button is-link is-light is-small is-fullwidth">Load P4P6 example</button>
+        <button id="draw" class="button is-primary is-light is-small is-fullwidth">Draw!</button>
       </div>
     </section>
   </div>
@@ -94,8 +95,29 @@
 <div id="drawing-container">
   <canvas id="render"></canvas>
   <div class="buttons" id="overlay-buttons">
-    <button id="download-svg" class="button is-link is-light">Download SVG</button>
-    <button id="download-png" class="button is-link is-light">Download PNG</button>
+    <div class="dropdown is-up">
+      <div class="dropdown-trigger">
+        <button class="button is-link is-light" aria-haspopup="true" aria-controls="dropdown-menu">
+          <span>Save Image</span>
+          <span class="icon is-small">
+            <i class="fas fa-angle-up" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content">
+          <a href="#" class="dropdown-item" id="download-svg">
+            Download SVG
+          </a>
+          <a class="dropdown-item" id="download-png">
+            Download PNG
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <!-- <button id="download-svg" class="button is-link is-light">Download SVG</button>
+    <button id="download-png" class="button is-link is-light">Download PNG</button> -->
   </div>
 </div>
     
