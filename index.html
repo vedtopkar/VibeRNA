@@ -3,62 +3,93 @@
   <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-<div id="menubar-container">
-  <div class="columns">
-    <div class="column is-10">
-      <div class="field is-horizontal">
-        <div class="field-label is-small">
-          <label class="label">RNA Name</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input class="input is-small" type="text" placeholder="Small sized input"  id="name" name="name">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="field is-horizontal">
-        <div class="field-label is-small">
-          <label class="label">Sequence</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input class="input is-small" type="text" placeholder="Small sized input" id="sequence" name="sequence">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="field is-horizontal">
-        <div class="field-label is-small">
-          <label class="label">Secondary structure</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input class="input is-small" type="text" placeholder="" id="structure" name="structure">
-            </div>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://vedtopkar.github.io/ts-rna-draw/">
+        🧬🖍️🙏🏽 TS-RNA-Draw
+      </a>
+  
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+  
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item">
+          About
+        </a>
+  
+        <a class="navbar-item" href="https://github.com/vedtopkar/ts-rna-draw">
+          Documentation
+        </a>
+  
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            More
+          </a>
+  
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              Put
+            </a>
+            <a class="navbar-item">
+              Stuff
+            </a>
+            <a class="navbar-item">
+              Here
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="https://github.com/vedtopkar/ts-rna-draw/issues">
+              Report an issue
+            </a>
           </div>
         </div>
       </div>
     </div>
-    <div class="column is-1">
+  </nav>
+</div>
+<div id="sidebar-container">
+  <div class="tabs is-centered">
+    <ul>
+      <li class="is-active"><a>Draw</a></li>
+      <li><a>Style</a></li>
+      <li><a>Annotate</a></li>
+    </ul>
+  </div>
+  <div>
+    <section class="tab-content">
+      <div class="field">
+        <label class="label">RNA Name</label>
+        <div class="control">
+          <input class="input is-small" type="text" placeholder="Small sized input"  id="name" name="name">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Sequence</label>
+        <div class="control">
+          <textarea class="textarea is-small" type="text" placeholder="Small sized input" id="sequence" name="sequence">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Secondary structure</label>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <textarea class="textarea is-small" type="text" placeholder="" id="structure" name="structure">
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="buttons">
         <button id="load-dummy" class="button is-link is-light">Load Ade example</button>
         <button id="load-p4p6" class="button is-link is-light">Load P4P6 example</button>
         <button id="draw" class="button is-primary is-light">Draw!</button>
       </div>
-    </div>
-
-</div>
-</div>
-<div id="sidebar-container">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris rutrum aliquam pharetra. Cras nisl ex, maximus non vestibulum eu, faucibus nec nunc. Donec tincidunt tristique felis, in facilisis mi. Donec eu nunc id dolor pellentesque dapibus. Duis eu leo eu risus vulputate convallis sit amet vel leo. Integer non orci mauris. Vivamus a dapibus urna. Quisque ut est augue. Nam erat ligula, consectetur a facilisis eu, imperdiet vitae lacus. Suspendisse eget tortor volutpat, condimentum est at, aliquet risus. Donec eu ultricies ipsum, ac consectetur libero. Curabitur sagittis dolor gravida felis scelerisque finibus. Curabitur accumsan mauris libero, et semper tellus posuere vitae. Integer varius eget urna nec faucibus.
-
-  Etiam lorem dui, gravida a ante eget, gravida varius tellus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec arcu nisl, cursus in maximus sed, porta mollis diam. Ut in porta arcu, sit amet venenatis metus. Aliquam ullamcorper lorem libero, ac sagittis velit fringilla non. Morbi non ullamcorper massa. Maecenas non augue nec ex sodales ultrices. In vitae arcu facilisis, dapibus urna eget, tempus velit. Phasellus in tortor ut urna porttitor mollis nec a nisi. Pellentesque nisi nibh, interdum at erat quis, sodales mollis turpis. Etiam nulla mauris, pretium sed luctus et, faucibus eget ex.
-  
-  Nullam non ex a libero tristique accumsan id nec nulla. Lorem i
+    </section>
+  </div>
 </div>
 <div id="drawing-container">
   <canvas id="render"></canvas>
