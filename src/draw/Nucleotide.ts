@@ -20,7 +20,6 @@ export class Nucleotide {
         this.parentElement = parentElement
         this.letter = letter
         this.center = center.clone()
-        console.log(this.parentElement.type)
 
     }
 
@@ -54,7 +53,6 @@ export class Nucleotide {
 
         this.group.onMouseEnter = function(event) {
             that.circle.strokeWidth += 3
-            console.log(this.parentElement)
         }
     
         this.group.onMouseLeave = function(event) {
@@ -74,11 +72,6 @@ export class Nucleotide {
             
             if(that.parentElement.type == 'BasePairElement') {
                 let nearestMultiple = Math.round(dragAngle / (Math.PI/2)) * (Math.PI/2)
-                console.log('nearest', dragAngle, nearestMultiple)
-                // Snap to nearest 45 degree angle if applicable
-                if (Math.abs(dragAngle - nearestMultiple) < Math.PI*15/180) {
-                    dragAngle = nearestMultiple
-                }
     
                 // Drag the stem if it's not at root
                 if (that.parentElement !== null) {

@@ -110,14 +110,20 @@ export class UnpairedElement extends DrawnElement {
      * (e.g. a stem is dragged), we move the nucleotides to space equally along some angle of the circle.
      */
     public rearrangeCircular(angleStart, angleEnd) {
-
+        this.angleStart = angleStart
+        this.angleEnd = angleEnd
 
         let angleCursor: number = angleStart
-        // let ntAngleIncrement: number = (360 - Math.abs(angleEnd) - Math.abs(angleStart))/(this.drawnNucleotides.length + 1)
-        let ntAngleIncrement: number = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
+
+        if (angleEnd < angleStart) {
+            let ntAngleIncrement: number = (360 + angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
+        } else {
+            let ntAngleIncrement: number = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
+        }
+        console.log('increment', ntAngleIncrement, angleEnd < angleStart)
         angleCursor += ntAngleIncrement
 
-        console.log('angles', angleStart, angleEnd)
+        // console.log('angles', angleStart, angleEnd)
 
         this.drawnNucleotides.forEach((nt, i) => {
 
@@ -129,9 +135,6 @@ export class UnpairedElement extends DrawnElement {
 
             angleCursor += ntAngleIncrement
         })
-
-        this.angleStart = angleStart
-        this.angleEnd = angleEnd
 
         return angleCursor
 

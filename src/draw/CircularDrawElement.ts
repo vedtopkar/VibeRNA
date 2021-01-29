@@ -210,12 +210,8 @@ export class CircularDrawElement extends DrawnElement {
     public rearrangeAfterDrag(stem: StemElement, angle: number) {
         let stem_index = this.daughterElements.indexOf(stem)
         let stem_angle = (stem.stemDirectionVector.angle + 360) % 360
-
-        if (stem angle < 0) {
-            stem angle = (stem_angle + 360) % 360
-        }
         
-        console.log('stem angle', stem_angle < 0)
+        
 
         if (stem_index > 0) {
             // rearrange the stuff before
@@ -226,7 +222,8 @@ export class CircularDrawElement extends DrawnElement {
         if (stem_index < this.daughterElements.length - 1) {
             // rearrange the stuff after
             let after_element = this.daughterElements[stem_index + 1]
-            after_element.rearrangeCircular(stem_angle + this.phi/2, after_element.angleEnd)
+            after_element.rearrangeCircular(stem_angle + this.phi/2, after_element.angleEnd % 360)
         }
+
     }
 }
