@@ -71,6 +71,7 @@ export class Nucleotide {
         this.group.onMouseDrag = function(event) {
             
             dragAngle = event.point.subtract(that.parentElement.parentElement.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.parentElement.parentElement.center).angle
+            
             if(that.parentElement.type == 'BasePairElement') {
                 let nearestMultiple = Math.round(dragAngle / (Math.PI/2)) * (Math.PI/2)
                 console.log('nearest', dragAngle, nearestMultiple)
@@ -118,9 +119,15 @@ export class Nucleotide {
 
     // Simply move the nucleotide and update the center
     public move(center) {
-
         this.center = center
         this.group.position = this.center
+    }
+
+    public rotate(angle, center) {
+        this.group.rotate(angle, center)
+        this.text.rotate(-1*angle)
+
+        this.center = this.group.center
     }
 
 }

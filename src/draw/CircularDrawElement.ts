@@ -207,12 +207,15 @@ export class CircularDrawElement extends DrawnElement {
     }
 
     // After a daughter stem is dragged, rearrange the 5' and 3' elements (if unpaired)
-    public rearrangeAfterDrag(stem: StemElement, angle) {
+    public rearrangeAfterDrag(stem: StemElement, angle: number) {
         let stem_index = this.daughterElements.indexOf(stem)
-        let stem_angle = 360 + stem.stemDirectionVector.angle
+        let stem_angle = (stem.stemDirectionVector.angle + 360) % 360
 
-
-
+        if (stem angle < 0) {
+            stem angle = (stem_angle + 360) % 360
+        }
+        
+        console.log('stem angle', stem_angle < 0)
 
         if (stem_index > 0) {
             // rearrange the stuff before

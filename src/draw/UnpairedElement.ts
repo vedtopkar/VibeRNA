@@ -84,11 +84,15 @@ export class UnpairedElement extends DrawnElement {
     }
 
     public rotateCircularly(angle, center) {
+
         this.centerPoint = this.centerPoint.rotate(angle, center)
         this.drawnNucleotides.forEach((n, i) {
-            n.group.rotate(angle, center)
-            n.text.rotate(-1*angle)
+            n.rotate(angle, center)
         })
+
+        this.angleStart += angle
+        this.angleEnd += angle
+
     }
 
     public normalizeAngle(angle) {
@@ -112,6 +116,8 @@ export class UnpairedElement extends DrawnElement {
         // let ntAngleIncrement: number = (360 - Math.abs(angleEnd) - Math.abs(angleStart))/(this.drawnNucleotides.length + 1)
         let ntAngleIncrement: number = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
         angleCursor += ntAngleIncrement
+
+        console.log('angles', angleStart, angleEnd)
 
         this.drawnNucleotides.forEach((nt, i) => {
 

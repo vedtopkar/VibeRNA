@@ -59,16 +59,9 @@ export class BasePairElement extends DrawnElement {
 
     public rotateCircularly(angle, center) {
 
-        this.nucleotides[0].circle.rotate(angle, center)
-        this.nucleotides[1].circle.rotate(angle, center)
-
-        this.nucleotides[0].text.rotate(angle, center)
-        this.nucleotides[1].text.rotate(angle, center)
-
-        this.nucleotides[0].text.rotate(-1*angle)
-        this.nucleotides[1].text.rotate(-1*angle)
+        this.nucleotides[0].rotate(angle, center)
+        this.nucleotides[1].rotate(angle, center)
 
         this.hBond.rotate(angle, center)
-
     }
 }
