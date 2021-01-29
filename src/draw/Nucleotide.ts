@@ -20,6 +20,8 @@ export class Nucleotide {
         this.parentElement = parentElement
         this.letter = letter
         this.center = center.clone()
+        console.log(this.parentElement.type)
+
     }
 
     public draw() {
@@ -42,6 +44,9 @@ export class Nucleotide {
         this.circle = circle
         this.text = text
 
+        let dragStartPoint: Point
+        let dragAngle: number
+
 
         this.group = new Group([this.circle, this.text])
 
@@ -49,10 +54,42 @@ export class Nucleotide {
 
         this.group.onMouseEnter = function(event) {
             that.circle.strokeWidth += 3
+            console.log(this.parentElement)
         }
     
         this.group.onMouseLeave = function(event) {
             that.circle.strokeWidth -= 3
+        }
+
+        this.group.onMouseDown = function(event) {
+            dragStartPoint = event.point.clone()
+        }
+    
+        this.group.onMouseUp = function(event) {
+        }
+
+        this.group.onMouseDrag = function(event) {
+            
+            dragAngle = event.point.subtract(that.parentElement.parentElement.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.parentElement.parentElement.center).angle
+            if(that.parentElement.type == 'BasePairElement') {
+                let nearestMultiple = Math.round(dragAngle / (Math.PI/2)) * (Math.PI/2)
+                console.log('nearest', dragAngle, nearestMultiple)
+                // Snap to nearest 45 degree angle if applicable
+                if (Math.abs(dragAngle - nearestMultiple) < Math.PI*15/180) {
+                    dragAngle = nearestMultiple
+                }
+    
+                // Drag the stem if it's not at root
+                if (that.parentElement !== null) {
+                    that.parentElement.parentElement.rotateStem(dragAngle, that.parentElement.parentElement.parentElement.center)
+                    dragStartPoint = event.point.clone()
+                } else {
+                    // If we're dragging a root stem, then do a flip!
+                    that.flipStem(that.startPoint)
+                }
+            }
+
+
         }
 
 

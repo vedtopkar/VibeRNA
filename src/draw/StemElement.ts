@@ -76,41 +76,6 @@ export class StemElement extends DrawnElement {
             drawCursor = drawCursor.add(scaledDirectionVector)
         })
 
-        this.elementGroup = new Group(this.drawnElements)
-        let dragStartPoint: Point
-        let dragAngle: Point
-        let that = this // make a reference to this stem for passing into scopes
-
-    
-        this.elementGroup.onMouseDown = function(event) {
-            dragStartPoint = event.point.clone()
-        }
-    
-        this.elementGroup.onMouseUp = function(event) {
-        }
-
-        this.elementGroup.onMouseDrag = function(event) {
-
-            
-            dragAngle = event.point.subtract(that.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.center).angle
-
-            let nearestMultiple = Math.round(dragAngle / (Math.PI/2)) * (Math.PI/2)
-            console.log('nearest', dragAngle, nearestMultiple)
-            // Snap to nearest 45 degree angle if applicable
-            if (Math.abs(dragAngle - nearestMultiple) < Math.PI*15/180) {
-                dragAngle = nearestMultiple
-            }
-
-            // Drag the stem if it's not at root
-            if (that.parentElement !== null) {
-                that.rotateStem(dragAngle, that.parentElement.center)
-                dragStartPoint = event.point.clone()
-            } else {
-                // If we're dragging a root stem, then do a flip!
-                that.flipStem(that.startPoint)
-            }
-        }
-
 
         return drawCursor
     }

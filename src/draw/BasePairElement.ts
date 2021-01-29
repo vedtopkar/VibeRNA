@@ -28,6 +28,7 @@ export class BasePairElement extends DrawnElement {
 
         // Scale the unit vector to length bpWidth
         this.drawVector.length = this.drawing.config.bpLength
+        this.type = 'BasePairElement'
     }
 
     public draw() {

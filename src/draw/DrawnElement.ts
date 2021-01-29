@@ -1,7 +1,7 @@
 import { Drawing } from "../draw"
 import { Structure } from "../structure/structure"
 
-export type DrawnElementType = "UnpairedElement" | "StemElement";
+export type DrawnElementType = "UnpairedElement" | "StemElement" | "BasePairElement";
 
 export class DrawnElement {
     public drawing: Drawing
