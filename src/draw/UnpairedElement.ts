@@ -31,7 +31,7 @@ export class UnpairedElement extends DrawnElement {
         const chars = [...this.node.sequence]
         let drawCursor: Point = startPoint.clone()
         chars.forEach((c, i) {
-            let n = new Nucleotide(this.drawing, this, c, drawCursor)
+            let n = new Nucleotide(this.drawing, this, c, drawCursor, 0)
             n.draw()
             this.drawing.nucleotides.push(n)
 
@@ -72,7 +72,7 @@ export class UnpairedElement extends DrawnElement {
             center.y += radius*Math.sin(Math.PI*angleCursor/180)
             center.x += radius*Math.cos(Math.PI*angleCursor/180)
 
-            let nt = new Nucleotide(this.drawing, this, c, center)
+            let nt = new Nucleotide(this.drawing, this, c, center, angleCursor + 90)
             nt.draw()
 
             this.drawing.nucleotides.push(nt)
@@ -120,7 +120,7 @@ export class UnpairedElement extends DrawnElement {
         } else {
             let ntAngleIncrement: number = (angleEnd - angleStart)/(this.drawnNucleotides.length + 1)
         }
-        console.log('increment', ntAngleIncrement, angleEnd < angleStart)
+
         angleCursor += ntAngleIncrement
 
         // console.log('angles', angleStart, angleEnd)

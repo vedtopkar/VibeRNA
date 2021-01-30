@@ -18,6 +18,7 @@ import { BasePairElement } from './draw/BasePairElement'
 import { Nucleotide } from './draw/Nucleotide'
 import { DrawConfig, DefaultConfig } from "./draw/DrawConfig"
 import { BulgeElement } from "./draw/BulgeElement"
+import { nextTick } from "process"
 
 /**
  * Drawing
@@ -106,12 +107,12 @@ export class Drawing {
             }
         }
 
-
-        this.nucleotides.forEach((n, i) {
-
-            // if (i == 0 || (i + 1) % 10 == 0) {
-            //     n.drawNumbering(i)
-            // }
+        
+        this.nucleotides.forEach((n, i) => {
+            if((i + 1) % 10 == 0 || i == 0) {
+                console.log('nt', n.drawDirection)
+                n.drawNumbering(i)
+            }
         })
     }
 

@@ -9,16 +9,19 @@ export class Nucleotide {
     public group: Group
     public circle: Path.Circle
     public text: Path.PointText
+    public drawDirection: number
 
     public parentElement: DrawnElement
     
+    public helixSide: string
     public numbered: Boolean = false
 
 
-    constructor(drawing: Drawing, parentElement: DrawnElement, letter: string, center: Point) {
+    constructor(drawing: Drawing, parentElement: DrawnElement, letter: string, center: Point, drawDirection: number) {
         this.drawing = drawing
         this.parentElement = parentElement
         this.letter = letter
+        this.drawDirection = drawDirection
         this.center = center.clone()
 
     }
@@ -27,8 +30,7 @@ export class Nucleotide {
         const circle = new Path.Circle(this.center, this.drawing.config.ntRadius)
 
         const color = this.drawing.config.ntColors[this.drawing.config.ntNucleotides.indexOf(this.letter)]
-
-        // circle.fillColor = this.drawing.config.ntFillColor
+        
         circle.fillColor = color
         circle.strokeColor = this.drawing.config.ntStrokeColor
         circle.strokeWidth = this.drawing.config.ntStrokeWidth
@@ -71,7 +73,8 @@ export class Nucleotide {
             dragAngle = event.point.subtract(that.parentElement.parentElement.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.parentElement.parentElement.center).angle
             
             if(that.parentElement.type == 'BasePairElement') {
-                let nearestMultiple = Math.round(dragAngle / (Math.PI/2)) * (Math.PI/2)
+                console.log(dragStartPoint, dragAngle)
+                let nearestMultiple = Math.round(dragAngle / 45) * 45
     
                 // Drag the stem if it's not at root
                 if (that.parentElement !== null) {
@@ -93,10 +96,21 @@ export class Nucleotide {
         // First, we get the overal drawing direction
         // we willd draw the numbering along its tangent
 
-        if (this.parent)
+        let drawCursor = new Point(this.center.x, this.center.y)
 
-        let numberCenter = this.center.clone()
-        numberCenter.y += 40
+        // if (this.helixSide == 'right' || this.helixSide === undefined) {
+        //     console.log(number)
+        //     let numberingVector = new Point({length: this.drawing.config.ntRadius*2, angle: this.drawDirection - 90})
+        // } else {
+        //     let numberingVector = new Point({length: this.drawing.config.ntRadius*2, angle: this.drawDirection + 90})
+        // }
+
+        let numberingVector = new Point({length: this.drawing.config.ntRadius*2, angle: this.drawDirection - 90})
+        
+        
+
+        let numberCenter = drawCursor.add(numberingVector)
+        console.log('vecang', numberCenter)
 
         const numberText = new PointText(numberCenter)
         numberText.content = number + 1
@@ -104,9 +118,7 @@ export class Nucleotide {
 
         let line = new Path.Line(numberCenter, this.center)
         line.strokeColor = 'black'
-
-        console.log(line)
-
+        console.log(numberCenter, this.center)
 
     }
 

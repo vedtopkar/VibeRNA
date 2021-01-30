@@ -105,6 +105,7 @@ export class StemElement extends DrawnElement {
     }
 
     public rotateCircularly(angle, center) {
+        
         // Rotate each bp individually
         this.basePairs.forEach((bp, i) {
             bp.rotateCircularly(angle, center)

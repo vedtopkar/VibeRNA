@@ -15,6 +15,7 @@ export class BasePairElement extends DrawnElement {
     public parentElement: StemElement
     public startPoint: Point
     public drawVector: Point
+    public drawDirection: number
 
     public nucleotides: Array<Nucleotide> = [] // 5' and 3', in that order
     public hBond: Path.Line
@@ -34,14 +35,16 @@ export class BasePairElement extends DrawnElement {
     public draw() {
 
         let drawCursor: Point = this.startPoint.clone()
-        let l = new Nucleotide(this.drawing, this, this.letterPair[0], drawCursor)
+        let l = new Nucleotide(this.drawing, this, this.letterPair[0], drawCursor, this.drawVector.angle - 90)
+        l.helixSide = 'left'
         l.draw()
 
         let p1: Point = drawCursor.clone()
         drawCursor = drawCursor.add(this.drawVector)
 
         let p2: Point = drawCursor.clone()
-        let r = new Nucleotide(this.drawing, this, this.letterPair[1], drawCursor)
+        let r = new Nucleotide(this.drawing, this, this.letterPair[1], drawCursor, this.drawVector.angle + 90)
+        l.helixSide = 'right'
         r.draw()
 
 
