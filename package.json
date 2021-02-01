@@ -8,6 +8,7 @@
     "ts-rna-draw": "./bin/ts-rna-draw.ts"
   },
   "dependencies": {
+    "@parcel/transformer-typescript-tsc": "^2.0.0-nightly.558",
     "bulma": "^0.9.1",
     "commander": "^2.20.3",
     "es6-promise": "^4.2.8",
@@ -18,7 +19,7 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "build": "parcel build index.html --out-dir build --public-url /ts-rna-draw",
+    "build": "parcel build index.html --dist-dir build --public-url /ts-rna-draw",
     "watch": "parcel index.html",
     "deploy": "yarn build && gh-pages -d build"
   },

@@ -18,7 +18,7 @@ import { UnpairedElement } from './UnpairedElement'
  * 
  */
 export class CircularDrawElement extends DrawnElement {
-    public parentElement: StemElement // All circular elements descend from stems
+    public parentElement: DrawnElement // All circular elements descend from stems
 
     public baseBp: BasePairElement // The base-pair at the base (end of the parent stem)
     public baseVector: Point
@@ -39,11 +39,12 @@ export class CircularDrawElement extends DrawnElement {
 
     constructor(drawing: Drawing, parentElement: DrawnElement, node: Node) {
         super(drawing, parentElement)
+        console.log(this.parentElement)
         this.node = node
-
         this.baseBp = this.parentElement.basePairs.slice(-1)[0]
         this.baseVector = this.baseBp.drawVector
         this.baseStart = this.baseBp.startPoint
+        console.log(this)
 
 
         this.computeRadius() // compute 
@@ -130,13 +131,13 @@ export class CircularDrawElement extends DrawnElement {
         // Count up the number of bp vs unpaired nts in the loop
         let bps: number = 1
         let nts: number = 0
-        this.node.daughters.forEach((n, i) => {
+        this.node.daughters.forEach(function(n, i) {
             switch (n.type) {
-                case 'UnpairedNode' {
+                case 'UnpairedNode': {
                     nts += n.sequence.length
                     break
                 }
-                case 'StemNode' {
+                case 'StemNode': {
                     bps += 1
                     break
                 }
@@ -154,7 +155,7 @@ export class CircularDrawElement extends DrawnElement {
         // Iterate through the nodes along the circle and draw
         this.node.daughters.forEach((n, i) => {
             switch (n.type) {
-                case 'UnpairedNode' {
+                case 'UnpairedNode': {
                     let u: UnpairedElement = new UnpairedElement(this.drawing, this, n)
                     let chars = [...n.sequence]
                     let endAngle = angle_cursor + nt_angle_increment*(chars.length + 1)
@@ -201,7 +202,7 @@ export class CircularDrawElement extends DrawnElement {
     // Rotate each daughter element to rotate this circle
     public rotateCircularly(angle, center) {
         this.center = this.center.rotate(angle, center)
-        this.daughterElements.forEach((e, i) {
+        this.daughterElements.forEach(function (e, i) {
             e.rotateCircularly(angle, center)
         })
     }

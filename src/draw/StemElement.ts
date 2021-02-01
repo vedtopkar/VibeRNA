@@ -58,20 +58,23 @@ export class StemElement extends DrawnElement {
      */
     public draw() {
         let drawCursor: Point = this.startPoint.clone()
-        this.node.pairs.forEach((p, i) {
-            let bp = new BasePairElement(this.drawing, this, p, drawCursor, this.startVector)
+        console.log(this)
+        let that = this
+        this.node.pairs.forEach(function (p, i) {
+            
+            let bp = new BasePairElement(that.drawing, that, p, drawCursor, that.startVector)
             bp.draw()
 
-            this.drawing.basePairs.push(bp)
-            this.basePairs.push(bp)
+            that.drawing.basePairs.push(bp)
+            that.basePairs.push(bp)
 
-            this.drawnElements.push(bp.nucleotides[0].circle)
-            this.drawnElements.push(bp.nucleotides[1].circle)
-            this.drawnElements.push(bp.nucleotides[0].text)
-            this.drawnElements.push(bp.nucleotides[1].text)
+            that.drawnElements.push(bp.nucleotides[0].circle)
+            that.drawnElements.push(bp.nucleotides[1].circle)
+            that.drawnElements.push(bp.nucleotides[0].text)
+            that.drawnElements.push(bp.nucleotides[1].text)
 
-            let scaledDirectionVector = this.stemDirectionVector.clone()
-            scaledDirectionVector.length = this.drawing.config.ntSpacing
+            let scaledDirectionVector = that.stemDirectionVector.clone()
+            scaledDirectionVector.length = that.drawing.config.ntSpacing
 
             drawCursor = drawCursor.add(scaledDirectionVector)
         })
@@ -84,7 +87,7 @@ export class StemElement extends DrawnElement {
     public flipStem(startPoint: Point) {
         
         // Flip every 
-        this.basePairs.forEach((bp, i) {
+        this.basePairs.forEach(function (bp, i) {
             bp.flipOverBaseline(this.startVector)
         })
 
@@ -107,7 +110,7 @@ export class StemElement extends DrawnElement {
     public rotateCircularly(angle, center) {
         
         // Rotate each bp individually
-        this.basePairs.forEach((bp, i) {
+        this.basePairs.forEach(function (bp, i) {
             bp.rotateCircularly(angle, center)
         })
 

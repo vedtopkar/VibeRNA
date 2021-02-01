@@ -24,10 +24,8 @@ export class BasePairElement extends DrawnElement {
         super(drawing, parentElement)
 
         this.letterPair = letterPair
-        this.startPoint = startPoint
-        this.drawVector = drawVector
-
-        // Scale the unit vector to length bpWidth
+        this.startPoint = startPoint.clone()
+        this.drawVector = drawVector.clone()
         this.drawVector.length = this.drawing.config.bpLength
         this.type = 'BasePairElement'
     }

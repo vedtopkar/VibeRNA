@@ -83,7 +83,7 @@ export class BulgeNode extends CircularNode {
     }
 }
 
-export class InternalLoop extends Node {
+export class InternalLoopNode extends Node {
     /*
     Internal loop are like BulgeNodes but have "left" AND "right" sequence that lead to a single stem
     */
@@ -95,7 +95,7 @@ export class InternalLoop extends Node {
     }
 }
 
-export class MultiLoop extends Node {
+export class MultiLoopNode extends Node {
     /*
     Multi loops are complex internal loops that have both unpaired regions and stems
     */

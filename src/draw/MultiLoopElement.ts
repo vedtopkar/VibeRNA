@@ -8,9 +8,8 @@ export class MultiLoopElement extends CircularDrawElement {
     public basePoint: Point
     public baseVector: Point
 
-    constructor(drawing: Drawing, parentElement: DrawnElement, node: BulgeNode) {
+    constructor(drawing: Drawing, parentElement: DrawnElement, node: MultiLoopNode) {
         super(drawing, parentElement, node)
-        this.node = node
     }
 
 

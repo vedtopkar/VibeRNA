@@ -12,7 +12,7 @@ This requires 2 things:
 
 import { paper, view } from 'paper/dist/paper-core'
 // import { setup, Path, Point, Line, install, view, Tool, DomEvent } from "paper/dist/paper-core"
-import 'bulma'
+
 
 import { Structure } from './structure/structure'
 import { Drawing } from "./draw"
@@ -47,7 +47,7 @@ const toolPan = new paper.Tool()
 // };
 
 // Zoom on scroll
-canvas.addEventListener('wheel', (e:WheelEvent) {
+canvas.addEventListener('wheel', function (e:WheelEvent) {
 	console.log(e)
 	// Zoom on mousewheel
 	let newZoom: number = 1
@@ -68,21 +68,21 @@ canvas.addEventListener('wheel', (e:WheelEvent) {
 })
 
 let ade_example = document.getElementById('load-dummy')
-ade_example.addEventListener('click', (e:Event) {
+ade_example.addEventListener('click', function (e) {
 	name_field.value = 'Ade example'
 	sequence_field.value = 'GAUCAACGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGU'
 	structure_field.value ='.......((((((((...((((((.........))))))........((((((.......))))))..))))))))'
 })
 
 let p4p6_example = document.getElementById('load-p4p6')
-p4p6_example.addEventListener('click', (e:Event) {
+p4p6_example.addEventListener('click', function (e) {
 	name_field.value = 'P4P6'
 	sequence_field.value = 'GGAAUUGCGGGAAAGGGGUCAACAGCCGUUCAGUACCAAGUCUCAGGGGAAACUUUGAGAUGGCCUUGCAAAGGGUAUGGUAAUAAGCUGACGGACAUGGUCCUAACCACGCAGCCAAGUCCUAAGUCAACAGAUCUUCUGUUGAUAUGGAUGCAGUUCA'
 	structure_field.value = '.....((((((...((((((.....(((.((((.(((..(((((((((....)))))))))..((.......))....)))......)))))))....))))))..)).))))((...((((...(((((((((...)))))))))..))))...))...'
 })
 
 let draw_button = document.getElementById('draw')
-draw_button.addEventListener('click', (e:Event) {
+draw_button.addEventListener('click', function (e) {
 
 	// Initialize a new structure with the
 	let s = new Structure(name_field.value, sequence_field.value, structure_field.value)
@@ -102,14 +102,14 @@ draw_button.addEventListener('click', (e:Event) {
 // Whenever the window is resized, recenter the drawing and change zoom if needed
 window.paper.view.onResize = function(event) {
 	window.drawing.centerAndZoomDrawing(window.paper.view, window.drawing)
-})
+}
 
 canvas.addEventListener('mouseup', function(e) {
 	window.drawing.centerAndZoomDrawing()
 })
 
 let download_svg = document.getElementById('download-svg')
-download_svg.addEventListener('click', (e:Event) {
+download_svg.addEventListener('click', function (e) {
 	let fileName = `${name_field.value}.svg`
 	let url = "data:image/svg+xml;utf8," + encodeURIComponent(window.paper.project.exportSVG({asString:true}))
 	let link = document.createElement("a")
@@ -121,7 +121,7 @@ download_svg.addEventListener('click', (e:Event) {
 
 let download_png = document.getElementById('download-png')
 let that = this
-download_png.addEventListener('click', (e:Event) {
+download_png.addEventListener('click', function  (e) {
 	let png = document.getElementById("render").toDataURL()
 
 	let fileName = `${name_field.value}.png`

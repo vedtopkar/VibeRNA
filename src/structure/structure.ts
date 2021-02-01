@@ -1,6 +1,11 @@
 import { DefaultConfig, DrawConfig } from "../draw/DrawConfig"
-import { MultiLoop, UnpairedNode } from "./nodes"
-import { RootNode, Node, UnpairedNode, StemNode, BulgeSide, BulgeNode, TerminalLoopNode, InternalLoop, MultiLoop } from "./nodes.ts"
+import { RootNode, Node, UnpairedNode, StemNode, BulgeNode, TerminalLoopNode, InternalLoopNode, MultiLoopNode } from "./nodes"
+
+export class StructureTree {
+    // A class that holds the root of a tree (that's it for now!)
+    public root: Node = new RootNode()
+
+}
 
 export class Structure {
     public name: string
@@ -201,16 +206,10 @@ export class Structure {
             let left_cursor = this.find_end_of_unpaired(left)
             let right_cursor = this.find_end_of_unpaired(right, true)
 
-            let m: MultiLoop = new MultiLoop(parentNode)
+            let m: MultiLoopNode = new MultiLoopNode(parentNode)
             parentNode.pushDaughters(m)
             this.recursive_tree_dispatch(left, right, m)
 
-        
+        }
     }
-}
-
-export class StructureTree {
-    // A class that holds the root of a tree (that's it for now!)
-    public root: Node = new RootNode()
-
 }

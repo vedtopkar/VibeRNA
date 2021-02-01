@@ -2,7 +2,7 @@ import { CircularNode, TerminalLoopNode } from '../structure/nodes'
 import { BasePairElement } from './BasePairElement'
 import { DrawnElement } from './DrawnElement'
 import { Nucleotide } from './Nucleotide'
-import { StemElement } from './StemElement']
+import { StemElement } from './StemElement'
 import { Drawing } from '../draw'
 import { CircularDrawElement } from './CircularDrawElement'
 

@@ -112,13 +112,13 @@ export class Nucleotide {
         let numberCenter = drawCursor.add(numberingVector)
         console.log('vecang', numberCenter)
 
-        const numberText = new PointText(numberCenter)
+/*         const numberText = new PointText(numberCenter)
         numberText.content = number + 1
         numberCenter.x += 5
 
         let line = new Path.Line(numberCenter, this.center)
         line.strokeColor = 'black'
-        console.log(numberCenter, this.center)
+        console.log(numberCenter, this.center) */
 
     }
 

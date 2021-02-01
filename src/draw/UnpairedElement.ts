@@ -30,12 +30,12 @@ export class UnpairedElement extends DrawnElement {
     public draw(startPoint: Point): Point {
         const chars = [...this.node.sequence]
         let drawCursor: Point = startPoint.clone()
-        chars.forEach((c, i) {
+        chars.forEach(function (c, i) {
             let n = new Nucleotide(this.drawing, this, c, drawCursor, 0)
             n.draw()
             this.drawing.nucleotides.push(n)
 
-            drawCursor.x += this.structure.drawConfig.ntSpacing
+            drawCursor.x += this.drawing.config.ntSpacing
         })
         
         this.endPoint = drawCursor.clone()
@@ -86,7 +86,7 @@ export class UnpairedElement extends DrawnElement {
     public rotateCircularly(angle, center) {
 
         this.centerPoint = this.centerPoint.rotate(angle, center)
-        this.drawnNucleotides.forEach((n, i) {
+        this.drawnNucleotides.forEach(function (n, i) {
             n.rotate(angle, center)
         })
 
