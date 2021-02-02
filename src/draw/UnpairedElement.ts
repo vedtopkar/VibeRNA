@@ -140,5 +140,11 @@ export class UnpairedElement extends DrawnElement {
 
     }
 
+    public flipOverBaseline(baseline_y) {
+        this.drawnNucleotides.forEach(function (nt, i) {
+            nt.flipOverBaseline(baseline_y)
+        })
+    }
+
 
 }

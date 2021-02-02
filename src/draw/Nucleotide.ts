@@ -35,9 +35,9 @@ export class Nucleotide {
         circle.strokeColor = this.drawing.config.ntStrokeColor
         circle.strokeWidth = this.drawing.config.ntStrokeWidth
 
-
         const offset_center: Point = this.center.clone()
-        offset_center.y += 4
+        offset_center.y = offset_center.y + 4
+
         const text = new PointText(offset_center)
         text.content = this.letter
         text.justification = 'center'
@@ -46,7 +46,9 @@ export class Nucleotide {
         this.text = text
 
         let dragStartPoint: Point
+        let dragLatestPoint: Point
         let dragAngle: number
+        let crossedBaseline: Boolean
 
 
         this.group = new Group([this.circle, this.text])
@@ -69,20 +71,29 @@ export class Nucleotide {
         }
 
         this.group.onMouseDrag = function(event) {
-            
-            dragAngle = event.point.subtract(that.parentElement.parentElement.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.parentElement.parentElement.center).angle
+            console.log(event)
             
             if(that.parentElement.type == 'BasePairElement') {
-                console.log(dragStartPoint, dragAngle)
+                
                 let nearestMultiple = Math.round(dragAngle / 45) * 45
     
-                // Drag the stem if it's not at root
-                if (that.parentElement !== null) {
+                // Flip the stem if it's at root, otherwise drag the stem
+                if(that.parentElement.parentElement.parentElement === null) {
+
+                    let min = Math.min(event.point.y, event.point.y - event.delta.y)
+                    let max = Math.max(event.point.y, event.point.y - event.delta.y)
+
+                    // Check if the latest drag traversed the baseline
+                    if(min < that.drawing.config.origin.y && that.drawing.config.origin.y < max) {
+                        console.log('FLIP')
+                        that.parentElement.parentElement.flipOverBaseline(that.drawing.config.origin.y)
+                    }
+                    
+
+                } else {
+                    dragAngle = event.point.subtract(that.parentElement.parentElement.parentElement.center).angle - dragStartPoint.subtract(that.parentElement.parentElement.parentElement.center).angle
                     that.parentElement.parentElement.rotateStem(dragAngle, that.parentElement.parentElement.parentElement.center)
                     dragStartPoint = event.point.clone()
-                } else {
-                    // If we're dragging a root stem, then do a flip!
-                    that.flipStem(that.startPoint)
                 }
             }
 
@@ -110,7 +121,6 @@ export class Nucleotide {
         
 
         let numberCenter = drawCursor.add(numberingVector)
-        console.log('vecang', numberCenter)
 
 /*         const numberText = new PointText(numberCenter)
         numberText.content = number + 1
@@ -124,7 +134,7 @@ export class Nucleotide {
 
     // Simply move the nucleotide and update the center
     public move(center) {
-        this.center = center
+        this.center = center.clone()
         this.group.position = this.center
     }
 
@@ -133,6 +143,16 @@ export class Nucleotide {
         this.text.rotate(-1*angle)
 
         this.center = this.group.center
+    }
+
+    public flipOverBaseline(baseline_y) {
+
+        let newCenter = this.center.clone()
+        newCenter.y += 2*(baseline_y - this.center.y)
+
+        this.move(newCenter)
+        
+
     }
 
 }

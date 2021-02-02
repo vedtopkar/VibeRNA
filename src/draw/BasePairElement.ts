@@ -65,4 +65,12 @@ export class BasePairElement extends DrawnElement {
 
         this.hBond.rotate(angle, center)
     }
+
+    public flipOverBaseline(baseline_y) {
+        this.nucleotides[0].flipOverBaseline(baseline_y)
+        this.nucleotides[1].flipOverBaseline(baseline_y)
+
+        this.hBond.segments[0].point = this.nucleotides[0].center.clone()
+        this.hBond.segments[1].point = this.nucleotides[1].center.clone()
+    }
 }

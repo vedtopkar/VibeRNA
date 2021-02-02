@@ -2,11 +2,13 @@
 
 Ved's attempt at using Typescript to write a pure Javascript RNA secondary structure drawing app. Play around with it here: <a>https://vedtopkar.github.io/ts-rna-draw/</a>
 
+TS RNA Draw can also be used as a CLI utility! See
+
 ## Demo
 
 ![ts-rna-draw-demo](img/vt-ts-rna-draw-demo.gif)
 
-## Example
+## Use the GUI
 
 Using the following inputs:
 
@@ -18,7 +20,20 @@ AAAAAGGGGGAAGGGGAAACCCAAGGGGAAACCCACCCCCAAAAAAAAAAGGGGGGAAAAAAACCACCCAAAAA
 We get:
 ![ts-rna-draw-example](img/ts-rna-draw-multiloop-example.png)
 
-## Usage
+## Use as CLI utility
+
+You can install this package with npm. First, [install node.js](https://nodejs.org/en/). On MacOS you can just do a quick `brew install  node`.
+
+Once you have node (and thus npm) installed, you can install this package as a global CLI utility by running:
+
+```
+npm install -g ts-rna-draw
+```
+
+For now, 
+
+
+## Local Development
 
 Clone:
 ```

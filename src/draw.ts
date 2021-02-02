@@ -110,7 +110,6 @@ export class Drawing {
         
         this.nucleotides.forEach((n, i) => {
             if((i + 1) % 10 == 0 || i == 0) {
-                console.log('nt', n.drawDirection)
                 n.drawNumbering(i)
             }
         })

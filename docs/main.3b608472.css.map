@@ -1,1 +1,0 @@
-{"version":3,"sources":["main.css"],"names":[],"mappings":"AAAA,cACI,YAAa,CACb,YAAa,CACb,kBAAmB,CACnB,iBACJ","file":"main.3b608472.css","sourceRoot":"..","sourcesContent":["canvas#render {\n    width: 1000px;\n    height: 600px;\n    border-style: solid;\n    border-color: black;\n}"]}

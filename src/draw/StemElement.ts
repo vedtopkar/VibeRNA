@@ -58,7 +58,6 @@ export class StemElement extends DrawnElement {
      */
     public draw() {
         let drawCursor: Point = this.startPoint.clone()
-        console.log(this)
         let that = this
         this.node.pairs.forEach(function (p, i) {
             
@@ -84,14 +83,23 @@ export class StemElement extends DrawnElement {
     }
 
     // When a root stem is dragged, flip the stem over the horizontal
-    public flipStem(startPoint: Point) {
+    public flipOverBaseline(baseline_y: number) {
+        let that = this
         
-        // Flip every 
+        // Flip every base pair in the stem
         this.basePairs.forEach(function (bp, i) {
-            bp.flipOverBaseline(this.startVector)
+            bp.flipOverBaseline(baseline_y)
         })
 
+        if (this.daughterElements.length > 0) {
+            let that = this
+            this.daughterElements.forEach(function(el, i) {
+                el.flipOverBaseline(baseline_y)
+            })
+        }
+
     }
+    
 
     // When a stem is dragged, rotate it and kick off the upstream and downstream cascade
     public rotateStem(angle: number, center: Point) {

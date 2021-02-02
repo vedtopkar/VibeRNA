@@ -227,4 +227,11 @@ export class CircularDrawElement extends DrawnElement {
         }
 
     }
+
+    public flipOverBaseline(baseline_y: number) {
+        this.center.y += 2*(baseline_y - this.center.y)
+        this.daughterElements.forEach(function (e, i) {
+            e.flipOverBaseline(baseline_y)
+        })
+    }
 }

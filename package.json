@@ -4,8 +4,9 @@
   "description": "Experimental RNA structure drawing in typescript",
   "author": "Ved V. Topkar",
   "license": "MIT",
+  "type": "module",
   "bin": {
-    "ts-rna-draw": "./bin/ts-rna-draw.ts"
+    "ts-rna-draw": "./bin/ts-rna-draw.js"
   },
   "dependencies": {
     "@parcel/transformer-typescript-tsc": "^2.0.0-nightly.558",
@@ -20,6 +21,7 @@
   },
   "scripts": {
     "build": "parcel build index.html --dist-dir build --public-url /ts-rna-draw",
+    "cli": "parcel bin/ts-rna-draw.ts --dist-dir bin",
     "watch": "parcel index.html",
     "deploy": "yarn build && gh-pages -d build"
   },
