@@ -160,25 +160,4 @@ export class Drawing {
         }
     }
 
-    public centerAndZoomDrawing() {
-
-        let unitedBounds = this.nucleotides.reduce((bbox, item) => {
-            return !bbox ? item.circle.bounds : bbox.unite(item.circle.bounds)
-        }, null)
-
-        // Set the zoom to encompass the whole drawing
-        this.view.center = unitedBounds.center
-
-        const viewBounds = view.bounds
-        const heightRatio = viewBounds.height/unitedBounds.height
-        const widthRatio = viewBounds.width/unitedBounds.width
-        const newZoom = Math.min(heightRatio, widthRatio)*.9
-
-        this.view.zoom *= newZoom
-    }
-
-    public centerAndZoomAfterResize() {
-        
-    }
-
 }

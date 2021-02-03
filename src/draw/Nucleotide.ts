@@ -14,6 +14,9 @@ export class Nucleotide {
     public parentElement: DrawnElement
     
     public helixSide: string
+
+    public highlighted: Boolean  = false
+    public selected: Boolean = false
     public numbered: Boolean = false
 
 
@@ -151,8 +154,20 @@ export class Nucleotide {
         newCenter.y += 2*(baseline_y - this.center.y)
 
         this.move(newCenter)
-        
 
+    }
+
+    public toggleHighlight() {
+
+    }
+
+    public select() {
+        this.selected = true
+        
+    }
+
+    public deselect() {
+        this.selected = false
     }
 
 }

@@ -11,6 +11,7 @@ This requires 2 things:
 */
 
 import { paper, view } from 'paper/dist/paper-core'
+import 'bulma'
 // import { setup, Path, Point, Line, install, view, Tool, DomEvent } from "paper/dist/paper-core"
 
 
@@ -48,7 +49,6 @@ const toolPan = new paper.Tool()
 
 // Zoom on scroll
 canvas.addEventListener('wheel', function (e:WheelEvent) {
-	console.log(e)
 	// Zoom on mousewheel
 	let newZoom: number = 1
 	let offset: number = 0
@@ -59,7 +59,6 @@ canvas.addEventListener('wheel', function (e:WheelEvent) {
 
 	// console.log('wheel', viewCenter, viewPosition)
 	let result = panAndZoom.changeZoom(paper.view.zoom, e.deltaY, viewCenter, viewPosition)
-	console.log(result)
 	paper.view.zoom = result[0]
 
 	// NOTE: Uncomment if you want zooming to happen under the mouse
@@ -94,18 +93,20 @@ draw_button.addEventListener('click', function (e) {
 	// Make a new drawing and draw it
 	window.drawing = new Drawing(s, window.paper.view)
 	window.drawing.drawTreeDispatch()
-	window.drawing.centerAndZoomDrawing()
+	panAndZoom.centerAndZoom(window.paper.view, window.drawing)
+
 	
 })
 
 
 // Whenever the window is resized, recenter the drawing and change zoom if needed
 window.paper.view.onResize = function(event) {
-	window.drawing.centerAndZoomDrawing(window.paper.view, window.drawing)
+	console.log('blah')
+	window.drawing.centerAfterChange(window.paper.view, window.drawing)
 }
 
 canvas.addEventListener('mouseup', function(e) {
-	window.drawing.centerAndZoomDrawing()
+	panAndZoom.centerAndZoom(window.paper.view, window.drawing)
 })
 
 let download_svg = document.getElementById('download-svg')

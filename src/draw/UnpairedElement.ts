@@ -30,12 +30,13 @@ export class UnpairedElement extends DrawnElement {
     public draw(startPoint: Point): Point {
         const chars = [...this.node.sequence]
         let drawCursor: Point = startPoint.clone()
+        let that = this
         chars.forEach(function (c, i) {
-            let n = new Nucleotide(this.drawing, this, c, drawCursor, 0)
+            let n = new Nucleotide(that.drawing, that, c, drawCursor, 0)
             n.draw()
-            this.drawing.nucleotides.push(n)
+            that.drawing.nucleotides.push(n)
 
-            drawCursor.x += this.drawing.config.ntSpacing
+            drawCursor.x += that.drawing.config.ntSpacing
         })
         
         this.endPoint = drawCursor.clone()

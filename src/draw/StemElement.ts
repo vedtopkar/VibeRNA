@@ -91,6 +91,9 @@ export class StemElement extends DrawnElement {
             bp.flipOverBaseline(baseline_y)
         })
 
+        // Update the startPoint, etc.
+        this.stemDirectionVector.angle = (this.stemDirectionVector + 180) % 180
+
         if (this.daughterElements.length > 0) {
             let that = this
             this.daughterElements.forEach(function(el, i) {
