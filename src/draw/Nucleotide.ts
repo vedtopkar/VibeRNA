@@ -26,7 +26,7 @@ export class Nucleotide {
     constructor(drawing: Drawing, parentElement: DrawnElement, letter: string, center: Point, drawDirection: number, sequenceIndex: number) {
         this.drawing = drawing
         this.parentElement = parentElement
-        this.letter = letter
+        this.letter = letter.toUpperCase()
         this.drawDirection = drawDirection
         this.center = center.clone()
         this.sequenceIndex = sequenceIndex

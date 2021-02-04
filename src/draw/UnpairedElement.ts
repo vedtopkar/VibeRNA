@@ -73,7 +73,7 @@ export class UnpairedElement extends DrawnElement {
             center.y += radius*Math.sin(Math.PI*angleCursor/180)
             center.x += radius*Math.cos(Math.PI*angleCursor/180)
 
-            let nt = new Nucleotide(this.drawing, this, c, center, angleCursor + 90)
+            let nt = new Nucleotide(this.drawing, this, c, center, angleCursor + 90, that.node.sequenceIndices[i])
             nt.draw()
 
             this.drawnNucleotides.push(nt)

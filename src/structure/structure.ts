@@ -173,7 +173,7 @@ export class Structure {
                 sequence = this.sequence.slice(left, left_cursor + 1)
                 left_cursor += 1
 
-                let u: UnpairedNode = new UnpairedNode(b, sequence)
+                let u: UnpairedNode = new UnpairedNode(b, sequence, this.sequence_indices.slice(left_cursor, left_cursor + sequence.length + 1))
                 b.pushDaughters(u)
                 this.recursive_tree_build(left_cursor, right_cursor, b)
 
@@ -183,7 +183,7 @@ export class Structure {
                 sequence = this.sequence.slice(right_cursor, right + 1)
                 right_cursor -= 1
 
-                let u: UnpairedNode = new UnpairedNode(b, sequence)
+                let u: UnpairedNode = new UnpairedNode(b, sequence, this.sequence_indices.slice(left_cursor, left_cursor + sequence.length + 1))
                 this.recursive_tree_build(left_cursor, right_cursor, b)
                 b.pushDaughters(u)
             }
@@ -194,7 +194,7 @@ export class Structure {
         } else if (n_boundary_paired == 0 && this.find_end_of_unpaired(left) == right) {
             // We are at a terminal loop!
             let t: TerminalLoopNode = new TerminalLoopNode(parentNode)
-            let u: UnpairedNode = new UnpairedNode(t, this.sequence.slice(left, right + 1))
+            let u: UnpairedNode = new UnpairedNode(t, this.sequence.slice(left, right + 1), this.sequence_indices.slice(left, right + 1))
 
             t.pushDaughters(u)
             parentNode.pushDaughters(t)

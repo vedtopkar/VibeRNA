@@ -18,7 +18,7 @@ import { BasePairElement } from './draw/BasePairElement'
 import { Nucleotide } from './draw/Nucleotide'
 import { DrawConfig, DefaultConfig } from "./draw/DrawConfig"
 import { BulgeElement } from "./draw/BulgeElement"
-import { nextTick } from "process"
+import tinygradient from "tinygradient"
 
 /**
  * Drawing
@@ -166,17 +166,25 @@ export class Drawing {
         // We start by taking in the values, splitting on commas, converting to floats, then normalizing to [0,1]
         const splitNumbers = reactivity.split(",")
         const reactivityFloats = splitNumbers.map(x => parseFloat(x))
-        this.normalizedReactivityFloats = this.normalizeReactivity(reactivityFloats)
+        this.reactivities = this.normalizeReactivity(reactivityFloats)
+
+        // Initialize gradient
+        let gradient = tinygradient('white', 'orange', 'red')
 
         // Next, we color from white to red (for now)
         let that = this
         this.nucleotides.forEach((n, i) => {
-            // n.circle.fillColor = 'white'
-            // n.circle.fillColor = new Color(1 - that.normalizedReactivityFloats[i], 0, 0)
-            console.log(n, i, that.normalizedReactivityFloats[i])
+            if (n.letter.toUpperCase() == "A"  || n.letter.toUpperCase() == "C") {
+                n.circle.fillColor = gradient.rgbAt(that.reactivities[i]).toHexString()
+                // console.log(n, i, that.reactivities[i], gradient.rgbAt(that.reactivities[i]).toHexString())
+            } else {
+                console.log(n.letter)
+                n.circle.fillColor = '#dbdbdb'
+            }
+
         })
 
-        console.log(reactivity.length, splitNumbers.length, reactivityFloats.length, this.normalizedReactivityFloats.length, this.structure.sequence.length)
+        // console.log(reactivity.length, splitNumbers.length, reactivityFloats.length, this.normalizedReactivityFloats.length, this.structure.sequence.length)
     }
 
     public normalizeReactivity(values) {
