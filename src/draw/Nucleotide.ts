@@ -9,6 +9,9 @@ export class Nucleotide {
     public group: Group
     public circle: Path.Circle
     public text: Path.PointText
+    public sequenceIndex: number
+
+    // Drawdirection is the angle in which the cursor is moving when the nucleotide is drawn
     public drawDirection: number
 
     public parentElement: DrawnElement
@@ -20,12 +23,16 @@ export class Nucleotide {
     public numbered: Boolean = false
 
 
-    constructor(drawing: Drawing, parentElement: DrawnElement, letter: string, center: Point, drawDirection: number) {
+    constructor(drawing: Drawing, parentElement: DrawnElement, letter: string, center: Point, drawDirection: number, sequenceIndex: number) {
         this.drawing = drawing
         this.parentElement = parentElement
         this.letter = letter
         this.drawDirection = drawDirection
         this.center = center.clone()
+        this.sequenceIndex = sequenceIndex
+
+        // When we make the nucleotide, put it at the appropriate place in the drawing's nucleotide array
+        this.drawing.nucleotides[this.sequenceIndex] = this
 
     }
 
@@ -74,7 +81,6 @@ export class Nucleotide {
         }
 
         this.group.onMouseDrag = function(event) {
-            console.log(event)
             
             if(that.parentElement.type == 'BasePairElement') {
                 

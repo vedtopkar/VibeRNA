@@ -110,7 +110,7 @@ export class Structure {
                     right_cursor += 1
                 }
 
-                let u: UnpairedNode = new UnpairedNode(parentNode, this.sequence.slice(left_cursor, right_cursor + 1))
+                let u: UnpairedNode = new UnpairedNode(parentNode, this.sequence.slice(left_cursor, right_cursor + 1), this.sequence_indices.slice(left_cursor, right_cursor + 1))
                 parentNode.pushDaughters(u)
                 left_cursor = right_cursor = right_cursor + 1
             } else {
@@ -142,8 +142,7 @@ export class Structure {
 
             // Consume the stem and make its node
             while (this.pairs[left_cursor] != null && this.pairs[right_cursor] != null && this.pairs[left_cursor] == right_cursor && this.pairs[right_cursor] == left_cursor) {
-                stem_indices.push(left_cursor)
-                stem_indices.push(right_cursor)
+                stem_indices.push([left_cursor, right_cursor])
 
                 stem_pairs.push([this.sequence.charAt(left_cursor), this.sequence.charAt(right_cursor)])
 
@@ -152,7 +151,7 @@ export class Structure {
             }
 
             // Make the node, add it to the parent
-            let s: StemNode = new StemNode(parentNode, stem_pairs)
+            let s: StemNode = new StemNode(parentNode, stem_pairs, stem_indices)
             parentNode.pushDaughters(s)
 
             // Kick off the next recursive layer, with the stem we just made as parent

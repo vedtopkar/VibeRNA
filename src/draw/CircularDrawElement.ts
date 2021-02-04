@@ -212,8 +212,6 @@ export class CircularDrawElement extends DrawnElement {
         let stem_index = this.daughterElements.indexOf(stem)
         let stem_angle = (stem.stemDirectionVector.angle + 360) % 360
         
-        
-
         if (stem_index > 0) {
             // rearrange the stuff before
             let before_element = this.daughterElements[stem_index - 1]

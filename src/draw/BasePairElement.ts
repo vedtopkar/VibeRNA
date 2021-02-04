@@ -16,24 +16,27 @@ export class BasePairElement extends DrawnElement {
     public startPoint: Point
     public drawVector: Point
     public drawDirection: number
+    public pairIndices: Array<number>
 
     public nucleotides: Array<Nucleotide> = [] // 5' and 3', in that order
     public hBond: Path.Line
 
-    constructor(drawing: Drawing, parentElement: DrawnElement, letterPair: Array<string>, startPoint: Point, drawVector: Point) {
+    constructor(drawing: Drawing, parentElement: DrawnElement, letterPair: Array<string>, startPoint: Point, drawVector: Point, pairIndices: Array<number>) {
         super(drawing, parentElement)
 
         this.letterPair = letterPair
         this.startPoint = startPoint.clone()
         this.drawVector = drawVector.clone()
         this.drawVector.length = this.drawing.config.bpLength
+        this.pairIndices = pairIndices
+
         this.type = 'BasePairElement'
     }
 
     public draw() {
 
         let drawCursor: Point = this.startPoint.clone()
-        let l = new Nucleotide(this.drawing, this, this.letterPair[0], drawCursor, this.drawVector.angle - 90)
+        let l = new Nucleotide(this.drawing, this, this.letterPair[0], drawCursor, this.drawVector.angle - 90, this.pairIndices[0])
         l.helixSide = 'left'
         l.draw()
 
@@ -41,7 +44,7 @@ export class BasePairElement extends DrawnElement {
         drawCursor = drawCursor.add(this.drawVector)
 
         let p2: Point = drawCursor.clone()
-        let r = new Nucleotide(this.drawing, this, this.letterPair[1], drawCursor, this.drawVector.angle + 90)
+        let r = new Nucleotide(this.drawing, this, this.letterPair[1], drawCursor, this.drawVector.angle + 90, this.pairIndices[1])
         l.helixSide = 'right'
         r.draw()
 
@@ -53,9 +56,6 @@ export class BasePairElement extends DrawnElement {
 
         this.nucleotides.push(l)
         this.nucleotides.push(r)
-
-        this.drawing.nucleotides.push(l)
-        this.drawing.nucleotides.push(r)
     }
 
     public rotateCircularly(angle, center) {

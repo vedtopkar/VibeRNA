@@ -61,7 +61,7 @@ export class StemElement extends DrawnElement {
         let that = this
         this.node.pairs.forEach(function (p, i) {
             
-            let bp = new BasePairElement(that.drawing, that, p, drawCursor, that.startVector)
+            let bp = new BasePairElement(that.drawing, that, p, drawCursor, that.startVector, that.node.sequenceIndices[i])
             bp.draw()
 
             that.drawing.basePairs.push(bp)
@@ -85,17 +85,20 @@ export class StemElement extends DrawnElement {
     // When a root stem is dragged, flip the stem over the horizontal
     public flipOverBaseline(baseline_y: number) {
         let that = this
+
+
         
         // Flip every base pair in the stem
         this.basePairs.forEach(function (bp, i) {
             bp.flipOverBaseline(baseline_y)
         })
 
+        console.log('old angle', this.stemDirectionVector.angle)
         // Update the startPoint, etc.
-        this.stemDirectionVector.angle = (this.stemDirectionVector + 180) % 180
+        this.stemDirectionVector.angle = (this.stemDirectionVector.angle + 180) % 360
+        console.log('new angle', this.stemDirectionVector.angle)
 
         if (this.daughterElements.length > 0) {
-            let that = this
             this.daughterElements.forEach(function(el, i) {
                 el.flipOverBaseline(baseline_y)
             })

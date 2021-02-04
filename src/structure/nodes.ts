@@ -15,6 +15,7 @@ export class Node {
     public parent: Node;
     public daughters: Array<Node> = [];
     public type: string;
+    public stringIndices: Array<number>
 
     constructor(parent: Node) {
         this.parent = parent;
@@ -33,9 +34,10 @@ export class UnpairedNode extends Node {
     public sequence: string;
     public type: NodeType = 'UnpairedNode';
 
-    constructor(parent: Node, sequence: string) {
-        super(parent);
-        this.sequence = sequence;
+    constructor(parent: Node, sequence: string, sequenceIndices: Array<number>) {
+        super(parent)
+        this.sequence = sequence
+        this.sequenceIndices = sequenceIndices
     }
 }
 
@@ -46,9 +48,10 @@ export class StemNode extends Node {
     public pairs: Array<number>;
     public type: NodeType = 'StemNode';
 
-    constructor(parent: Node, pairs: Array<number>) {
+    constructor(parent: Node, pairs: Array<string>, sequenceIndices: Array<number>) {
         super(parent);
         this.pairs = pairs;
+        this.sequenceIndices = sequenceIndices
     }
 }
 

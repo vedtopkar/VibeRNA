@@ -22,6 +22,7 @@ import { PanAndZoom } from './interact/PanAndZoom'
 let name_field: HTMLInputElement = document.getElementById('name')
 let sequence_field: HTMLInputElement = document.getElementById('sequence')
 let structure_field: HTMLInputElement = document.getElementById('structure')
+let reactivity_field: HTMLInputElement = document.getElementById('reactivity')
 
 console.log(paper)
 paper.install(window)
@@ -69,8 +70,9 @@ canvas.addEventListener('wheel', function (e:WheelEvent) {
 let ade_example = document.getElementById('load-dummy')
 ade_example.addEventListener('click', function (e) {
 	name_field.value = 'Ade example'
-	sequence_field.value = 'GAUCAACGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGU'
-	structure_field.value ='.......((((((((...((((((.........))))))........((((((.......))))))..))))))))'
+	sequence_field.value = 'ggaaaggaaagggaaagaaACGCUUCAUAUAAUCCUAAUGAUAUGGUUUGGGAGUUUCUACCAAGAGCCUUAAACUCUUGAUUAUGAAGUGaaaacaaaacaaagaaacaacaacaacaac'
+	structure_field.value ='....................(((((((((...((((((.........))))))........((((((.......))))))..)))))))))..............................'
+	reactivity_field.value='0.6775,0.5422,0.2528,0.655,0.4755,0.0057,0.5808,0.6561,0.2812,0.2412,0.7743,0.8104,0.2768,0.0875,0.3538,0.2732,0.4146,0.0933,0.0538,0.0493,0.018,0.0504,0.0711,0.028,0.0646,0.0285,0.1416,0.1264,0.0243,0.0188,0.0364,0.0233,0.1087,0.0919,0.0519,0.0783,0.1341,0.0156,0.384,0.1599,0.0161,0.0193,-0.0153,0.0028,0.0346,0.0009,0.0769,0.0069,0.024,-0.0063,0.0232,0.0377,-0.0463,-0.0096,0.0387,0.0218,0.0455,-0.0075,0.0328,0.0713,0.0102,0.0949,0.0075,0.0231,0.0325,0.0696,0.0263,0.5351,0.1938,0.1135,0.0678,0.0003,-0.0016,0.0063,0.0321,0.0244,0.0868,0.017,0.0037,0.0416,0.054,0.0284,0.1237,0.1418,-0.1526,0.2069,0.3223,1.6037,0.8508,1.3139,1.0931'
 })
 
 let p4p6_example = document.getElementById('load-p4p6')
@@ -85,6 +87,7 @@ draw_button.addEventListener('click', function (e) {
 
 	// Initialize a new structure with the
 	let s = new Structure(name_field.value, sequence_field.value, structure_field.value)
+	console.log(s)
 
 	// Clear canvas
 	const canvas: HTMLCanvasElement = document.getElementById("render") as HTMLCanvasElement
@@ -93,11 +96,15 @@ draw_button.addEventListener('click', function (e) {
 	// Make a new drawing and draw it
 	window.drawing = new Drawing(s, window.paper.view)
 	window.drawing.drawTreeDispatch()
+
+	if(reactivity_field.value.length > 0) {
+		window.drawing.paintReactivity(reactivity_field.value)
+	}
+
 	panAndZoom.centerAndZoom(window.paper.view, window.drawing)
 
 	
 })
-
 
 // Whenever the window is resized, recenter the drawing and change zoom if needed
 window.paper.view.onResize = function(event) {

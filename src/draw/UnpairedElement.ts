@@ -32,9 +32,9 @@ export class UnpairedElement extends DrawnElement {
         let drawCursor: Point = startPoint.clone()
         let that = this
         chars.forEach(function (c, i) {
-            let n = new Nucleotide(that.drawing, that, c, drawCursor, 0)
+            let n = new Nucleotide(that.drawing, that, c, drawCursor, 0, that.node.sequenceIndices[i])
             n.draw()
-            that.drawing.nucleotides.push(n)
+            that.drawnNucleotides.push(n)
 
             drawCursor.x += that.drawing.config.ntSpacing
         })
@@ -61,13 +61,13 @@ export class UnpairedElement extends DrawnElement {
         this.angleEnd = angleEnd
         this.centerPoint = centerPoint
 
-        
         const chars = [...this.node.sequence]
 
         let angleCursor: number = angleStart
         let ntAngleIncrement: number = (angleEnd - angleStart)/(chars.length + 1)
         angleCursor += ntAngleIncrement
 
+        let that = this
         chars.forEach((c, i) => {
             let center = this.centerPoint.clone()
             center.y += radius*Math.sin(Math.PI*angleCursor/180)
@@ -76,7 +76,6 @@ export class UnpairedElement extends DrawnElement {
             let nt = new Nucleotide(this.drawing, this, c, center, angleCursor + 90)
             nt.draw()
 
-            this.drawing.nucleotides.push(nt)
             this.drawnNucleotides.push(nt)
             angleCursor += ntAngleIncrement
         })
@@ -142,6 +141,10 @@ export class UnpairedElement extends DrawnElement {
     }
 
     public flipOverBaseline(baseline_y) {
+
+        this.angleStart = (this.angleStart + 180) % 360
+        this.angleEnd = (this.angleEnd + 180) % 360
+
         this.drawnNucleotides.forEach(function (nt, i) {
             nt.flipOverBaseline(baseline_y)
         })

@@ -4,7 +4,7 @@
  * Main file that initiates drawing
 */
 
-import { Point, View } from "paper/dist/paper-core"
+import { Point, View, Color } from "paper/dist/paper-core"
 import { Structure, StructureTree } from "./structure/structure"
 import { Node, UnpairedNode, StemNode, TerminalLoopNode, BulgeNode, InternalLoop, MultiLoop, RootNode } from './structure/nodes'
 
@@ -36,7 +36,6 @@ export class Drawing {
     // The drawtree is a nested 
     public rootElements: Array<DrawnElement> = []
 
-
     // Explicit references to each type of drawn element for easy post-hoc updating
     public unpaireds: Array<UnpairedElement> = []
     public stems: Array<StemElement> = []
@@ -44,13 +43,13 @@ export class Drawing {
     public internalLoops: Array<InternalLoopElement> = []
     public multiLoops: Array<MultiLoopElement> = []
     public basePairs: Array<BasePairElement> = []
-    public nucleotides: Array<Nucleotide> = []
+    public nucleotides: Array<Nucleotide>
     
-
     // Load in the default config
     public config: DrawConfig = DefaultConfig
 
- 
+    public reactivities: Array<number>
+
     /**
      * Draw cursor of drawing
      * 
@@ -69,6 +68,8 @@ export class Drawing {
 
     constructor(structure: Structure, view: View) {
         this.structure = structure
+        this.nucleotides = Array(this.structure.sequence.length)
+
         this.view = view
 
         // Shift over so that the first element is drawn at the origin
@@ -158,6 +159,37 @@ export class Drawing {
                 break
             }
         }
+    }
+
+    public paintReactivity(reactivity) {
+
+        // We start by taking in the values, splitting on commas, converting to floats, then normalizing to [0,1]
+        const splitNumbers = reactivity.split(",")
+        const reactivityFloats = splitNumbers.map(x => parseFloat(x))
+        this.normalizedReactivityFloats = this.normalizeReactivity(reactivityFloats)
+
+        // Next, we color from white to red (for now)
+        let that = this
+        this.nucleotides.forEach((n, i) => {
+            // n.circle.fillColor = 'white'
+            // n.circle.fillColor = new Color(1 - that.normalizedReactivityFloats[i], 0, 0)
+            console.log(n, i, that.normalizedReactivityFloats[i])
+        })
+
+        console.log(reactivity.length, splitNumbers.length, reactivityFloats.length, this.normalizedReactivityFloats.length, this.structure.sequence.length)
+    }
+
+    public normalizeReactivity(values) {
+
+        // If values dip below 0, move everything up to be positive
+        if(Math.min(...values) < 0) {
+            values = values.map(x => x + Math.abs(Math.min(...values)))
+        }
+
+        // Divide by the maximun value
+        values = values.map(x => x/Math.max(...values))
+
+        return values
     }
 
 }
