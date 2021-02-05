@@ -169,14 +169,15 @@ export class Drawing {
         this.reactivities = this.normalizeReactivity(reactivityFloats)
 
         // Initialize gradient
-        let gradient = tinygradient('white', 'orange', 'red')
+        let gradient = tinygradient('white', 'red')
 
         // Next, we color from white to red (for now)
         let that = this
         this.nucleotides.forEach((n, i) => {
             if (n.letter.toUpperCase() == "A"  || n.letter.toUpperCase() == "C") {
+                n.reactivityValue = that.reactivities[i]
                 n.circle.fillColor = gradient.rgbAt(that.reactivities[i]).toHexString()
-                // console.log(n, i, that.reactivities[i], gradient.rgbAt(that.reactivities[i]).toHexString())
+                console.log(n, i, that.reactivities[i], gradient.rgbAt(that.reactivities[i]).toHexString())
             } else {
                 console.log(n.letter)
                 n.circle.fillColor = '#dbdbdb'
