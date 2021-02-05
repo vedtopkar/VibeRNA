@@ -43,10 +43,12 @@ paper.view.scale(1)
 const toolPan = new paper.Tool()
 
 // Pan on mousedrag
-// toolPan.onMouseDrag = function (event) {
-//     var delta = event.downPoint.subtract(event.point)
-//     paper.view.scrollBy(delta)
-// };
+toolPan.onMouseDrag = function (toolEvent) {
+	if(toolEvent.event.shiftKey) {
+		var delta = toolEvent.downPoint.subtract(toolEvent.point)
+		paper.view.scrollBy(delta)
+	}
+};
 
 // Zoom on scroll
 canvas.addEventListener('wheel', function (e:WheelEvent) {
@@ -109,13 +111,15 @@ draw_button.addEventListener('click', function (e) {
 
 // Whenever the window is resized, recenter the drawing and change zoom if needed
 window.paper.view.onResize = function(event) {
-	console.log('blah')
-	panAndZoom.centerAndZoom(window.paper.view, window.drawing)
+	panAndZoom.centerDrawing(window.paper.view, window.drawing)
 	
 }
 
 canvas.addEventListener('mouseup', function(e) {
-	panAndZoom.centerAndZoom(window.paper.view, window.drawing)
+	// if(e.altKey) {
+		panAndZoom.centerAndZoom(window.paper.view, window.drawing)
+		e.preventDefault()
+	// }
 })
 
 let download_svg = document.getElementById('download-svg')

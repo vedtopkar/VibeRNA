@@ -1,7 +1,7 @@
 
 :root {
     --menubar-height: 45pt;
-    --sidebar-width: 200pt;
+    --sidebar-width: 250pt;
   }
 
 html, body { 
@@ -28,10 +28,10 @@ canvas[resize] {
 }
 
 #menubar-container {
-    /* padding: 10pt; */
+    // /* padding: 10pt; */
     top: 0pt; left: 0pt; right: 0pt; height: var(--menubar-height);
     border-style: solid;
-    border-width: 0.5pt;
+    border-width: 1pt;
     border-color: gray;
     overflow-y: auto;
     overflow-x: hidden;
