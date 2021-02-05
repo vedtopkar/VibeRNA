@@ -32,8 +32,8 @@ export const DefaultConfig: DrawConfig = {
     ntRadius: 10,
     ntSpacing: 30,
     ntFillColor: 'white',
-    ntStrokeColor: 'black',
-    ntStrokeWidth: 0,
+    ntStrokeColor: 'gray',
+    ntStrokeWidth: 0.25,
 
     ntNucleotides: ['A', 'U', 'C', 'G'],
     ntColors: ['#ff70a6', '#ffd670', '#06d6a0', '#70d6ff'],
