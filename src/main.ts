@@ -110,7 +110,8 @@ draw_button.addEventListener('click', function (e) {
 // Whenever the window is resized, recenter the drawing and change zoom if needed
 window.paper.view.onResize = function(event) {
 	console.log('blah')
-	window.drawing.centerAfterChange(window.paper.view, window.drawing)
+	panAndZoom.centerAndZoom(window.paper.view, window.drawing)
+	
 }
 
 canvas.addEventListener('mouseup', function(e) {
