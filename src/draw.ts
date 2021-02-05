@@ -169,7 +169,7 @@ export class Drawing {
         this.reactivities = this.normalizeReactivity(reactivityFloats)
 
         // Initialize gradient
-        let gradient = tinygradient('white', 'red')
+        let gradient = tinygradient('white', 'orange')
 
         // Next, we color from white to red (for now)
         let that = this
@@ -177,9 +177,7 @@ export class Drawing {
             if (n.letter.toUpperCase() == "A"  || n.letter.toUpperCase() == "C") {
                 n.reactivityValue = that.reactivities[i]
                 n.circle.fillColor = gradient.rgbAt(that.reactivities[i]).toHexString()
-                console.log(n, i, that.reactivities[i], gradient.rgbAt(that.reactivities[i]).toHexString())
             } else {
-                console.log(n.letter)
                 n.circle.fillColor = '#dbdbdb'
             }
 

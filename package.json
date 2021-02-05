@@ -21,8 +21,8 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "build": "parcel build index.html --dist-dir build --public-url /ts-rna-draw",
-    "cli": "parcel bin/ts-rna-draw.ts --dist-dir bin",
+    "build": "parcel build index.html --out-dir build --public-url /ts-rna-draw",
+    "cli": "parcel bin/ts-rna-draw.ts --out-dir bin",
     "watch": "parcel index.html",
     "deploy": "yarn build && gh-pages -d build"
   },

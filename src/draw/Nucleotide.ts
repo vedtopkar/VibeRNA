@@ -41,7 +41,6 @@ export class Nucleotide {
 
         const color = this.drawing.config.ntColors[this.drawing.config.ntNucleotides.indexOf(this.letter)]
         
-        circle.fillColor = color
         circle.strokeColor = this.drawing.config.ntStrokeColor
         circle.strokeWidth = this.drawing.config.ntStrokeWidth
 

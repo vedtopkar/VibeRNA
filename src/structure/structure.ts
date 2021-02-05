@@ -173,7 +173,7 @@ export class Structure {
                 sequence = this.sequence.slice(left, left_cursor + 1)
                 left_cursor += 1
 
-                let u: UnpairedNode = new UnpairedNode(b, sequence, this.sequence_indices.slice(left_cursor, left_cursor + sequence.length + 1))
+                let u: UnpairedNode = new UnpairedNode(b, sequence, this.sequence_indices.slice(left, left_cursor + 1))
                 b.pushDaughters(u)
                 this.recursive_tree_build(left_cursor, right_cursor, b)
 
@@ -181,10 +181,11 @@ export class Structure {
                 // right side bulge
                 right_cursor = this.find_end_of_unpaired(right, true)
                 sequence = this.sequence.slice(right_cursor, right + 1)
-                right_cursor -= 1
 
-                let u: UnpairedNode = new UnpairedNode(b, sequence, this.sequence_indices.slice(right_cursor + sequence.length + 1, right_cursor))
-                this.recursive_tree_build(left_cursor, right_cursor, b)
+                let u: UnpairedNode = new UnpairedNode(b, sequence, this.sequence_indices.slice(right_cursor, right + 1))
+
+                console.log('BULGE', right_cursor, right)
+                this.recursive_tree_build(left_cursor, right_cursor - 1, b)
                 b.pushDaughters(u)
             }
 
