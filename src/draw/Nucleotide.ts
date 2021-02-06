@@ -10,6 +10,7 @@ export class Nucleotide {
     public circle: Path.Circle
     public text: Path.PointText
     public sequenceIndex: number
+    public reactivityValue: number
 
     // Drawdirection is the angle in which the cursor is moving when the nucleotide is drawn
     public drawDirection: number

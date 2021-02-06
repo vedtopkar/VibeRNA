@@ -2849,6 +2849,11 @@ inherits@2.0.3:
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
+interface@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/interface/-/interface-1.2.1.tgz#ba9ec974a56fc576e497278348dd59b3fc9a7c44"
+  integrity sha512-qMf+X2WyPxlGKE/lyBxQ7Ju3RNe8buQUxRBVPlmrmqMyMvQtPUShz7a/281njPjGnUMJ7hJ8+3Wx8Y7H6L5ixw==
+
 is-absolute-url@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/is-absolute-url/-/is-absolute-url-2.1.0.tgz#50530dfb84fcc9aa7dbe7852e83a37b93b9f2aa6"

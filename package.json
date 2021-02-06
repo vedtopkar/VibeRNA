@@ -12,6 +12,7 @@
     "bulma": "^0.9.1",
     "commander": "^2.20.3",
     "es6-promise": "^4.2.8",
+    "interface": "^1.2.1",
     "paper": "^0.12.11",
     "parcel": "^1.12.4",
     "sass": "^1.32.5",
