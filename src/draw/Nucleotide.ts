@@ -151,11 +151,12 @@ export class Nucleotide {
         this.group.rotate(angle, center)
         this.text.rotate(-1*angle)
 
-        this.center = this.group.center
+        this.center = this.circle.position.clone()
     }
 
     public flipOverBaseline(baseline_y) {
 
+        console.log(this)
         let newCenter = this.center.clone()
         newCenter.y += 2*(baseline_y - this.center.y)
 
