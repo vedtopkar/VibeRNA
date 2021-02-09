@@ -156,7 +156,6 @@ export class Nucleotide {
 
     public flipOverBaseline(baseline_y) {
 
-        console.log(this)
         let newCenter = this.center.clone()
         newCenter.y += 2*(baseline_y - this.center.y)
 

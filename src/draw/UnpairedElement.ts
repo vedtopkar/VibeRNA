@@ -142,13 +142,12 @@ export class UnpairedElement extends DrawnElement {
 
     public flipOverBaseline(baseline_y) {
 
-        this.angleStart = (this.angleStart + 180) % 360
-        this.angleEnd = (this.angleEnd + 180) % 360
+        this.angleStart = (180 - this.angleStart) % 360
+        this.angleEnd = (180 - this.angleEnd) % 360
 
         this.drawnNucleotides.forEach(function (nt, i) {
             nt.flipOverBaseline(baseline_y)
         })
     }
-
 
 }

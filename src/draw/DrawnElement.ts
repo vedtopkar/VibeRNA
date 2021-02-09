@@ -17,7 +17,6 @@ export class DrawnElement {
         this.drawing = drawing
         this.structure = this.drawing.structure
         this.parentElement = parent
-        console.log(this)
     }
 
 }

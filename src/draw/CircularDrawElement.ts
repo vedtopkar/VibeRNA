@@ -209,6 +209,7 @@ export class CircularDrawElement extends DrawnElement {
 
     // After a daughter stem is dragged, rearrange the 5' and 3' elements (if unpaired)
     public rearrangeAfterDrag(stem: StemElement, angle: number) {
+
         let stem_index = this.daughterElements.indexOf(stem)
         let stem_angle = (stem.stemDirectionVector.angle + 360) % 360
         
@@ -216,18 +217,24 @@ export class CircularDrawElement extends DrawnElement {
             // rearrange the stuff before
             let before_element = this.daughterElements[stem_index - 1]
             before_element.rearrangeCircular(before_element.angleStart, stem_angle - this.phi/2)
+            console.log('before stem', before_element.angleStart, before_element.angleEnd)
         }
 
         if (stem_index < this.daughterElements.length - 1) {
             // rearrange the stuff after
             let after_element = this.daughterElements[stem_index + 1]
             after_element.rearrangeCircular(stem_angle + this.phi/2, after_element.angleEnd % 360)
+            console.log('after stem', after_element.angleStart, after_element.angleEnd)
         }
 
     }
 
     public flipOverBaseline(baseline_y: number) {
         this.center.y += 2*(baseline_y - this.center.y)
+
+        // Flipped circular elements reverse the clockwise order of daughters!
+        this.daughterElements.reverse()
+        console.log(this.daughterElements)
         this.daughterElements.forEach(function (e, i) {
             e.flipOverBaseline(baseline_y)
         })
