@@ -8,8 +8,8 @@ const program = require('commander');
 /*******************************************/
 
 // Draw an RNA secondary structure
-// $ ts-rna-draw draw
-// $ ts-rna-draw d
+// $ VIBING draw
+// $ VIBING d
 program
 
     .option('--seq <sequence>', 'Primary Sequence')

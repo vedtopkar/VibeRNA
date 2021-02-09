@@ -1,8 +1,8 @@
-# TS RNA Draw
+# VIBING
 
-Ved's attempt at using Typescript to write a pure Javascript RNA secondary structure drawing app. Play around with it here: <a>https://vedtopkar.github.io/ts-rna-draw/</a>
+Varna Implemented as a Browser Interface for Nucleic acid Graphing
 
-TS RNA Draw can also be used as a CLI utility! See
+Ved's attempt at using Typescript to write a pure Javascript RNA secondary structure drawing app. Play around with it here: <a>https://vedtopkar.github.io/vibing</a>
 
 ## Demo
 
@@ -27,22 +27,20 @@ You can install this package with npm. First, [install node.js](https://nodejs.o
 Once you have node (and thus npm) installed, you can install this package as a global CLI utility by running:
 
 ```
-npm install -g ts-rna-draw
+npm install -g vibing
 ```
-
-For now, 
 
 
 ## Local Development
 
 Clone:
 ```
-git clone https://github.com/vedtopkar/ts-rna-draw.git
+git clone https://github.com/vedtopkar/vibing.git
 ```
 
 Install npm module dependencies:
 ```
-cd ts-rna-draw && yarn install
+cd vibing && yarn install
 ```
 
 For development, start the `parcel` server with `yarn`:
@@ -59,9 +57,9 @@ Your page will reload every time you hit save on a modified `.ts` or `.html` fil
 
 ## Feature TODOs
 
-- Implement pan mouse functionality
+- ~~Implement pan mouse functionality~~
 - Figure out robust vertical text centering for nucleotides
-- Implement interactive flipping stems around basline
+- ~~Implement interactive flipping stems around baseline~~
 - ~~Scale up terminal loop radius for large-sequence loops~~
 - ~~Abstract away global variables for drawing config~~
 - ~~Split up drawing scripts for each element type~~
