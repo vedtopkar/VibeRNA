@@ -33,6 +33,8 @@ export class CircularDrawElement extends DrawnElement {
 
     public phi: number // angle consumed by stems in this circle
 
+    public drawDirection: number = 1 // Clockwise = 1, counterclockwise = -1
+
     // An array that logs the amount of angle consumed by each daughter element
     public daughterAngles: Array<Array<number>> = []
 
@@ -231,12 +233,15 @@ export class CircularDrawElement extends DrawnElement {
 
     public flipOverBaseline(baseline_y: number) {
         this.center.y += 2*(baseline_y - this.center.y)
+        this.drawDirection *= -1
 
         // Flipped circular elements reverse the clockwise order of daughters!
         this.daughterElements.reverse()
         console.log(this.daughterElements)
+
+        let that = this
         this.daughterElements.forEach(function (e, i) {
-            e.flipOverBaseline(baseline_y)
+            e.flipOverBaseline(baseline_y, that.drawDirection)
         })
     }
 }

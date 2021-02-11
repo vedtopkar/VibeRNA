@@ -21,6 +21,8 @@ export class UnpairedElement extends DrawnElement {
     public angleStart: number
     public angleEnd: number
 
+    public drawDirection: number = 1 // 1 is clockwise, -1 is counterclockwise
+
     constructor(drawing: Drawing, parentElement: DrawnElement, node: UnpairedNode) {
         super(drawing, parentElement)
         this.node = node
@@ -109,7 +111,7 @@ export class UnpairedElement extends DrawnElement {
      * When our unpairedlement is part of a circular element, and when the circular element is shifted
      * (e.g. a stem is dragged), we move the nucleotides to space equally along some angle of the circle.
      */
-    public rearrangeCircular(angleStart, angleEnd) {
+    public rearrangeCircular(angleStart, angleEnd, drawDirection) {
         this.angleStart = angleStart
         this.angleEnd = angleEnd
 
@@ -140,8 +142,9 @@ export class UnpairedElement extends DrawnElement {
 
     }
 
-    public flipOverBaseline(baseline_y) {
+    public flipOverBaseline(baseline_y, drawDirection) {
 
+        this.drawDirection = drawDirection
         this.angleStart = (180 - this.angleStart) % 360
         this.angleEnd = (180 - this.angleEnd) % 360
 
