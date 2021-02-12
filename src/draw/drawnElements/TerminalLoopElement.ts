@@ -1,9 +1,9 @@
-import { CircularNode, TerminalLoopNode } from '../structure/nodes'
+import { CircularNode, TerminalLoopNode } from '../../structure/Nodes'
 import { BasePairElement } from './BasePairElement'
 import { DrawnElement } from './DrawnElement'
-import { Nucleotide } from './Nucleotide'
+import { Nucleotide } from '../Nucleotide'
 import { StemElement } from './StemElement'
-import { Drawing } from '../draw'
+import { Drawing } from '../../draw'
 import { CircularDrawElement } from './CircularDrawElement'
 
 

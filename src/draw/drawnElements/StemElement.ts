@@ -1,11 +1,11 @@
 import { Point, Path, Group } from 'paper/dist/paper-core'
 import { start } from 'repl'
-import { Drawing } from '../draw'
-import { StemNode } from '../structure/nodes'
-import { Structure } from '../structure/structure'
+import { Drawing } from '../../draw'
+import { StemNode } from '../../structure/Nodes'
+import { ParseSecondaryStructure } from '../../structure/ParseSecondaryStructure'
 import { BasePairElement } from './BasePairElement'
 import { DrawnElement } from './DrawnElement'
-import { Nucleotide } from './Nucleotide'
+import { Nucleotide } from '../Nucleotide'
 
 /**
  * Stem element

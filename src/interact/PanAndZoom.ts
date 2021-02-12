@@ -1,4 +1,4 @@
-import { paper } from "paper/dist/paper-core"
+import paper from "paper/dist/paper-core"
 
 // Logic for simple panning and zooming of the canvas
 // adapted from this informative script: https://github.com/mberth/PanAndZoom/blob/master/app/scripts/pan_and_zoom.coffee

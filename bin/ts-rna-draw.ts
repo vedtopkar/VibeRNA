@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { Structure } from '../src/structure/structure'
+import { ParseSecondaryStructure } from '../src/structure/ParseSecondaryStructure'
 import { Drawing } from '../src/draw'
 
 const program = require('commander');
@@ -13,7 +13,7 @@ const program = require('commander');
 program
 
     .option('--seq <sequence>', 'Primary Sequence')
-    .option('--struct <structure>', 'Secondary Structure')
+    .option('--struct <structure>', 'Secondary ParseSecondaryStructure')
     .parse(process.argv)
 
 // allow commander to parse `process.argv`
@@ -25,7 +25,7 @@ var paper = require('paper');
 paper.setup([1200, 800]);
 
 // Initialize a new structure with the
-let s = new Structure('CLI test', options.seq, options.struct)
+let s = new ParseSecondaryStructure('CLI test', options.seq, options.struct)
 
 // Clear canvas
 

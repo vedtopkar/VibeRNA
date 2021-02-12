@@ -6,7 +6,7 @@ Ved's attempt at using Typescript to write a pure Javascript RNA secondary struc
 
 ## Demo
 
-![ts-rna-draw-demo](img/vt-ts-rna-draw-demo.gif)
+![ts-rna-draw-demo](assets/img/vt-ts-rna-draw-demo.gif)
 
 ## Use the GUI
 
@@ -18,7 +18,7 @@ AAAAAGGGGGAAGGGGAAACCCAAGGGGAAACCCACCCCCAAAAAAAAAAGGGGGGAAAAAAACCACCCAAAAA
 ```
 
 We get:
-![ts-rna-draw-example](img/ts-rna-draw-multiloop-example.png)
+![ts-rna-draw-example](assets/img/ts-rna-draw-multiloop-example.png)
 
 ## Use as CLI utility
 

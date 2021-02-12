@@ -5,19 +5,19 @@
 */
 
 import { Point, View, Color } from "paper/dist/paper-core"
-import { Structure, StructureTree } from "./structure/structure"
-import { Node, UnpairedNode, StemNode, TerminalLoopNode, BulgeNode, InternalLoop, MultiLoop, RootNode } from './structure/nodes'
+import { ParseSecondaryStructure, StructureTree } from "./structure/ParseSecondaryStructure"
+import { Node, UnpairedNode, StemNode, TerminalLoopNode, BulgeNode, InternalLoop, MultiLoop, RootNode } from './structure/Nodes'
 
-import { DrawnElement } from './draw/DrawnElement'
-import { UnpairedElement } from './draw/UnpairedElement'
-import { StemElement } from './draw/StemElement'
-import { TerminalLoopElement } from './draw/TerminalLoopElement'
-import { InternalLoopElement } from './draw/InternalLoopElement'
-import { MultiLoopElement } from './draw/MultiLoopElement'
-import { BasePairElement } from './draw/BasePairElement'
+import { DrawnElement } from './draw/drawnElements/DrawnElement'
+import { UnpairedElement } from './draw/drawnElements/UnpairedElement'
+import { StemElement } from './draw/drawnElements/StemElement'
+import { TerminalLoopElement } from './draw/drawnElements/TerminalLoopElement'
+import { InternalLoopElement } from './draw/drawnElements/InternalLoopElement'
+import { MultiLoopElement } from './draw/drawnElements/MultiLoopElement'
+import { BasePairElement } from './draw/drawnElements/BasePairElement'
 import { Nucleotide } from './draw/Nucleotide'
-import { DrawConfig, DefaultConfig } from "./draw/DrawConfig"
-import { BulgeElement } from "./draw/BulgeElement"
+import { DrawConfig, DefaultConfig } from "./config/DrawConfig"
+import { BulgeElement } from "./draw/drawnElements/BulgeElement"
 import tinygradient from "tinygradient"
 
 /**
@@ -31,7 +31,7 @@ export class Drawing {
     public view: View
 
     // Reference to a structure object
-    public structure: Structure
+    public structure: ParseSecondaryStructure
 
     // The drawtree is a nested 
     public rootElements: Array<DrawnElement> = []
@@ -66,7 +66,7 @@ export class Drawing {
     private drawCursor: Point = this.config.origin.clone()
     private drawVector: Point
 
-    constructor(structure: Structure, view: View) {
+    constructor(structure: ParseSecondaryStructure, view: View) {
         this.structure = structure
         this.nucleotides = Array(this.structure.sequence.length)
 

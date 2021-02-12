@@ -1,6 +1,6 @@
 import { Path, Point, PointText, Group } from "paper/dist/paper-core"
 import { Drawing } from "../draw"
-import { DrawnElement } from "./DrawnElement"
+import { DrawnElement } from "./drawnElements/DrawnElement"
 
 export class Nucleotide {
     public drawing: Drawing

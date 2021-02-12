@@ -1,11 +1,11 @@
-import { Drawing } from "../draw"
-import { Structure } from "../structure/structure"
+import { Drawing } from "../../draw"
+import { ParseSecondaryStructure } from "../../structure/ParseSecondaryStructure"
 
 export type DrawnElementType = "UnpairedElement" | "StemElement" | "BasePairElement";
 
 export class DrawnElement {
     public drawing: Drawing
-    public structure: Structure
+    public structure: ParseSecondaryStructure
     public parentElement: DrawnElement
     public type: DrawnElementType
     

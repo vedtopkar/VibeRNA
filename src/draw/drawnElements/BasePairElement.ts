@@ -1,7 +1,7 @@
 import { Path } from 'paper/dist/paper-core'
-import { Structure } from '../structure/structure'
+import { ParseSecondaryStructure } from '../../structure/ParseSecondaryStructure'
 import {DrawnElement} from './DrawnElement'
-import { Nucleotide } from './Nucleotide'
+import { Nucleotide } from '../Nucleotide'
 import { StemElement } from './StemElement'
 
 /**

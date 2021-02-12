@@ -1,9 +1,9 @@
 import { DrawnElement } from './DrawnElement'
-import { Nucleotide } from './Nucleotide'
+import { Nucleotide } from '../Nucleotide'
 import { Point } from 'paper/dist/paper-core'
-import { Structure } from '../structure/structure'
-import { UnpairedNode } from '../structure/nodes'
-import { Drawing } from '../draw'
+import { ParseSecondaryStructure } from '../../structure/ParseSecondaryStructure'
+import { UnpairedNode } from '../../structure/Nodes'
+import { Drawing } from '../../draw'
 
 /**
  * Unlike an UnpairedNode, which can point to unpaired root or loop regions,

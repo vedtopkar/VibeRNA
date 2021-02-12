@@ -10,13 +10,16 @@ This requires 2 things:
 
 */
 
-import { paper, view } from 'paper/dist/paper-core'
-import { Structure } from './structure/structure'
+import paper from 'paper/dist/paper-core'
+import { ParseSecondaryStructure } from './structure/ParseSecondaryStructure'
 import { Drawing } from "./draw"
-import { PanAndZoom } from './interface/PanAndZoom'
+import { PanAndZoom } from './interact/PanAndZoom'
 
-import { initializeDownloadButtons } from "./interface/Download";
+import { initializeDownloadButtons } from "./interface/DownloadButton"
+import { initializeResizeActions } from "./interface/Resize"
+
 import 'bulma'
+import {adjustAfterWindowResize, initializeAdjustAfterWindowResize} from "./interact/Resize";
 
 let nameField = <HTMLInputElement>document.getElementById('name')
 let sequence_field = <HTMLInputElement>document.getElementById('sequence')
@@ -27,7 +30,7 @@ console.log(paper)
 paper.install(window)
 
 // Initialize structure object with inputted values
-let s:Structure = new Structure(nameField.value, sequence_field.value, structure_field.value)
+let s:ParseSecondaryStructure = new ParseSecondaryStructure(nameField.value, sequence_field.value, structure_field.value)
 
 // Initialize canvas for PaperJS
 const canvas: HTMLCanvasElement = document.getElementById("render") as HTMLCanvasElement
@@ -88,7 +91,7 @@ let draw_button = document.getElementById('draw')
 draw_button.addEventListener('click', function (e) {
 
 	// Initialize a new structure with the
-	let s = new Structure(nameField.value, sequence_field.value, structure_field.value)
+	let s = new ParseSecondaryStructure(nameField.value, sequence_field.value, structure_field.value)
 	console.log(s)
 
 	// Clear canvas
@@ -107,11 +110,7 @@ draw_button.addEventListener('click', function (e) {
 
 })
 
-// Whenever the window is resized, recenter the drawing and change zoom if needed
-window.paper.view.onResize = function(event) {
-	panAndZoom.centerDrawing(window.paper.view, window.drawing)
-	
-}
+
 
 canvas.addEventListener('mouseup', function(e) {
 	// if(e.altKey) {
@@ -133,6 +132,9 @@ dropdown.addEventListener('click', function(event) {
   event.stopPropagation();
   dropdown.classList.toggle('is-active');
 });
+
+// Initialize adjustments after window resize
+initializeAdjustAfterWindowResize()
 
 // Initialize download buttons
 initializeDownloadButtons(nameField)

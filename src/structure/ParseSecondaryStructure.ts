@@ -1,5 +1,5 @@
-import { DefaultConfig, DrawConfig } from "../draw/DrawConfig"
-import { RootNode, Node, UnpairedNode, StemNode, BulgeNode, TerminalLoopNode, InternalLoopNode, MultiLoopNode } from "./nodes"
+import { DefaultConfig, DrawConfig } from "../config/DrawConfig"
+import { RootNode, Node, UnpairedNode, StemNode, BulgeNode, TerminalLoopNode, InternalLoopNode, MultiLoopNode } from "./Nodes"
 
 export class StructureTree {
     // A class that holds the root of a tree (that's it for now!)
@@ -7,7 +7,7 @@ export class StructureTree {
 
 }
 
-export class Structure {
+export class ParseSecondaryStructure {
     public name: string
     public sequence: string
     public sequence_indices: Array<number>
