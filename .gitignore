@@ -1,5 +1,6 @@
 # Build export
 build
+dist
 
 # JetBrains IDEA folder
 .idea
