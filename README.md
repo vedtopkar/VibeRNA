@@ -40,3 +40,11 @@ The original v0.1 version of this repo wasn't designed very well. Here are the l
 -   Data should not be repeated. Each nucleotide or other drawn element holds its own data, and all non-self data should be referenced instead of copied.
 -   The design philosophy overall is to have _beautiful defaults_. The first thing that is spit out should be as close to a publication-quality figure as possible (except for freeform mode).
 -   Don't add features unnecessarily. Ask users for what would actually be useful!
+
+## Development
+
+I hope that this project lives on for some time and eventually has many contributors beyond me. To that end, I am doing my best to enforce style and correctness rules.
+
+This project uses `eslint` and `prettier` to lint and prettify code, respectively. You can always run `yarn lint` to lint all existing code, and `yarn prettify` to prettify all files.
+
+Using `husky` and `lint-staged`, linting and prettification will be run whenever you try to `git commit`. That way, you don't end up committing ugly or incorrect code.
