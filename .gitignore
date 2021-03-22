@@ -1,7 +1,10 @@
 node_modules
 .DS_Store
 dist
+build
 dist-ssr
-*.local
-
 .idea
+.cache
+
+*.local
+*.log
