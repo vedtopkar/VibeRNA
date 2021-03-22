@@ -1,17 +1,11 @@
-<template>
-  DrawArea
-</template>
+<template>DrawArea</template>
 
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
 export default defineComponent({
-  name: 'DrawArea',
-  props: {
-
-  }
+    name: 'DrawArea',
+    props: {}
 })
 </script>
 
-<style>
-
-</style>
+<style></style>

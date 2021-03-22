@@ -14,26 +14,11 @@
         "parser": "@typescript-eslint/parser",
         "sourceType": "module"
     },
-    "plugins": [
-        "vue",
-        "@typescript-eslint"
-    ],
+    "plugins": ["vue", "@typescript-eslint"],
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "never"
-        ]
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "never"]
     }
 }
