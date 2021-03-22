@@ -29,6 +29,8 @@ export default defineComponent({
     DrawArea,
   }
 })
+
+var x = 'test'
 </script>
 
 
